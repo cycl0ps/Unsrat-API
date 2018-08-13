@@ -5,13 +5,32 @@
 !*/cache/index.html
 !*/cache/.htaccess
 
+.htaccess
+
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 
 #codeigniter 3
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
+server/logs/*
+!server/logs/index.html
+!server/logs/.htaccess
 /vendor/
+
+.DS_Store
+composer.lock
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+
+## Sublime Text cache files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+/tests/tests/
+/tests/results/
