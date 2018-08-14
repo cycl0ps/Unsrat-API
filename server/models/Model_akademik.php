@@ -11,7 +11,7 @@ class Model_akademik extends CI_Model {
 
 		$sql = "SELECT
 				    `mhsNiu` AS 'nim',
-				    `mhsSksTranskrip` AS `sks_total`,
+				    `mhsSksTranskrip` AS `sksTotal`,
 				    ROUND(mhsIpkTranskrip, 2) AS ipk
 				FROM
 				    `mahasiswa`
@@ -19,44 +19,62 @@ class Model_akademik extends CI_Model {
 				    `mhsNiu` = '$nim'";
 		
 		$result = $this->dbSia->query($sql);
-		//$this->debug();
+		//$this->debugSql();
 		return $result->row_array();
 	}
+
+	public function total_sks_lulus($nim){
+
+		$sql = "SELECT
+				    SUM(krsdtSksMatakuliah) AS sksLulus
+				FROM
+				    (SELECT
+				        *
+				    	FROM
+				        s_krs
+				    JOIN s_krs_detil ON s_krs_detil.krsdtKrsId = s_krs.krsId
+				    JOIN s_matakuliah_kurikulum ON s_matakuliah_kurikulum.mkkurId = s_krs_detil.krsdtMkkurId
+				    WHERE
+				        krsMhsNiu = '$nim' AND krsdtKodeNilai IN('A', 'B+', 'B', 'C+', 'C')
+				    GROUP BY
+				        krsdtMkkurId
+				) temp";
+		
+		$result = $this->dbSia->query($sql);
+		//$this->debugSql();
+		return $result->row_array();
+	}	
 
 	//Model function untuk mengecek apakah sudah mengontrak mata kuliah Tugas Akhir
 	public function cek_mk_ta($nim) {
 
 		$sql = "SELECT
-				    b.krsMhsNiu AS nim,
-				    d.sempSemId,
-				    c.mkkurKode,
-				    c.mkkurNamaResmi,
-				    SUM(a.krsdtSksMatakuliah) AS 'sks_kontrak',
+				    krsMhsNiu AS nim,
+				    sempSemId AS semKontrak,
+				    mkkurKode AS kodeMK,
+				    mkkurNamaResmi AS namaMK,
 				    IF(
-				        b.krsApprovalKe != '0',
+				        krsApprovalKe != '0',
 				        'Sudah',
 				        'Belum'
 				    ) AS 'approve'
 				FROM
-				    akademika_sia.s_krs_detil a
-				LEFT JOIN akademika_sia.s_krs b ON b.krsId = a.krsdtKrsId
-				LEFT JOIN akademika_sia.s_matakuliah_kurikulum c ON c.mkkurId = a.krsdtMkkurId
-				LEFT JOIN akademika_sia.s_semester_prodi d ON d.sempId = b.krsSempId
-				LEFT JOIN akademika_sia.s_kelas e ON e.klsId = a.krsdtKlsId
+				    s_krs
+				JOIN s_krs_detil ON s_krs_detil.krsdtKrsId = s_krs.krsId
+				JOIN s_matakuliah_kurikulum ON s_matakuliah_kurikulum.mkkurId = s_krs_detil.krsdtMkkurId
+				JOIN s_kelas ON s_kelas.klsId = s_krs_detil.krsdtKlsId
+				JOIN s_semester_prodi ON s_semester_prodi.sempId = s_krs.krsSempId
 				WHERE
-					b.krsMhsNiu = '$nim' AND d.sempIsAktif = '1' AND a.krsdtIsBatal = '0' AND e.klsIsBatal = '0' 
-					AND (
-				        c.mkkurNamaResmi LIKE '%TESIS%' OR c.mkkurNamaResmi LIKE 'Tugas%Akhir%' OR c.mkkurNamaResmi LIKE 'THESIS%' OR c.mkkurNamaResmi LIKE '%SKRIPSI%' OR c.mkkurNamaResmi LIKE 'KOMPREHENSIF%'
-				    )";
+				    krsMhsNiu = '$nim' AND sempIsAktif = '1' AND krsdtIsBatal = '0' AND klsIsBatal = '0' AND mkkurNamaResmi REGEXP 'TESIS|Tugas Akhir|THESIS|SKRIPSI|KOMPREHENSIF'";
 		
 		$result = $this->dbSia->query($sql);
-		//$this->debug();
+		//$this->debugSql();
 		return $result->row_array();
 	}
 
-    private function debug() {
+    private function debugSql() {
 		
 		echo $this->dbSia->last_query(); die;
-		//$this->db->select("dsnPegNip as NIP, CONCAT(COALESCE(pegGelarDepan,''),pegNama,', ',COALESCE(pegGelarBelakang,'')) as Nama",FALSE);
-    }
+    }	
+
 }

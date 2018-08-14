@@ -56,7 +56,7 @@ class Model_dosen extends CI_Model {
 		$this->dbSdm->where('sdm_pegawai_detail.pegdtKategori','Academic');
 		$query = $this->dbSdm->get('pub_pegawai');
 		$result = $query->result_array();
-		//$this->debug();
+		//$this->debugSql();
 		
 		return $result;
 	}    
@@ -80,12 +80,12 @@ class Model_dosen extends CI_Model {
 		$this->dbSdm->where('pub_pegawai.pegKodeResmi',$nip);
 		$query = $this->dbSdm->get('pub_pegawai');
 		$result = $query->row_array();
-		//$this->debug();
+		//$this->debugSql();
 
 		return $result;
 	}	
 
-    private function debug() {
+    private function debugSql() {
 		
 		echo $this->dbSdm->last_query(); die;
 		//$this->dbSdm->select("dsnPegNip as NIP, CONCAT(COALESCE(pegGelarDepan,''),pegNama,', ',COALESCE(pegGelarBelakang,'')) as Nama",FALSE);

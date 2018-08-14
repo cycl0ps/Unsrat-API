@@ -4,6 +4,7 @@ class Model_mahasiswa extends CI_Model {
 	private $shortListMhs = "mhsNiu AS nim,
 							mhsNama AS nama,
 							mhsFoto AS foto,
+							mhsAngkatan AS angkatan,
 							prodiNamaResmi AS prodi,
 							prodiKode AS kodeProdi,
 							jurNamaResmi AS jurusan,
@@ -14,7 +15,7 @@ class Model_mahasiswa extends CI_Model {
 	private $longListMhs = "mhsNiu AS nim, 
 							mhsNama AS nama,
 							mhsTanggalLahir AS tanggalLahir,
-							kotaNama AS tempatLahir,
+							mhsTempatLahirTranskrip AS tempatLahir,
 							mhsAlamatMhs AS alamat,
 							mhsJenisKelamin AS jenisKelamin,
 							agmrNama AS agama,
@@ -49,7 +50,7 @@ class Model_mahasiswa extends CI_Model {
 		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
 		$query = $this->dbSia->get('mahasiswa');
 		$result = $query->result_array();
-		//$this->debug();
+		//$this->debugSql();
 
 		return $result;
 	}
@@ -69,12 +70,12 @@ class Model_mahasiswa extends CI_Model {
 		$this->dbSia->where('mhsNiu',$nim);
 		$query = $this->dbSia->get('mahasiswa');
 		$result = $query->row_array();
-		//$this->debug();
+		//$this->debugSql();
 
 		return $result;
 	}
 
-    private function debug() {
+    private function debugSql() {
 		
 		echo $this->dbSia->last_query(); die;
 		//$this->dbSia->select("dsnPegNip as NIP, CONCAT(COALESCE(pegGelarDepan,''),pegNama,', ',COALESCE(pegGelarBelakang,'')) as Nama",FALSE);

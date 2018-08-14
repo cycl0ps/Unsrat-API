@@ -100,7 +100,7 @@ return: Array data
 Example: http://{server_url}/akademik/mk-tugas-akhir?nim=110216080 or http://{server_url}/akademik/mk-tugas-akhir/nim/110216080
 </code></pre>
 
-<p><b>3. KRS Mahasiswa.</b> Menampilkan jumlah krs kontrak dan ipk</p>
+<p><b>3. SKS Mahasiswa.</b> Menampilkan jumlah total sks, sks lulu dan ipk</p>
 <pre><code>Format: {server_url}/akademik/total-sks/nim/{nim mahasiswa}
 URL Parameter: nim
 return: Array data

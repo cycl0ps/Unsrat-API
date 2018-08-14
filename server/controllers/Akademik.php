@@ -44,7 +44,7 @@ class Akademik extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Data could not be found'
+	                'message' => 'Tidak kontrak MK Tugas Akhir pada semester aktif'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
@@ -60,6 +60,7 @@ class Akademik extends REST_Controller {
         	$data = $this->Model_akademik->total_sks($id);
        		if (!empty($data))
 	        {
+	        	$data += $this->Model_akademik->total_sks_lulus($id);
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
 	        else
