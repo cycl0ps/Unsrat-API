@@ -40,7 +40,7 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan data mahasiswa dengan id tersebut'
+	                'message' => 'Tidak ditemukan data mahasiswa dengan nim tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
@@ -127,7 +127,7 @@ class Mahasiswa extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_login->akademika_portal($username,$password);
+        	$data = $this->Model_login->akademika_portal($username,$password,1);
             if (!empty($data))
             {
                 $this->set_response([
@@ -140,7 +140,7 @@ class Mahasiswa extends REST_Controller {
                 $this->set_response([
                     'status' => FALSE,
                     'message' => 'Authentication failed!'
-                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+                ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
 		}
 	}

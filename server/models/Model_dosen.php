@@ -48,10 +48,10 @@ class Model_dosen extends CI_Model {
 
 		$this->dbSdm->select($this->shortListDsn);
 		if ($condition) $this->dbSdm->where($condition);
-		$this->dbSdm->join('Akademika_sia.dosen', 'Akademika_sia.dosen.dsnPegNip = Akademika_sdm.pub_pegawai.pegKodeResmi');
-    	$this->dbSdm->join('Akademika_sia.program_studi', 'Akademika_sia.program_studi.prodiKode = Akademika_sia.dosen.dsnProdiKode');
-		$this->dbSdm->join('Akademika_sia.jurusan', 'Akademika_sia.jurusan.jurKode = Akademika_sia.program_studi.prodiJurKode');
-		$this->dbSdm->join('Akademika_sia.fakultas', 'Akademika_sia.fakultas.fakKode = Akademika_sia.program_studi.prodiFakKode');
+		$this->dbSdm->join('akademika_sia.dosen', 'akademika_sia.dosen.dsnPegNip = akademika_sdm.pub_pegawai.pegKodeResmi');
+    	$this->dbSdm->join('akademika_sia.program_studi', 'akademika_sia.program_studi.prodiKode = akademika_sia.dosen.dsnProdiKode');
+		$this->dbSdm->join('akademika_sia.jurusan', 'akademika_sia.jurusan.jurKode = akademika_sia.program_studi.prodiJurKode');
+		$this->dbSdm->join('akademika_sia.fakultas', 'akademika_sia.fakultas.fakKode = akademika_sia.program_studi.prodiFakKode');
 		$this->dbSdm->join('sdm_pegawai_detail', 'sdm_pegawai_detail.pegdtPegId = pub_pegawai.pegId');
 		$this->dbSdm->where('sdm_pegawai_detail.pegdtKategori','Academic');
 		$query = $this->dbSdm->get('pub_pegawai');
@@ -64,10 +64,10 @@ class Model_dosen extends CI_Model {
     public function detail_dosen($nip) {
     	
     	$this->dbSdm->select($this->longListDsn);
-		$this->dbSdm->join('Akademika_sia.dosen', 'Akademika_sia.dosen.dsnPegNip = pub_pegawai.pegKodeResmi');
-    	$this->dbSdm->join('Akademika_sia.program_studi', 'Akademika_sia.program_studi.prodiKode = Akademika_sia.dosen.dsnProdiKode');
-		$this->dbSdm->join('Akademika_sia.jurusan', 'Akademika_sia.jurusan.jurKode = Akademika_sia.program_studi.prodiJurKode');
-		$this->dbSdm->join('Akademika_sia.fakultas', 'Akademika_sia.fakultas.fakKode = Akademika_sia.program_studi.prodiFakKode');
+		$this->dbSdm->join('akademika_sia.dosen', 'akademika_sia.dosen.dsnPegNip = pub_pegawai.pegKodeResmi');
+    	$this->dbSdm->join('akademika_sia.program_studi', 'akademika_sia.program_studi.prodiKode = akademika_sia.dosen.dsnProdiKode');
+		$this->dbSdm->join('akademika_sia.jurusan', 'akademika_sia.jurusan.jurKode = akademika_sia.program_studi.prodiJurKode');
+		$this->dbSdm->join('akademika_sia.fakultas', 'akademika_sia.fakultas.fakKode = akademika_sia.program_studi.prodiFakKode');
 		$this->dbSdm->join('sdm_pegawai_detail', 'sdm_pegawai_detail.pegdtPegId = pub_pegawai.pegId');
 		$this->dbSdm->join("(SELECT jbtnPegKode, jbtnJabfungrId FROM sdm_jabatan_fungsional WHERE jbtnStatus = 'Aktif') a", "a.jbtnPegKode = pub_pegawai.pegId");
 		$this->dbSdm->join('pub_ref_jabatan_fungsional', 'pub_ref_jabatan_fungsional.jabfungrId = a.jbtnJabfungrId');

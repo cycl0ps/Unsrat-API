@@ -85,5 +85,4 @@ define('EXIT_DATABASE', 8); // database error
 define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('DIR_FOTO_DOSEN',	'../ft_data/fotodosen/');
-define('DIR_FOTO_MAHASISWA','../ft_data/fotomahasiswa/');
+define('URL_FOTO_MHS',		"https://kkt.unsrat.ac.id/images/user_foto/");

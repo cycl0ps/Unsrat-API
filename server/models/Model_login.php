@@ -6,11 +6,12 @@ class Model_login extends CI_Model {
 		parent::__construct();
 	}
 
-	function akademika_portal($username, $password) {
-		
+	function akademika_portal($username, $password, $role) {
+
 		$this->dbPortal = $this->load->database('akademika_portal', TRUE);
 		$this->dbPortal->where('tusrNama', $username);
 		$this->dbPortal->where('tusrPassword', md5($password));
+		$this->dbPortal->where('tusrThakrId', $role);
 		$query = $this->dbPortal->get('t_user');
 		$result = $query->row_array();
 		//echo $this->dbPortal->last_query(); die;

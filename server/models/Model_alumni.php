@@ -1,5 +1,5 @@
 <?php
-class Model_mahasiswa extends CI_Model {
+class Model_alumni extends CI_Model {
 	
 	private $shortListMhs = "mhsNiu AS nim,
 							mhsNama AS nama,
@@ -13,21 +13,19 @@ class Model_mahasiswa extends CI_Model {
 
 	private $longListMhs = "mhsNiu AS nim, 
 							mhsNama AS nama,
-							mhsTanggalLahir AS tanggalLahir,
-							mhsTempatLahirTranskrip AS tempatLahir,
+							mhsTanggalLulus AS tanggalLulus,
+							taJudul AS judulTa,
+							mhsNoIjasah AS noIjazah,
+							mhsTanggalIjasah AS tanggalIjazah,
+							mhsPrlsrNama AS predikatKelulusan,
+							mhsProdiGelarKelulusan AS gelar,
 							mhsAlamatMhs AS alamat,
 							mhsJenisKelamin AS jenisKelamin,
-							agmrNama AS agama,
-							stnkrNama AS statusNikah,
 							mhsNoHp AS noHp,
 							mhsEmail AS email,
 							mhsFoto AS foto,
-							mhsHobi AS hobi,
 							mhsAngkatan AS angkatan,
 							stakmhsrNama AS statusMahasiswa,
-							jllrNama AS jalurMasuk,
-							pegNama AS dosenPembimbingAkademik,
-							pegNip AS nipDosenPembimbingAkademik,
 							prodiNamaResmi AS prodi,
 							prodiKode AS kodeProdi,
 							jurNamaResmi AS jurusan,
@@ -40,10 +38,11 @@ class Model_mahasiswa extends CI_Model {
 		$this->dbSia = $this->load->database('akademika_sia', TRUE);
 	}
 	
-	public function list_mahasiswa($condition = FALSE) {
+	public function list_alumni($condition = FALSE) {
 
 		$this->dbSia->select($this->shortListMhs);
 		if ($condition) $this->dbSia->where($condition);
+		$this->dbSia->where('mhsStakmhsrKode', 'L'); // Status mahasiswa Lulus
 		$this->dbSia->join('program_studi', 'mahasiswa.mhsProdiKode = program_studi.prodiKode');
 		$this->dbSia->join('jurusan', 'program_studi.prodiJurKode = jurusan.jurKode');
 		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
@@ -54,18 +53,16 @@ class Model_mahasiswa extends CI_Model {
 		return $result;
 	}
 
-	public function detail_mahasiswa($nim) {
+	public function detail_alumni($nim) {
 
 		$this->dbSia->select($this->longListMhs);
+		$this->dbSia->where('mhsStakmhsrKode', 'L'); // Status mahasiswa Lulu
 		$this->dbSia->join('program_studi', 'program_studi.prodiKode = mahasiswa.mhsProdiKode');
 		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode');
 		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
 		$this->dbSia->join('kota_ref', 'kota_ref.kotaKode = mahasiswa.mhsKotaKodeLahir','left');
-		$this->dbSia->join('agama_ref', 'agama_ref.agmrId = mahasiswa.mhsAgmrId','left');
-		$this->dbSia->join('status_nikah_ref', 'status_nikah_ref.stnkrId = mahasiswa.mhsStnkrId','left');
 		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
-		$this->dbSia->join('s_jalur_ref', 's_jalur_ref.jllrKode = mahasiswa.mhsJlrrKode','left');
-		$this->dbSia->join('pegawai', 'pegawai.pegNip = mahasiswa.mhsDsnPegNipPembimbingAkademik','left');
+		$this->dbSia->join('s_tugas_akhir', 's_tugas_akhir.taMhsNiu = mahasiswa.mhsNiu','left');
 		$this->dbSia->where('mhsNiu',$nim);
 		$query = $this->dbSia->get('mahasiswa');
 		$result = $query->row_array();
