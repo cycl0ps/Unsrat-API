@@ -19,8 +19,7 @@ class Alumni extends REST_Controller {
 
     function __construct() {
         parent::__construct();
-		$this->load->helper(array('url'));
-		$this->load->model(array('Model_alumni'));
+		$this->load->model(array('Akademika_sia'));
 
     }	
 
@@ -31,9 +30,10 @@ class Alumni extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_alumni->detail_alumni($id);
+        	$data = $this->Akademika_sia->detail_alumni($id);
        		if (!empty($data))
 	        {
+	        	$data['pembimbing'] = $this->Akademika_sia->get_pembimbing($id);
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
 	        else
@@ -54,7 +54,7 @@ class Alumni extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_alumni->list_alumni(array('prodiKode' => $id));
+        	$data = $this->Akademika_sia->list_alumni(array('prodiKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -78,7 +78,7 @@ class Alumni extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_alumni->list_alumni(array('jurKode' => $id));
+        	$data = $this->Akademika_sia->list_alumni(array('jurKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -102,7 +102,7 @@ class Alumni extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_alumni->list_alumni(array('fakKode' => $id));
+        	$data = $this->Akademika_sia->list_alumni(array('fakKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code

@@ -15,7 +15,7 @@ require APPPATH . '/libraries/REST_Controller.php';
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Mahasiswa extends REST_Controller {
+class Judul extends REST_Controller {
 
     function __construct() {
         parent::__construct();
@@ -23,28 +23,6 @@ class Mahasiswa extends REST_Controller {
 
     }	
 
-    public function index_get() {
-        $id = $this->get('nim');
-
-        if ($id === NULL)
-        {
-			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        } else {
-        	$data = $this->Akademika_sia->detail_mahasiswa($id);
-       		if (!empty($data))
-	        {
-	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-	        }
-	        else
-	        {
-	            $this->set_response([
-	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan data mahasiswa dengan nim tersebut'
-	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-	        }
-		}
-	}	
-		
     public function prodi_get() {
 	
         $id = $this->get('id');
@@ -53,7 +31,7 @@ class Mahasiswa extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(array('prodiKode' => $id));
+        	$data = $this->Akademika_sia->list_judul(array('prodiKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -62,7 +40,7 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan prodi id tersebut'
+	                'message' => 'Tidak ditemukan list judul dengan prodi id tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
@@ -77,7 +55,7 @@ class Mahasiswa extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(array('jurKode' => $id));
+        	$data = $this->Akademika_sia->list_judul(array('jurKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -86,7 +64,7 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan jurusan id tersebut'
+	                'message' => 'Tidak ditemukan list judul dengan jurusan id tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
@@ -101,7 +79,7 @@ class Mahasiswa extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(array('fakKode' => $id));
+        	$data = $this->Akademika_sia->list_judul(array('fakKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -110,7 +88,7 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan fakultas id tersebut'
+	                'message' => 'Tidak ditemukan list judul dengan fakultas id tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}

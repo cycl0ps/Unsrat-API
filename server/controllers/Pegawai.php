@@ -15,45 +15,48 @@ require APPPATH . '/libraries/REST_Controller.php';
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Mahasiswa extends REST_Controller {
+class Pegawai extends REST_Controller {
 
     function __construct() {
         parent::__construct();
-		$this->load->model(array('Akademika_sia'));
+		$this->load->model(array('Akademika_sdm'));
 
     }	
 
     public function index_get() {
-        $id = $this->get('nim');
-
+        $id = $this->get('nip');
+        
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->detail_mahasiswa($id);
+        	$data = $this->Akademika_sdm->detail_pegawai($id);
        		if (!empty($data))
 	        {
+	        	$data['edu'] = $this->Akademika_sdm->get_pendidikan($id);
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
 	        else
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan data mahasiswa dengan nim tersebut'
+	                'message' => 'Tidak ditemukan data pegawai dengan nip tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
+
 	}	
 		
-    public function prodi_get() {
+    public function satker_get() {
 	
         $id = $this->get('id');
 
         if ($id === NULL)
         {
-			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+			//To be List satker
+
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(array('prodiKode' => $id));
+        	$data = $this->Akademika_sdm->list_pegawai(array('satkerpegSatkerId' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -62,22 +65,22 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan prodi id tersebut'
+	                'message' => 'Tidak ditemukan list pegawai dengan satker id tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
 
 	}
 
-	public function jurusan_get() {
+	public function academic_get() {
 	
-        $id = $this->get('id');
+        $id = $this->get('satker');
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(array('jurKode' => $id));
+        	$data = $this->Akademika_sdm->list_pegawai(array('pegdtKategori' => 'Academic', 'satkerpegSatkerId' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -86,22 +89,22 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan jurusan id tersebut'
+	                'message' => 'Tidak ditemukan list pegawai academic dengan satker id tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
 
 	}
 
-	public function fakultas_get() {
+	public function non_academic_get() {
 	
-        $id = $this->get('id');
+        $id = $this->get('satker');
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(array('fakKode' => $id));
+        	$data = $this->Akademika_sdm->list_pegawai(array('pegdtKategori' => 'Non-Academic', 'satkerpegSatkerId' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -110,10 +113,12 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan fakultas id tersebut'
+	                'message' => 'Tidak ditemukan list pegawai non-academic dengan satker id tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
 
-	}
+	}	
+
+
 }

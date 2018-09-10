@@ -1,151 +1,242 @@
-<title>Unsrat RestServer</title>
-<h1>Unsrat RestServer</h1>
+<title>Unsrat RESTful Web Service</title>
+<h1>Unsrat RESTful Web Service</h1>
 
-<p>Proyek pengembangan RestServer Universitas Sam Ratulangi </p>
+<p>Proyek pengembangan RESTful Web Service Universitas Sam Ratulangi. API ini dapat digunakan oleh developer lain, sebagai interface untuk mengakses database yang digunakan di Universitas Sam Ratulangi. Untuk menggunakan layanan ini, silahkan menghubungi Tim Pengembang UPT TIK Universitas Sam Ratulangi, untuk mendapatkan valid API-KEY</p>
+
+<h2>API Architecture</h2>
+
+<table border="1" padding="15px">
+	<thead>
+		<th></th>
+		<th>Resources</th>
+		<th>Controller Name</th>
+		<th>Method Name</th>
+		<th>Method Descriptions</th>
+		<th>Parameter</th>
+		<th>Format</th>
+		<th>Example</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="4">A.</td>
+			<td rowspan="4">Data mahasiswa</td>
+			<td rowspan="4">Mahasiswa</td>
+			<td><pre>index()</pre></td>
+			<td>Detail mahasiswa untuk nim tertentu</td>
+			<td><pre>nim={nim mahasiswa}</pre></td>
+			<td><pre>{server_url}/mahasiswa?nim={nim mahasiswa}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa?nim=12345');?>"><?php echo site_url('mahasiswa?nim=12345');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>prodi()</code></pre></td>
+			<td>List mahasiswa prodi tertentu</td>
+			<td><pre>id={kode prodi}</pre></td>
+			<td><pre>{server_url}/mahasiswa/prodi?id={kode prodi}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/prodi?id=77');?>"><?php echo site_url('mahasiswa/prodi?id=77');?></a></pre></td>		
+		</tr>
+		<tr>
+			<td><pre><code>jurusan()</code></pre></td>
+			<td>List mahasiswa jurusan tertentu</td>
+			<td><pre>id={kode jurusan}</pre></td>
+			<td><pre>{server_url}/mahasiswa/jurusan?id={kode jurusan}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/jurusan?id=43');?>"><?php echo site_url('mahasiswa/jurusan?id=43');?></a></pre></td>	
+		</tr>
+		<tr>
+			<td><pre><code>fakultas()</code></pre></td>
+			<td>List mahasiswa fakultas tertentu</td>
+			<td><pre>id={kode fakultas}</pre></td>
+			<td><pre>{server_url}/mahasiswa/fakultas?id={kode fakultas}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/fakultas?id=2');?>"><?php echo site_url('mahasiswa/fakultas?id=2');?></a></pre></td>
+		</tr>
+
+		<tr>
+			<td rowspan="4">B.</td>
+			<td rowspan="4">Data dosen</td>
+			<td rowspan="4">Dosen</td>
+			<td><pre><code>index()</code></pre></td>
+			<td>Detail dosen untuk nip tertentu</td>
+			<td><pre>nip={nip dosen}</pre></td>
+			<td><pre>{server_url}/dosen?nip={nip dosen}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('dosen?nip=12345');?>"><?php echo site_url('dosen?nip=12345');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>prodi()</code></pre></td>
+			<td>List dosen prodi tertentu</td>
+			<td><pre>id={kode prodi}</pre></td>
+			<td><pre>{server_url}/dosen/prodi?id={kode prodi}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('dosen/prodi?id=77');?>"><?php echo site_url('dosen/prodi?id=77');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>jurusan()</code></pre></td>
+			<td>List dosen jurusan tertentu</td>
+			<td><pre>id={kode jurusan}</pre></td>
+			<td><pre>{server_url}/dosen/jurusan?id={kode jurusan}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('dosen/jurusan?id=43');?>"><?php echo site_url('dosen/jurusan?id=43');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>fakultas()</code></pre></td>
+			<td>List dosen fakultas tertentu</td>
+			<td><pre>id={kode fakultas}</pre></td>
+			<td><pre>{server_url}/dosen/fakultas?id={kode fakultas}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('dosen/fakultas?id=2');?>"><?php echo site_url('dosen/fakultas?id=2');?></a></pre></td>
+		</tr>
+		<tr>
+			<td rowspan="4">C.</td>
+			<td rowspan="4">Data alumni</td>
+			<td rowspan="4">Alumni</td>
+			<td><pre><code>index()</code></pre></td>
+			<td>Detail alumni untuk nim tertentu</td>
+			<td><pre>nim={nim alumni}</pre></td>
+			<td><pre>{server_url}/alumni?nim={nim alumni}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('alumni?nim=12345');?>"><?php echo site_url('alumni?nim=12345');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>prodi()</code></pre></td>
+			<td>List alumni prodi tertentu</td>
+			<td><pre>id={kode prodi}</pre></td>
+			<td><pre>{server_url}/alumni/prodi?id={kode prodi}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('alumni/prodi?id=77');?>"><?php echo site_url('alumni/prodi?id=77');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>jurusan()</code></pre></td>
+			<td>List alumni jurusan tertentu</td>
+			<td><pre>id={kode jurusan}</pre></td>
+			<td><pre>{server_url}/alumni/jurusan?id={kode jurusan}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('alumni/jurusan?id=43');?>"><?php echo site_url('alumni/jurusan?id=43');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>fakultas()</code></pre></td>
+			<td>List alumni fakultas tertentu</td>
+			<td><pre>id={kode fakultas}</pre></td>
+			<td><pre>{server_url}/alumni/fakultas?id={kode fakultas}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('alumni/fakultas?id=2');?>"><?php echo site_url('alumni/fakultas?id=2');?></a></pre></td>
+		</tr>
+		<tr>
+			<td rowspan="4">D.</td>
+			<td rowspan="4">Data pegawai</td>
+			<td rowspan="4">Pegawai</td>
+			<td><pre><code>index()</code></pre></td>
+			<td>Detail pegawai untuk nip tertentu</td>
+			<td><pre>nip={nip pegawai}</pre></td>
+			<td><pre>{server_url}/pegawai?nip={nip pegawai}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('pegawai?nip=12345');?>"><?php echo site_url('pegawai?nip=12345');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>satker()</code></pre></td>
+			<td>List pegawai satker tertentu</td>
+			<td><pre>id={kode satker}</pre></td>
+			<td><pre>{server_url}/pegawai/satker?id={kode satker}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('pegawai/satker?id=13');?>"><?php echo site_url('pegawai/satker?id=13');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>academic()</code></pre></td>
+			<td>List pegawai akademik (Tenaga pendidik) pada satker tertentu</td>
+			<td><pre>satker={kode satker}</pre></td>
+			<td><pre>{server_url}/pegawai/academic?satker={kode satker}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('pegawai/academic?satker=13');?>"><?php echo site_url('pegawai/academic?satker=13');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>non_academic()</code></pre></td>
+			<td>List pegawai non-akademik (Tenaga kependidikan) pada satker tertentu</td>
+			<td><pre>satker={kode satker}</pre></td>
+			<td><pre>{server_url}/pegawai/non-academic?satker={kode satker}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('pegawai/non-academic?satker=13');?>"><?php echo site_url('pegawai/non-academic?satker=13');?></a></pre></td>
+		</tr>		
+		<tr>
+			<td rowspan="2">E.</td>
+			<td rowspan="2">Data akademik</td>
+			<td rowspan="2">Akademik</td>
+			<td><pre><code>mk_tugas_akhir()</code></pre></td>
+			<td>Cek MK Tugas Akhir mahasiswa</td>
+			<td><pre>nim={nim mahasiswa}</pre></td>
+			<td><pre>{server_url}/akademik/mk-tugas-akhir?nim={nim mahasiswa}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('akademik/mk-tugas-akhir?nim=12345');?>"><?php echo site_url('akademik/mk-tugas-akhir?nim=12345');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>total_sks()</code></pre></td>
+			<td>Data total sks mahasiswa</td>
+			<td><pre>im={nim mahasiswa}</pre></td>
+			<td><pre>{server_url}/akademik/total-sks?nim={nim mahasiswa}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('akademik/total-sks?nim=12345');?>"><?php echo site_url('akademik/total-sks?nim=12345');?></a></pre></td>
+		</tr>
+		<tr>
+			<td rowspan="3">F.</td>
+			<td rowspan="3">Data judul skripsi mahasiswa</td>
+			<td rowspan="3">Judul</td>
+			<td><pre><code>prodi()</code></pre></td>
+			<td>List judul skripsi mahasiswa pada prodi tertentu</td>
+			<td><pre>id={kode prodi}</pre></td>
+			<td><pre>{server_url}/judul/prodi?id={kode prodi}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('judul/prodi?id=77');?>"><?php echo site_url('judul/prodi?id=77');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>jurusan()</code></pre></td>
+			<td>List judul skripsi mahasiswa pada jurusan tertentu</td>
+			<td><pre>id={kode jurusan}</pre></td>
+			<td><pre>{server_url}/judul/jurusan?id={kode jurusan}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('judul/jurusan?id=43');?>"><?php echo site_url('judul/jurusan?id=43');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>fakultas()</code></pre></td>
+			<td>List judul skripsi mahasiswa pada fakultas tertentu</td>
+			<td><pre>id={kode fakultas}</pre></td>
+			<td><pre>{server_url}/judul/fakultas?id={kode fakultas}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('judul/fakultas?id=2');?>"><?php echo site_url('judul/fakultas?id=2');?></a></pre></td>
+		</tr>
+		<tr>
+			<td rowspan="2">G.</td>
+			<td rowspan="2">Otentifikasi login</td>
+			<td rowspan="2">Login</td>
+			<td><pre><code>mahasiswa()</code></pre></td>
+			<td>Otentifikasi login mahasiswa</td>
+			<td><pre>user={username}, pass={password}</pre></td>
+			<td><pre>{server_url}/login/mahasiswa?user={username}&pass={password}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('login/mahasiswa?user=tes&pass=12345');?>"><?php echo site_url('login/mahasiswa?user=tes&pass=12345');?></a></pre></td>
+		</tr>
+		<tr>
+			<td><pre><code>dosen()</code></pre></td>
+			<td>Otentifikasi login dosen</td>
+			<td><pre>user={username}, pass={password}</pre></td>
+			<td><pre>{server_url}/login/dosen?user={username}&pass={password}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('login/dosen?user=tes&pass=12345');?>"><?php echo site_url('login/dosen?user=tes&pass=12345');?></a></pre></td>
+		</tr>											
+	</tbody>
+</table>
 
 <h2>HTTP Verb</h2>
 <ol>
-<li>GET (Avalaible)</li>
-<li>PUT (Not avalaible)</li>
-<li>PATCH (Not avalaible)</li>
-<li>DELETE (Not avalaible)</li>
+	<li>GET (Avalaible)</li>
+	<li>PUT (Not avalaible)</li>
+	<li>PATCH (Not avalaible)</li>
+	<li>DELETE (Not avalaible)</li>
 </ol>
 
-<h2>Resources Architecture</h2>
+<h2>Parameter Info</h2>
 
-<h3>A. Data Mahasiswa</h3>
+<ol>
+<li><a target="_blank" href="<?php echo site_url('welcome/kode-fakultas');?>">Info parameter kode fakultas/jurusan/prodi</a></li>
+<li><a target="_blank" href="<?php echo site_url('welcome/kode-satker');?>">Info parameter kode satker</a></li>
+</ol>
 
-<p><b>1. Detail mahasiswa.</b> Menampilkan detail mahasiswa untuk nim tertentu</p>
-<pre><code>Format: {server_url}/mahasiswa/nim/{nim mahasiswa}
-URL Parameter: nim
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('mahasiswa?nim=110216080');?>"><?php echo base_url();?>mahasiswa?nim=110216080</a> or <a target="blank" href="<?php echo site_url('mahasiswa/index/nim/110216080');?>"><?php echo base_url();?>mahasiswa/index/nim/110216080</a>
-</code></pre>
-
-<p><b>2. Mahasiswa Prodi.</b> Menampilkan daftar mahasiswa untuk prodi tertentu</p>
-<pre><code>Format: {server_url}/mahasiswa/prodi/id/{kode prodi}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('mahasiswa/prodi?id=77');?>"><?php echo base_url();?>mahasiswa/prodi?id=77</a> or <a target="blank" href="<?php echo site_url('mahasiswa/prodi/id/77');?>"><?php echo base_url();?>mahasiswa/prodi/id/77</a></code></pre>
-
-<p><b>3. Mahasiswa Jurusan.</b> Menampilkan daftar mahasiswa untuk jurusan tertentu</p>
-<pre><code>Format: {server_url}/mahasiswa/jurusan/id/{kode jurusan}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('mahasiswa/jurusan?id=43');?>"><?php echo base_url();?>mahasiswa/jurusan?id=43</a> or <a target="blank" href="<?php echo site_url('mahasiswa/jurusan/id/43');?>"><?php echo base_url();?>mahasiswa/jurusan/id/43</a>
-</code></pre>
-
-<p><b>4. Mahasiswa Fakultas.</b> Menampilkan daftar mahasiswa untuk fakultas tertentu</p>
-<pre><code>Format: {server_url}/mahasiswa/fakultas/id/{kode fakultas}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('mahasiswa/fakultas?id=2');?>"><?php echo base_url();?>mahasiswa/fakultas?id=2</a> or <a target="blank" href="<?php echo site_url('mahasiswa/fakultas/id/2');?>"><?php echo base_url();?>mahasiswa/fakultas/id/2</a>
-</code></pre>
-
-<p><b>5. Login Mahasiswa.</b> Autentikasi mahasiswa menggunakan database portal</p>
-<pre><code>Format: {server_url}/mahasiswa/login/user/{username}/pass/{password}
-URL Parameter: user, pass
-return: TRUE or FALSE
-Example: <a target="blank" href="<?php echo site_url('mahasiswa/login?user=12345&pass=12345');?>"><?php echo base_url();?>mahasiswa/login?user=12345&pass=12345</a> or <a target="blank" href="<?php echo site_url('mahasiswa/login/user/12345/pass/12345');?>"><?php echo base_url();?>mahasiswa/login/user/12345/pass/12345</a>
-</code></pre>
-
-<h3>B. Data Dosen</h3>
-
-<p><b>1. Detail dosen.</b> Menampilkan detail dosen untuk nip tertentu</p>
-<pre><code>Format: {server_url}/dosen/nip/{nip dosen}
-URL Parameter: nim
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('dosen?nip=110216080');?>"><?php echo base_url();?>dosen?nip=110216080</a> or <a target="blank" href="<?php echo site_url('dosen/index/nip/110216080');?>"><?php echo base_url();?>dosen/index/nip/110216080</a>
-</code></pre>
-
-<p><b>2. Dosen Prodi.</b> Menampilkan daftar dosen untuk prodi tertentu</p>
-<pre><code>Format: {server_url}/dosen/prodi/id/{kode prodi}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('dosen/prodi?id=77');?>"><?php echo base_url();?>dosen/prodi?id=77</a> or <a target="blank" href="<?php echo site_url('dosen/prodi/id/77');?>"><?php echo base_url();?>dosen/prodi/id/77</a>
-</code></pre>
-
-<p><b>3. Dosen Jurusan.</b> Menampilkan daftar dosen untuk jurusan tertentu</p>
-<pre><code>Format: {server_url}/dosen/jurusan/id/{kode jurusan}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('dosen/jurusan?id=43');?>"><?php echo base_url();?>dosen/jurusan?id=43</a> or <a target="blank" href="<?php echo site_url('dosen/jurusan/id/43');?>"><?php echo base_url();?>dosen/jurusan/id/43</a></code></pre>
-
-<p><b>4. Dosen Fakultas.</b> Menampilkan daftar dosen untuk fakultas tertentu</p>
-<pre><code>Format: {server_url}/dosen/fakultas/id/{kode fakultas}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('dosen/fakultas?id=2');?>"><?php echo base_url();?>dosen/fakultas?id=2</a> or <a target="blank" href="<?php echo site_url('dosen/fakultas/id/2');?>"><?php echo base_url();?>dosen/fakultas/id/2</a>
-</code></pre>
-
-<p><b>5. Login Dosen.</b> Autentikasi dosen menggunakan database portal</p>
-<pre><code>Format: {server_url}/dosen/login/user/{username}/pass/{password}
-URL Parameter: user, pass
-return: TRUE or FALSE
-Example: <a target="blank" href="<?php echo site_url('dosen/login?user=12345&pass=12345');?>"><?php echo base_url();?>dosen/login?user=12345&pass=12345</a> or <a target="blank" href="<?php echo site_url('dosen/login/user/12345/pass/12345');?>"><?php echo base_url();?>dosen/login/user/12345/pass/12345</a>
-</code></pre>
-
-<h3>C. Data Akademik</h3>
-
-<p><b>1. Data akademik mahasiswa.</b> Menampilkan data general akademik mahasiswa</p>
-<pre><code>UNDER DEVELOPMENT
-</code></pre>
-
-<p><b>2. MK Tugas Akhir.</b> Menampilkan data kontrak mata kuliah tugas akhir mahasiswa</p>
-<pre><code>Format: {server_url}/akademik/mk-tugas-akhir/nim/{nim mahasiswa}
-URL Parameter: nim
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('akademik/mk-tugas-akhir?nim=110216080');?>"><?php echo base_url();?>akademik/mk-tugas-akhir?nim=110216080</a> or <a target="blank" href="<?php echo site_url('akademik/mk-tugas-akhir/nim/110216080');?>"><?php echo base_url();?>akademik/mk-tugas-akhir/nim/110216080</a>
-</code></pre>
-
-<p><b>3. SKS Mahasiswa.</b> Menampilkan jumlah total sks, sks lulus dan ipk</p>
-<pre><code>Format: {server_url}/akademik/total-sks/nim/{nim mahasiswa}
-URL Parameter: nim
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('akademik/total-sks?nim=110216080');?>"><?php echo base_url();?>akademik/total-sks?nim=110216080</a> or <a target="blank" href="<?php echo site_url('akademik/total-sks/nim/110216080');?>"><?php echo base_url();?>akademik/total-sks/nim/110216080</a>
-</code></pre>
-
-<h3>D. Data Alumni</h3>
-
-<p><b>1. Detail alumni.</b> Menampilkan detail alumni untuk nim tertentu</p>
-<pre><code>Format: {server_url}/alumni/nim/{nim alumni}
-URL Parameter: nim
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('alumni?nim=100216001');?>"><?php echo base_url();?>alumni?nim=100216001</a> or <a target="blank" href="<?php echo site_url('alumni/index/nim/100216001');?>"><?php echo base_url();?>alumni/index/nim/100216001</a>
-</code></pre>
-
-<p><b>2. Alumni Prodi.</b> Menampilkan daftar alumni untuk prodi tertentu</p>
-<pre><code>Format: {server_url}/alumni/prodi/id/{kode prodi}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('alumni/prodi?id=77');?>"><?php echo base_url();?>alumni/prodi?id=77</a> or <a target="blank" href="<?php echo site_url('alumni/prodi/id/77');?>"><?php echo base_url();?>alumni/prodi/id/77</a></code></pre>
-
-<p><b>3. Alumni Jurusan.</b> Menampilkan daftar alumni untuk jurusan tertentu</p>
-<pre><code>Format: {server_url}/alumni/jurusan/id/{kode jurusan}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('alumni/jurusan?id=43');?>"><?php echo base_url();?>alumni/jurusan?id=43</a> or <a target="blank" href="<?php echo site_url('alumni/jurusan/id/43');?>"><?php echo base_url();?>alumni/jurusan/id/43</a>
-</code></pre>
-
-<p><b>4. Alumni Fakultas.</b> Menampilkan daftar alumni untuk fakultas tertentu</p>
-<pre><code>Format: {server_url}/alumni/fakultas/id/{kode fakultas}
-URL Parameter: id
-return: Array data
-Example: <a target="blank" href="<?php echo site_url('alumni/fakultas?id=2');?>"><?php echo base_url();?>alumni/fakultas?id=2</a> or <a target="blank" href="<?php echo site_url('alumni/fakultas/id/2');?>"><?php echo base_url();?>alumni/fakultas/id/2</a>
-</code></pre>
 
 <h2>Output Format</h2>
 
-<p>Format luaran dapat disesuaikan dengan kebutuhan rest-client. Default output format: json</p>
-<pre><code>Output: json - array - csv - html - php - xml - serialized 
-URL Parameter: format AND [resource parameter]
-Format URL : {resources}/format/{output format}
-Example: <a target="blank" href="<?php echo site_url('mahasiswa/prodi?id=77&format=xml');?>"><?php echo base_url();?>mahasiswa/prodi?id=77&format=xml</a> or <a target="blank" href="<?php echo site_url('dosen/jurusan/id/43/format/csv');?>"><?php echo base_url();?>dosen/jurusan/id/43/format/csv</a>
-</code></pre>
+<p>Format luaran dapat disesuaikan dengan kebutuhan client. Default output format: json</p>
+<pre>Output format: json - jsonp - array - csv - html - php - xml - serialized 
+URL Parameter: format={output format}
+Format URL : {server_url}/{method}?{parameter}&format={output format}
+Example: <a target="blank" href="<?php echo site_url('mahasiswa/prodi?id=77&format=xml');?>"><?php echo site_url('mahasiswa/prodi?id=77&format=xml');?></a></pre>
+
+<h2>URI Request</h2>
+
+<p>Request URI dapat menggunakan default query string atau URI segment</p>
+<pre>Format URI segment : {server_url}/{method}/{parameter1}/{parameter2}
+Example: <a target="blank" href="<?php echo site_url('login/mahasiswa/user/tes/pass/1234');?>"><?php echo site_url('login/mahasiswa/user/tes/pass/1234');?></a></pre>
 
 <h2>Tim Pengembang</h2>
 
+<p>UPT Teknologi Informasi Universitas Sam Ratulangi</p>
 <ul>
-<li><strong>Alwin Sambul</strong> - asambul@unsrat.ac.id</li>
-<li><strong>Xaverius Najoan</strong> - xnajoan@unsrat.ac.id</li>
+<li><strong>Alwin Sambul</strong> - asambul[a]unsrat.ac.id</li>
+<li><strong>Xaverius Najoan</strong> - xnajoan[a]unsrat.ac.id</li>
 </ul>

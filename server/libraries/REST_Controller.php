@@ -191,7 +191,7 @@ abstract class REST_Controller extends CI_Controller {
 
     /**
      * Contains details about the REST API
-     * Fields: db, ignore_limits, key, level, user_id
+     * Fields: db, ignore_limits, key, level, user
      * Note: This is a dynamic object (stdClass)
      *
      * @var object
@@ -979,7 +979,7 @@ abstract class REST_Controller extends CI_Controller {
 
         $this->rest->key = NULL;
         $this->rest->level = NULL;
-        $this->rest->user_id = NULL;
+        $this->rest->user = NULL;
         $this->rest->ignore_limits = FALSE;
 
         // Find the key from server or arguments
@@ -992,7 +992,7 @@ abstract class REST_Controller extends CI_Controller {
 
             $this->rest->key = $row->{$this->config->item('rest_key_column')};
 
-            isset($row->user_id) && $this->rest->user_id = $row->user_id;
+            isset($row->user) && $this->rest->user = $row->user;
             isset($row->level) && $this->rest->level = $row->level;
             isset($row->ignore_limits) && $this->rest->ignore_limits = $row->ignore_limits;
 
@@ -1087,7 +1087,7 @@ abstract class REST_Controller extends CI_Controller {
                 'uri' => $this->uri->uri_string(),
                 'method' => $this->request->method,
                 'params' => $this->_args ? ($this->config->item('rest_logs_json_params') === TRUE ? json_encode($this->_args) : serialize($this->_args)) : NULL,
-                'api_key' => isset($this->rest->key) ? $this->rest->key : '',
+                'user' => isset($this->rest->user) ? $this->rest->user : '',
                 'ip_address' => $this->input->ip_address(),
                 'time' => time(),
                 'authorized' => $authorized

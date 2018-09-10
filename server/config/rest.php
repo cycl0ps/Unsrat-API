@@ -94,7 +94,7 @@ $config['enable_emulate_request'] = TRUE;
 | e.g: My Secret REST API
 |
 */
-$config['rest_realm'] = 'REST API';
+$config['rest_realm'] = 'Unsrat API';
 
 /*
 |--------------------------------------------------------------------------
@@ -126,7 +126,7 @@ $config['rest_auth'] = FALSE;
 | Note: If 'rest_auth' is set to 'session' then change 'auth_source' to the name of the session variable
 |
 */
-$config['auth_source'] = 'ldap';
+$config['auth_source'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -299,7 +299,7 @@ $config['rest_database_group'] = 'default';
 | The table name in your database that stores API keys
 |
 */
-$config['rest_keys_table'] = 'keys';
+$config['rest_keys_table'] = 'usrapi_keys';
 
 /*
 |--------------------------------------------------------------------------
@@ -324,7 +324,7 @@ $config['rest_keys_table'] = 'keys';
 |   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_keys'] = FALSE;
+$config['rest_enable_keys'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -377,7 +377,7 @@ $config['rest_key_length'] = 40;
 | 2012/06/12. See RFC 6648 specification for more details
 |
 */
-$config['rest_key_name'] = 'X-API-KEY';
+$config['rest_key_name'] = 'USR-API-KEY';
 
 /*
 |--------------------------------------------------------------------------
@@ -404,7 +404,7 @@ $config['rest_key_name'] = 'X-API-KEY';
 |   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_logging'] = FALSE;
+$config['rest_enable_logging'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -415,7 +415,7 @@ $config['rest_enable_logging'] = FALSE;
 | table name to match e.g. my_logs
 |
 */
-$config['rest_logs_table'] = 'logs';
+$config['rest_logs_table'] = 'usrapi_logs';
 
 /*
 |--------------------------------------------------------------------------
@@ -437,7 +437,7 @@ $config['rest_logs_table'] = 'logs';
 |    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_access'] = FALSE;
+$config['rest_enable_access'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -448,7 +448,7 @@ $config['rest_enable_access'] = FALSE;
 | table name to match e.g. my_access
 |
 */
-$config['rest_access_table'] = 'access';
+$config['rest_access_table'] = 'usrapi_access';
 
 /*
 |--------------------------------------------------------------------------
@@ -590,7 +590,7 @@ $config['allowed_cors_methods'] = [
 | source domain
 |
 */
-$config['allow_any_cors_domain'] = FALSE;
+$config['allow_any_cors_domain'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

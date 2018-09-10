@@ -19,8 +19,7 @@ class Dosen extends REST_Controller {
 
     function __construct() {
         parent::__construct();
-		$this->load->helper(array('url'));
-		$this->load->model(array('Model_dosen','Model_login'));
+		$this->load->model(array('Akademika_sia'));
 
     }	
 
@@ -31,7 +30,8 @@ class Dosen extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_dosen->detail_dosen($id);
+        	$data = $this->Akademika_sia->detail_dosen($id);
+
         	
        		if (!empty($data))
 	        {
@@ -56,7 +56,7 @@ class Dosen extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_dosen->list_dosen(array('prodiKode' => $id));
+        	$data = $this->Akademika_sia->list_dosen(array('prodiKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -80,7 +80,7 @@ class Dosen extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_dosen->list_dosen(array('jurKode' => $id));
+        	$data = $this->Akademika_sia->list_dosen(array('jurKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -104,7 +104,7 @@ class Dosen extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_dosen->list_dosen(array('fakKode' => $id));
+        	$data = $this->Akademika_sia->list_dosen(array('fakKode' => $id));
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -118,33 +118,5 @@ class Dosen extends REST_Controller {
 	        }
 		}
 	}	
-
-	public function login_get() {
-        $username = $this->get('user');
-        $password = $this->get('pass');
-
-
-        if ($username === NULL OR $password === NULL)
-        {
-			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        } else {
-        	$data = $this->Model_login->akademika_portal($username,$password,2);
-            if (!empty($data))
-            {
-                $this->set_response([
-                    'status' => TRUE,
-                    'message' => 'Authentication success!'
-                ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            }
-            else
-            {
-                $this->set_response([
-                    'status' => FALSE,
-                    'message' => 'Authentication failed!'
-                ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            }
-		}
-	}
-
 
 }

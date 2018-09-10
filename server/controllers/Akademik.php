@@ -19,8 +19,7 @@ class Akademik extends REST_Controller {
 
     function __construct() {
         parent::__construct();
-		$this->load->helper(array('url'));
-		$this->load->model(array('Model_akademik'));
+		$this->load->model(array('Akademika_sia'));
 
     }	
 
@@ -35,7 +34,7 @@ class Akademik extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_akademik->cek_mk_ta($id);
+        	$data = $this->Akademika_sia->cek_mk_ta($id);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -57,10 +56,10 @@ class Akademik extends REST_Controller {
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Model_akademik->total_sks($id);
+        	$data = $this->Akademika_sia->total_sks($id);
        		if (!empty($data))
 	        {
-	        	$data += $this->Model_akademik->total_sks_lulus($id);
+	        	$data += $this->Akademika_sia->total_sks_lulus($id);
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
 	        else
