@@ -19,7 +19,7 @@ class Dosen extends REST_Controller {
 
     function __construct() {
         parent::__construct();
-		$this->load->model(array('Akademika_sia'));
+		$this->load->model(array('Akademika_sia','Akademika_sdm'));
 
     }	
 
@@ -35,6 +35,7 @@ class Dosen extends REST_Controller {
         	
        		if (!empty($data))
 	        {
+	        	$data['edu'] = $this->Akademika_sdm->get_pendidikan($id);
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
 	        else

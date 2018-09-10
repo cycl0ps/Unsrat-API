@@ -50,6 +50,8 @@ class Akademika_sdm extends CI_Model {
 							pegFoto AS foto,
 							jabfungrNama AS jabatanFungsional,
 							CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan,
+							pegThnSer AS tahunSerdos,
+							pegNoKarpeg AS noKarpeg,
 							statrPegawai AS statusPegawai,
 							pegdtKategori AS kategoriPegawai,
 							jnspegrNama AS jenisPegawai,
