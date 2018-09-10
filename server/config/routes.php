@@ -63,4 +63,4 @@ $route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/
 
 //$route['mahasiswa/(:num)'] = 'mahasiswa/nim/$1';
 //$route['mahasiswa/prodi/(:num)'] = 'mahasiswa/prodi/$1';
-$route['mahasiswa/prodi/id/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'mahasiswa/prodi/id/$1/format/$3$4'; // Example 8
+//$route['mahasiswa/prodi/id/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'mahasiswa/prodi/id/$1/format/$3$4'; // Example 8

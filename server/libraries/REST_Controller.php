@@ -639,8 +639,22 @@ abstract class REST_Controller extends CI_Controller {
                 ], self::HTTP_FORBIDDEN);
         }
 
+        // Check to see if this key is allowed to access
+        if ($this->rest->allowed == 0)
+        {
+            if ($this->config->item('rest_enable_logging') && $log_method)
+            {
+                $this->_log_request();
+            }
+
+            $this->response([
+                    $this->config->item('rest_status_field_name') => FALSE,
+                    $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_unallowed')
+                ], self::HTTP_UNAUTHORIZED);
+        }        
+
         // Check to see if this key has access to the requested controller
-        if ($this->config->item('rest_enable_keys') && $use_key)
+        if ($this->_check_access() === FALSE)
         {
             if ($this->config->item('rest_enable_logging') && $log_method)
             {
@@ -979,7 +993,9 @@ abstract class REST_Controller extends CI_Controller {
 
         $this->rest->key = NULL;
         $this->rest->level = NULL;
+        $this->rest->all_access = NULL;
         $this->rest->user = NULL;
+        $this->rest->allowed = NULL;
         $this->rest->ignore_limits = FALSE;
 
         // Find the key from server or arguments
@@ -994,6 +1010,8 @@ abstract class REST_Controller extends CI_Controller {
 
             isset($row->user) && $this->rest->user = $row->user;
             isset($row->level) && $this->rest->level = $row->level;
+            isset($row->is_allowed) && $this->rest->allowed = $row->is_allowed;
+            isset($row->is_all_access) && $this->rest->all_access = $row->is_all_access;
             isset($row->ignore_limits) && $this->rest->ignore_limits = $row->ignore_limits;
 
             $this->_apiuser = $row;
@@ -2139,25 +2157,22 @@ abstract class REST_Controller extends CI_Controller {
     protected function _check_access()
     {
         // If we don't want to check access, just return TRUE
-        if ($this->config->item('rest_enable_access') === FALSE)
+        if ($this->config->item('rest_enable_access') === FALSE || $this->rest->all_access)
         {
             return TRUE;
         }
 
         // Fetch controller based on path and controller name
-        $controller = implode(
-            '/', [
-            $this->router->directory,
-            $this->router->class
-        ]);
+        $controller = ($this->router->directory) ? $this->router->directory.$this->router->class : $this->router->class;
+        $method     = $this->router->method;
 
-        // Remove any double slashes for safety
-        $controller = str_replace('//', '/', $controller);
-
+        //echo $controller;die;
+        
         // Query the access table and get the number of results
         return $this->rest->db
-            ->where('key', $this->rest->key)
+            ->where('user', $this->rest->user)
             ->where('controller', $controller)
+            ->where('method', $method)
             ->get($this->config->item('rest_access_table'))
             ->num_rows() > 0;
     }
