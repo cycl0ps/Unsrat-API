@@ -640,7 +640,7 @@ abstract class REST_Controller extends CI_Controller {
         }
 
         // Check to see if this key has access to the requested controller
-        if ($this->config->item('rest_enable_keys') && $use_key && empty($this->rest->key) === FALSE && $this->_check_access() === FALSE)
+        if ($this->config->item('rest_enable_keys') && $use_key)
         {
             if ($this->config->item('rest_enable_logging') && $log_method)
             {
