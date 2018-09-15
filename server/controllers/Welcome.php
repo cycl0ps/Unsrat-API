@@ -38,6 +38,23 @@ class Welcome extends CI_Controller {
         header('Content-type: application/json');
         echo json_encode($data);
    		
-	}	
+	}
+
+	public function kategori() {
+
+		$mhs = array('jalurmasuk','status','angkatan','sumberdana','gender','jurusan','prodi');
+		$alu = array('tahun','wisudaprd','angkatan','jurusan','prodi');
+		$dsn = array('ikatankerja','aktifitas','status','jenis','jurusan','prodi');
+		$pgw = array('pangkat','fungsional','status','kategori','jenis','gender','nikah');
+	
+		$data['parameter kategori untuk jumlah/mahasiswa'] = $mhs;
+		$data['parameter kategori untuk jumlah/alumni'] = $alu;
+		$data['parameter kategori untuk jumlah/dosen'] = $dsn;
+		$data['parameter kategori untuk jumlah/pegawai'] = $pgw;
+
+        header('Content-type: application/json');
+        echo json_encode($data);
+   		
+	}
 	
 }

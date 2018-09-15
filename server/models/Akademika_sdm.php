@@ -23,7 +23,7 @@ class Akademika_sdm extends CI_Model {
     	$this->dbSdm->join('sdm_pegawai_detail', 'sdm_pegawai_detail.pegdtPegId = pub_pegawai.pegId','left');
 		$this->dbSdm->join('sdm_ref_status_pegawai', 'sdm_ref_status_pegawai.statrId = pub_pegawai.pegStatrId','left');
 		$this->dbSdm->join('sdm_ref_jenis_pegawai', 'sdm_ref_jenis_pegawai.jnspegrId = pub_pegawai.pegJnspegrId','left');
-		$this->dbSdm->join("(SELECT satkerpegId, satkerpegPegId, satkerpegSatkerId FROM sdm_satuan_kerja_pegawai WHERE satkerpegAktif = 'Aktif' GROUP BY satkerpegPegId) c", "c.satkerpegPegId = pub_pegawai.pegId");
+		$this->dbSdm->join("(SELECT satkerpegId, satkerpegPegId, satkerpegSatkerId FROM sdm_satuan_kerja_pegawai WHERE satkerpegAktif = 'Aktif' GROUP BY satkerpegPegId) c", "c.satkerpegPegId = pub_pegawai.pegId", 'left');
 
 		$query = $this->dbSdm->get('pub_pegawai');
 		$result = $query->result_array();
@@ -55,20 +55,22 @@ class Akademika_sdm extends CI_Model {
 							statrPegawai AS statusPegawai,
 							pegdtKategori AS kategoriPegawai,
 							jnspegrNama AS jenisPegawai,
-							satkerNama AS satuanKerja,";		
+							satkerNama AS satuanKerja,
+							pegLastUpdate AS lastUpdate,";	
 
 		$this->dbSdm->select($longListPeg);
 		$this->dbSdm->where('pub_pegawai.pegKodeResmi',$nip);;
     	$this->dbSdm->join('sdm_pegawai_detail', 'sdm_pegawai_detail.pegdtPegId = pub_pegawai.pegId','left');
 		$this->dbSdm->join('sdm_ref_status_pegawai', 'sdm_ref_status_pegawai.statrId = pub_pegawai.pegStatrId','left');
 		$this->dbSdm->join('sdm_ref_jenis_pegawai', 'sdm_ref_jenis_pegawai.jnspegrId = pub_pegawai.pegJnspegrId','left');
-
-		$this->dbSdm->join("(SELECT jbtnPegKode, jbtnJabfungrId FROM sdm_jabatan_fungsional WHERE jbtnStatus = 'Aktif') a", "a.jbtnPegKode = pub_pegawai.pegId");
-		$this->dbSdm->join('pub_ref_jabatan_fungsional', 'pub_ref_jabatan_fungsional.jabfungrId = a.jbtnJabfungrId','left');
-		$this->dbSdm->join("(SELECT pktgolPegKode, pktgolPktgolrId FROM sdm_pangkat_golongan WHERE pktgolStatus = 'Aktif') b", "b.pktgolPegKode = pub_pegawai.pegId");
 		$this->dbSdm->join("(SELECT satkerpegId, satkerpegPegId, satkerpegSatkerId FROM sdm_satuan_kerja_pegawai WHERE satkerpegAktif = 'Aktif' GROUP BY satkerpegPegId) c", "c.satkerpegPegId = pub_pegawai.pegId");
 
+		$this->dbSdm->join("(SELECT jbtnPegKode, jbtnJabfungrId, jbtnTglMulai FROM sdm_jabatan_fungsional WHERE jbtnStatus = 'Aktif') a", "a.jbtnPegKode = pub_pegawai.pegId AND a.jbtnTglMulai = (SELECT MAX(a2.jbtnTglMulai) FROM sdm_jabatan_fungsional a2 WHERE a2.jbtnPegKode = pub_pegawai.pegId)", 'left');
+		$this->dbSdm->join('pub_ref_jabatan_fungsional', 'pub_ref_jabatan_fungsional.jabfungrId = a.jbtnJabfungrId','left');
+		
+		$this->dbSdm->join("(SELECT pktgolPegKode, pktgolPktgolrId, pktgolTmt FROM sdm_pangkat_golongan WHERE pktgolStatus = 'Aktif') b", "b.pktgolPegKode = pub_pegawai.pegId AND b.pktgolTmt = (SELECT MAX(b2.pktgolTmt) FROM sdm_pangkat_golongan b2 WHERE b2.pktgolPegKode = pub_pegawai.pegId )","left");
 		$this->dbSdm->join('sdm_ref_pangkat_golongan', 'sdm_ref_pangkat_golongan.pktgolrId = b.pktgolPktgolrId','left');
+
 		$this->dbSdm->join('pub_ref_agama', 'pub_ref_agama.agmId = pub_pegawai.pegAgamaId','left');
 		$this->dbSdm->join('pub_ref_status_nikah', 'pub_ref_status_nikah.statnkhId = pub_pegawai.pegStatnikahId','left');
 		$this->dbSdm->join('pub_satuan_kerja', 'pub_satuan_kerja.satkerId = c.satkerpegSatkerId','left');	
@@ -90,6 +92,7 @@ class Akademika_sdm extends CI_Model {
 							pddkTempat AS lokasi,";			
     	
     	$this->dbSdm->select($pendidikan);
+    	$this->dbSdm->order_by('pddkThnLulus DESC');
 		$this->dbSdm->join('pub_pegawai', 'pub_pegawai.pegId = sdm_pendidikan.pddkPegKode');
 		$this->dbSdm->join('pub_ref_pendidikan', 'pub_ref_pendidikan.pendId = sdm_pendidikan.pddkTkpddkrId');
 		$this->dbSdm->join('pub_ref_pendidikan_kelompok', 'pub_ref_pendidikan_kelompok.pendkelId = pub_ref_pendidikan.pendPendkelId','left');
@@ -110,7 +113,33 @@ class Akademika_sdm extends CI_Model {
 		//$this->debugSql();
 
 		return $result;
-	}		
+	}
+
+	public function count_pegawai($select, $condition, $groupby) {
+		$this->dbSdm->select($select);
+		$this->dbSdm->where($condition);
+    	$this->dbSdm->join('sdm_pegawai_detail', 'sdm_pegawai_detail.pegdtPegId = pub_pegawai.pegId','left');
+		$this->dbSdm->join('sdm_ref_status_pegawai', 'sdm_ref_status_pegawai.statrId = pub_pegawai.pegStatrId','left');
+		$this->dbSdm->join('sdm_ref_jenis_pegawai', 'sdm_ref_jenis_pegawai.jnspegrId = pub_pegawai.pegJnspegrId','left');
+		$this->dbSdm->join("(SELECT satkerpegId, satkerpegPegId, satkerpegSatkerId FROM sdm_satuan_kerja_pegawai WHERE satkerpegAktif = 'Aktif' GROUP BY satkerpegPegId) c", "c.satkerpegPegId = pub_pegawai.pegId");
+
+		$this->dbSdm->join("(SELECT jbtnPegKode, jbtnJabfungrId, jbtnTglMulai FROM sdm_jabatan_fungsional WHERE jbtnStatus = 'Aktif') a", "a.jbtnPegKode = pub_pegawai.pegId AND a.jbtnTglMulai = (SELECT MAX(a2.jbtnTglMulai) FROM sdm_jabatan_fungsional a2 WHERE a2.jbtnPegKode = pub_pegawai.pegId)", 'left');
+		$this->dbSdm->join('pub_ref_jabatan_fungsional', 'pub_ref_jabatan_fungsional.jabfungrId = a.jbtnJabfungrId','left');
+		
+		$this->dbSdm->join("(SELECT pktgolPegKode, pktgolPktgolrId, pktgolTmt FROM sdm_pangkat_golongan WHERE pktgolStatus = 'Aktif') b", "b.pktgolPegKode = pub_pegawai.pegId AND b.pktgolTmt = (SELECT MAX(b2.pktgolTmt) FROM sdm_pangkat_golongan b2 WHERE b2.pktgolPegKode = pub_pegawai.pegId )","left");
+		$this->dbSdm->join('sdm_ref_pangkat_golongan', 'sdm_ref_pangkat_golongan.pktgolrId = b.pktgolPktgolrId','left');
+
+		$this->dbSdm->join('pub_ref_agama', 'pub_ref_agama.agmId = pub_pegawai.pegAgamaId','left');
+		$this->dbSdm->join('pub_ref_status_nikah', 'pub_ref_status_nikah.statnkhId = pub_pegawai.pegStatnikahId','left');
+		$this->dbSdm->join('pub_satuan_kerja', 'pub_satuan_kerja.satkerId = c.satkerpegSatkerId','left');
+
+		$this->dbSdm->group_by($groupby);
+		$query = $this->dbSdm->get('pub_pegawai');
+		$result = $query->result_array();
+		//$this->debugSql();
+		
+		return $result;
+	}				
 
     private function debugSql() {
 		

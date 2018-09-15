@@ -53,7 +53,8 @@ class Akademika_sia extends CI_Model {
 							sikjNama AS statusIkatanKerja,
 							sadrNama AS statusAktifitas,
 							stpegrNama AS statusPegawai,
-							jnpegrNama AS jenisPegawai";    	
+							jnpegrNama AS jenisPegawai,
+							pegTanggalPengubahan AS lastUpdate"; 	
     	
     	$this->dbSia->select($longListDsn);
 		$this->dbSia->join('pegawai', 'pegawai.pegNip = dosen.dsnPegNip');
@@ -118,6 +119,7 @@ class Akademika_sia extends CI_Model {
 							mhsAngkatan AS angkatan,
 							stakmhsrNama AS statusMahasiswa,
 							jllrNama AS jalurMasuk,
+							sbdnNama AS sumberDana,
 							pegNama AS dosenPembimbingAkademik,
 							pegNip AS nipDosenPembimbingAkademik,
 							prodiNamaResmi AS prodi,
@@ -136,6 +138,7 @@ class Akademika_sia extends CI_Model {
 		$this->dbSia->join('status_nikah_ref', 'status_nikah_ref.stnkrId = mahasiswa.mhsStnkrId','left');
 		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
 		$this->dbSia->join('s_jalur_ref', 's_jalur_ref.jllrKode = mahasiswa.mhsJlrrKode','left');
+		$this->dbSia->join('s_sumber_dana_ref', 's_sumber_dana_ref.sbdnrId = mahasiswa.mhsSbdnrId','left');
 		$this->dbSia->join('pegawai', 'pegawai.pegNip = mahasiswa.mhsDsnPegNipPembimbingAkademik','left');
 		$this->dbSia->where('mhsNiu',$nim);
 		$query = $this->dbSia->get('mahasiswa');
@@ -180,8 +183,9 @@ class Akademika_sia extends CI_Model {
 
 		$longListAlu = "mhsNiu AS nim, 
 							mhsNama AS nama,
-							mhsTanggalLulus AS tanggalLulus,
 							taJudul AS judulTa,
+							mhsTanggalLulus AS tanggalLulus,
+							wsdTanggal AS tanggalWisuda,
 							mhsNoIjasah AS noIjazah,
 							mhsTanggalIjasah AS tanggalIjazah,
 							mhsPrlsrNama AS predikatKelulusan,
@@ -198,7 +202,7 @@ class Akademika_sia extends CI_Model {
 							jurNamaResmi AS jurusan,
 							jurKode AS kodeJurusan,
 							fakNamaResmi AS fakultas,
-							fakKode AS kodeFakultas,";		
+							fakKode AS kodeFakultas,";	
 
 		$this->dbSia->select($longListAlu);
 		$this->dbSia->where('mhsStakmhsrKode', 'L'); // Status mahasiswa Lulus
@@ -208,6 +212,7 @@ class Akademika_sia extends CI_Model {
 		$this->dbSia->join('kota_ref', 'kota_ref.kotaKode = mahasiswa.mhsKotaKodeLahir','left');
 		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
 		$this->dbSia->join('s_tugas_akhir', 's_tugas_akhir.taMhsNiu = mahasiswa.mhsNiu','left');
+		$this->dbSia->join('s_wisuda', 's_wisuda.wsdId = mahasiswa.mhsWsdId','left');
 		$this->dbSia->where('mhsNiu',$nim);
 		$query = $this->dbSia->get('mahasiswa');
 		$result = $query->row_array();
@@ -333,7 +338,49 @@ class Akademika_sia extends CI_Model {
 		//$this->debugSql();
 
 		return $result;
+	}
+
+	public function count_mhs($select, $condition, $groupby, $having=FALSE) {
+		$this->dbSia->select($select);
+		$this->dbSia->where($condition);
+		$this->dbSia->join('program_studi', 'program_studi.prodiKode = mahasiswa.mhsProdiKode');
+		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode');
+		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
+		$this->dbSia->join('agama_ref', 'agama_ref.agmrId = mahasiswa.mhsAgmrId','left');
+		$this->dbSia->join('status_nikah_ref', 'status_nikah_ref.stnkrId = mahasiswa.mhsStnkrId','left');
+		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
+		$this->dbSia->join('s_sumber_dana_ref', 's_sumber_dana_ref.sbdnrId = mahasiswa.mhsSbdnrId','left');
+		$this->dbSia->join('s_jalur_ref', 's_jalur_ref.jllrKode = mahasiswa.mhsJlrrKode','left');
+		$this->dbSia->join('s_tugas_akhir', 's_tugas_akhir.taMhsNiu = mahasiswa.mhsNiu','left');
+		$this->dbSia->join('s_wisuda', 's_wisuda.wsdId = mahasiswa.mhsWsdId','left');
+		$this->dbSia->group_by($groupby);
+		if ($having) $this->dbSia->having($having);
+		$query = $this->dbSia->get('mahasiswa');
+		$result = $query->result_array();
+		//$this->debugSql();
+		
+		return $result;
 	}	
+
+	public function count_dosen($select, $condition, $groupby, $having=FALSE) {
+		$this->dbSia->select($select);
+		$this->dbSia->where($condition);
+		$this->dbSia->join('pegawai', 'pegawai.pegNip = dosen.dsnPegNip');
+    	$this->dbSia->join('program_studi', 'program_studi.prodiKode = dosen.dsnProdiKode','left');
+		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode','left');
+		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode','left');
+		$this->dbSia->join('pg_status_ikatan_kerja_dosen', 'pg_status_ikatan_kerja_dosen.sikjKode = dosen.dsnSikjKode','left');
+		$this->dbSia->join('pg_status_aktivitas_dosen_ref', 'pg_status_aktivitas_dosen_ref.sadrKode = dosen.dsnSadrKode','left');
+		$this->dbSia->join('pg_status_pegawai_ref', 'pg_status_pegawai_ref.stpegrId = pegawai.pegStpegrId','left');
+		$this->dbSia->join('pg_jenis_pegawai_ref', 'pg_jenis_pegawai_ref.jnpegrId = pegawai.pegJnpegrId','left');
+		$this->dbSia->group_by($groupby);
+		if ($having) $this->dbSia->having($having);
+		$query = $this->dbSia->get('dosen');
+		$result = $query->result_array();
+		//$this->debugSql();
+		
+		return $result;
+	}
 
     private function debugSql() {
 		
