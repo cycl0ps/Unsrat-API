@@ -23,10 +23,11 @@ class Pegawai extends REST_Controller {
 
     }	
 
-    public function index_get() {
+    public function satker_get() {
     
-        $id         = $this->get('satker');
+        $id         = $this->get('id');
         $groupby    = $this->get('by');
+        $where      = array('satkerpegId' => $id);
 
         if ($id === NULL)
         {
@@ -60,7 +61,7 @@ class Pegawai extends REST_Controller {
                            			break;  
             }
 
-            $data = $this->Akademika_sdm->count_pegawai($select, 'satkerpegSatkerId ='.$id, $groupby, $having); 
+            $data = $this->Akademika_sdm->list_pegawai($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -82,6 +83,7 @@ class Pegawai extends REST_Controller {
 	
         $id         = $this->get('satker');
         $groupby    = $this->get('by');
+        $where      = array('pegdtKategori' => 'Academic', 'satkerpegSatkerId' => $id);
 
         if ($id === NULL)
         {
@@ -115,7 +117,7 @@ class Pegawai extends REST_Controller {
                            			break;  
             }
 
-            $data = $this->Akademika_sdm->count_pegawai($select, array('pegdtKategori' => 'Academic', 'satkerpegSatkerId' => $id), $groupby, $having); 
+            $data = $this->Akademika_sdm->list_pegawai($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -137,6 +139,7 @@ class Pegawai extends REST_Controller {
 	
         $id         = $this->get('satker');
         $groupby    = $this->get('by');
+        $where      = array('pegdtKategori' => 'Non-Academic', 'satkerpegSatkerId' => $id);
 
         if ($id === NULL)
         {
@@ -170,7 +173,7 @@ class Pegawai extends REST_Controller {
                            			break;  
             }
 
-            $data = $this->Akademika_sdm->count_pegawai($select, array('pegdtKategori' => 'Non-Academic', 'satkerpegSatkerId' => $id), $groupby, $having); 
+            $data = $this->Akademika_sdm->list_pegawai($select, $where, $groupby, $having);
 
             if (!empty($data))
             {

@@ -23,11 +23,11 @@ class Alumni extends REST_Controller {
 
     }
 
-	
 	public function fakultas_get() {
 	
         $id 		= $this->get('id');
         $groupby	= $this->get('by');
+        $where      = array('fakKode' => $id,'mhsStakmhsrKode' => 'L');
 
         if ($id === NULL)
         {
@@ -58,7 +58,7 @@ class Alumni extends REST_Controller {
         							break;	
         	}
 
-        	$data = $this->Akademika_sia->count_mhs($select, array('fakultas.fakKode '=>$id,'mhsStakmhsrKode'=>'L'), $groupby, $having); 
+        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -81,6 +81,7 @@ class Alumni extends REST_Controller {
 	
         $id 		= $this->get('id');
         $groupby	= $this->get('by');
+        $where      = array('jurKode' => $id,'mhsStakmhsrKode' => 'L');
 
         if ($id === NULL)
         {
@@ -108,7 +109,7 @@ class Alumni extends REST_Controller {
                                     break;  
             }
 
-        	$data = $this->Akademika_sia->count_mhs($select, array('jurusan.jurKode '=>$id,'mhsStakmhsrKode'=>'L'), $groupby, $having); 
+        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -131,6 +132,7 @@ class Alumni extends REST_Controller {
     
         $id         = $this->get('id');
         $groupby    = $this->get('by');
+        $where      = array('prodiKode' => $id,'mhsStakmhsrKode' => 'L');
 
         if ($id === NULL)
         {
@@ -155,7 +157,7 @@ class Alumni extends REST_Controller {
                                     break;  
             }
 
-            $data = $this->Akademika_sia->count_mhs($select, array('program_studi.prodiKode '=>$id,'mhsStakmhsrKode'=>'L'), $groupby, $having); 
+            $data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having);
 
             if (!empty($data))
             {

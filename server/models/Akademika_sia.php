@@ -6,24 +6,13 @@ class Akademika_sia extends CI_Model {
 		$this->dbSia = $this->load->database('akademika_sia', TRUE);
 	}
 
-	public function list_dosen($condition = FALSE) {
+	public function get_dosen($select = FALSE, $condition = FALSE, $groupby = FALSE, $having = FALSE) {
 
-		$shortListDsn = "dsnPegNip AS nip, 
-							dsnNidn AS nidn,
-							CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama,
-							prodiNamaResmi AS prodi,
-							prodiKode AS kodeProdi,
-							jurNamaResmi AS jurusan,
-							jurKode AS kodeJurusan,
-							fakNamaResmi AS fakultas,
-							fakKode AS kodeFakultas,
-							sikjNama AS statusIkatanKerja,
-							sadrNama AS statusAktifitas,
-							stpegrNama AS statusPegawai,
-							jnpegrNama AS jenisPegawai";		
+		if ($select)	$this->dbSia->select($select);
+		if ($condition)	$this->dbSia->where($condition);
+		if ($groupby) 	$this->dbSia->group_by($groupby);
+		if ($having) 	$this->dbSia->having($having);
 
-		$this->dbSia->select($shortListDsn);
-		if ($condition) $this->dbSia->where($condition);
 		$this->dbSia->join('pegawai', 'pegawai.pegNip = dosen.dsnPegNip');
     	$this->dbSia->join('program_studi', 'program_studi.prodiKode = dosen.dsnProdiKode','left');
 		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode','left');
@@ -32,6 +21,7 @@ class Akademika_sia extends CI_Model {
 		$this->dbSia->join('pg_status_aktivitas_dosen_ref', 'pg_status_aktivitas_dosen_ref.sadrKode = dosen.dsnSadrKode','left');
 		$this->dbSia->join('pg_status_pegawai_ref', 'pg_status_pegawai_ref.stpegrId = pegawai.pegStpegrId','left');
 		$this->dbSia->join('pg_jenis_pegawai_ref', 'pg_jenis_pegawai_ref.jnpegrId = pegawai.pegJnpegrId','left');
+		
 		$query = $this->dbSia->get('dosen');
 		$result = $query->result_array();
 		//$this->debugSql();
@@ -39,24 +29,11 @@ class Akademika_sia extends CI_Model {
 		return $result;
 	}
 
-    public function detail_dosen($nip) {
+	public function detail_dosen($select = FALSE, $condition = FALSE) {
 
-		$longListDsn = "dsnPegNip AS nip, 
-							dsnNidn AS nidn,
-							CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama,
-							prodiNamaResmi AS prodi,
-							prodiKode AS kodeProdi,
-							jurNamaResmi AS jurusan,
-							jurKode AS kodeJurusan,
-							fakNamaResmi AS fakultas,
-							fakKode AS kodeFakultas,
-							sikjNama AS statusIkatanKerja,
-							sadrNama AS statusAktifitas,
-							stpegrNama AS statusPegawai,
-							jnpegrNama AS jenisPegawai,
-							pegTanggalPengubahan AS lastUpdate"; 	
-    	
-    	$this->dbSia->select($longListDsn);
+		if ($select)	$this->dbSia->select($select);
+		if ($condition)	$this->dbSia->where($condition);
+
 		$this->dbSia->join('pegawai', 'pegawai.pegNip = dosen.dsnPegNip');
     	$this->dbSia->join('program_studi', 'program_studi.prodiKode = dosen.dsnProdiKode','left');
 		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode','left');
@@ -65,170 +42,63 @@ class Akademika_sia extends CI_Model {
 		$this->dbSia->join('pg_status_aktivitas_dosen_ref', 'pg_status_aktivitas_dosen_ref.sadrKode = dosen.dsnSadrKode','left');
 		$this->dbSia->join('pg_status_pegawai_ref', 'pg_status_pegawai_ref.stpegrId = pegawai.pegStpegrId','left');
 		$this->dbSia->join('pg_jenis_pegawai_ref', 'pg_jenis_pegawai_ref.jnpegrId = pegawai.pegJnpegrId','left');
-		$this->dbSia->where('dsnPegNip',$nip);
+		
 		$query = $this->dbSia->get('dosen');
 		$result = $query->row_array();
 		//$this->debugSql();
-
 		return $result;
 	}
 
-	public function list_mahasiswa($condition = FALSE) {
-
-		$shortListMhs = "mhsNiu AS nim,
-							mhsNama AS nama,
-							mhsFoto AS foto,
-							mhsAngkatan AS angkatan,
-							prodiNamaResmi AS prodi,
-							prodiKode AS kodeProdi,
-							jurNamaResmi AS jurusan,
-							jurKode AS kodeJurusan,
-							fakNamaResmi AS fakultas,
-							fakKode AS kodeFakultas,";		
-
-		$this->dbSia->select($shortListMhs);
-		if ($condition) $this->dbSia->where($condition);
-		$this->dbSia->join('program_studi', 'mahasiswa.mhsProdiKode = program_studi.prodiKode');
-		$this->dbSia->join('jurusan', 'program_studi.prodiJurKode = jurusan.jurKode');
-		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
-		$query = $this->dbSia->get('mahasiswa');
-		$result = $query->result_array();
-		//$this->debugSql();
-
-		foreach ($result as $key => $value) {
-			if (!empty($result[$key]['foto'])) $result[$key]['foto'] = URL_FOTO_MHS.$result[$key]['foto'];
-		}
-
-		return $result;
-	}
-
-	public function detail_mahasiswa($nim) {
-
-		$longListMhs = "mhsNiu AS nim, 
-							mhsNama AS nama,
-							mhsTanggalLahir AS tanggalLahir,
-							mhsTempatLahirTranskrip AS tempatLahir,
-							mhsAlamatMhs AS alamat,
-							mhsJenisKelamin AS jenisKelamin,
-							agmrNama AS agama,
-							stnkrNama AS statusNikah,
-							mhsNoHp AS noHp,
-							mhsEmail AS email,
-							mhsFoto AS foto,
-							mhsHobi AS hobi,
-							mhsAngkatan AS angkatan,
-							stakmhsrNama AS statusMahasiswa,
-							jllrNama AS jalurMasuk,
-							sbdnNama AS sumberDana,
-							pegNama AS dosenPembimbingAkademik,
-							pegNip AS nipDosenPembimbingAkademik,
-							prodiNamaResmi AS prodi,
-							prodiKode AS kodeProdi,
-							jurNamaResmi AS jurusan,
-							jurKode AS kodeJurusan,
-							fakNamaResmi AS fakultas,
-							fakKode AS kodeFakultas,";		
-
-		$this->dbSia->select($longListMhs);
+	public function get_mahasiswa($select = FALSE, $condition = FALSE, $groupby = FALSE, $having = FALSE) {
+		if ($select)	$this->dbSia->select($select);
+		if ($condition)	$this->dbSia->where($condition);
+		if ($groupby) 	$this->dbSia->group_by($groupby);
+		if ($having) 	$this->dbSia->having($having);
+		
 		$this->dbSia->join('program_studi', 'program_studi.prodiKode = mahasiswa.mhsProdiKode');
 		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode');
 		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
-		$this->dbSia->join('kota_ref', 'kota_ref.kotaKode = mahasiswa.mhsKotaKodeLahir','left');
 		$this->dbSia->join('agama_ref', 'agama_ref.agmrId = mahasiswa.mhsAgmrId','left');
 		$this->dbSia->join('status_nikah_ref', 'status_nikah_ref.stnkrId = mahasiswa.mhsStnkrId','left');
-		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
-		$this->dbSia->join('s_jalur_ref', 's_jalur_ref.jllrKode = mahasiswa.mhsJlrrKode','left');
 		$this->dbSia->join('s_sumber_dana_ref', 's_sumber_dana_ref.sbdnrId = mahasiswa.mhsSbdnrId','left');
-		$this->dbSia->join('pegawai', 'pegawai.pegNip = mahasiswa.mhsDsnPegNipPembimbingAkademik','left');
-		$this->dbSia->where('mhsNiu',$nim);
-		$query = $this->dbSia->get('mahasiswa');
-		$result = $query->row_array();
-		if (!empty($result['foto'])) $result['foto'] = URL_FOTO_MHS.$result['foto'];
-		//$this->debugSql();
+		$this->dbSia->join('s_jalur_ref', 's_jalur_ref.jllrKode = mahasiswa.mhsJlrrKode','left');
+		$this->dbSia->join('s_tugas_akhir', 's_tugas_akhir.taMhsNiu = mahasiswa.mhsNiu','left');
+		$this->dbSia->join('s_wisuda', 's_wisuda.wsdId = mahasiswa.mhsWsdId','left');
+		$this->dbSia->join('pegawai', 'pegawai.pegNip = mahasiswa.mhsDsnPegNipPembimbingAkademik','left');		
+		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
 
-		return $result;
-	}
-
-	public function list_alumni($condition = FALSE) {
-
-		$shortListAlu = "mhsNiu AS nim,
-							mhsNama AS nama,
-							mhsFoto AS foto,
-							mhsAngkatan AS angkatan,
-							prodiNamaResmi AS prodi,
-							prodiKode AS kodeProdi,
-							jurNamaResmi AS jurusan,
-							jurKode AS kodeJurusan,
-							fakNamaResmi AS fakultas,
-							fakKode AS kodeFakultas,";		
-
-		$this->dbSia->select($shortListAlu);
-		if ($condition) $this->dbSia->where($condition);
-		$this->dbSia->where('mhsStakmhsrKode', 'L'); // Status mahasiswa Lulus
-		$this->dbSia->join('program_studi', 'mahasiswa.mhsProdiKode = program_studi.prodiKode');
-		$this->dbSia->join('jurusan', 'program_studi.prodiJurKode = jurusan.jurKode');
-		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
 		$query = $this->dbSia->get('mahasiswa');
 		$result = $query->result_array();
 		//$this->debugSql();
-
-		foreach ($result as $key => $value) {
-			if (!empty($result[$key]['foto'])) $result[$key]['foto'] = URL_FOTO_MHS.$result[$key]['foto'];
-		}
-
 		return $result;
 	}
 
-	public function detail_alumni($nim) {
+	public function detail_mahasiswa($select = FALSE, $condition = FALSE) {
 
-		$longListAlu = "mhsNiu AS nim, 
-							mhsNama AS nama,
-							taJudul AS judulTa,
-							mhsTanggalLulus AS tanggalLulus,
-							wsdTanggal AS tanggalWisuda,
-							mhsNoIjasah AS noIjazah,
-							mhsTanggalIjasah AS tanggalIjazah,
-							mhsPrlsrNama AS predikatKelulusan,
-							mhsProdiGelarKelulusan AS gelar,
-							mhsAlamatMhs AS alamat,
-							mhsJenisKelamin AS jenisKelamin,
-							mhsNoHp AS noHp,
-							mhsEmail AS email,
-							mhsFoto AS foto,
-							mhsAngkatan AS angkatan,
-							stakmhsrNama AS statusMahasiswa,
-							prodiNamaResmi AS prodi,
-							prodiKode AS kodeProdi,
-							jurNamaResmi AS jurusan,
-							jurKode AS kodeJurusan,
-							fakNamaResmi AS fakultas,
-							fakKode AS kodeFakultas,";	
-
-		$this->dbSia->select($longListAlu);
-		$this->dbSia->where('mhsStakmhsrKode', 'L'); // Status mahasiswa Lulus
+		if ($select)	$this->dbSia->select($select);
+		if ($condition)	$this->dbSia->where($condition);
+		
 		$this->dbSia->join('program_studi', 'program_studi.prodiKode = mahasiswa.mhsProdiKode');
 		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode');
 		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
-		$this->dbSia->join('kota_ref', 'kota_ref.kotaKode = mahasiswa.mhsKotaKodeLahir','left');
-		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
+		$this->dbSia->join('agama_ref', 'agama_ref.agmrId = mahasiswa.mhsAgmrId','left');
+		$this->dbSia->join('status_nikah_ref', 'status_nikah_ref.stnkrId = mahasiswa.mhsStnkrId','left');
+		$this->dbSia->join('s_sumber_dana_ref', 's_sumber_dana_ref.sbdnrId = mahasiswa.mhsSbdnrId','left');
+		$this->dbSia->join('s_jalur_ref', 's_jalur_ref.jllrKode = mahasiswa.mhsJlrrKode','left');
 		$this->dbSia->join('s_tugas_akhir', 's_tugas_akhir.taMhsNiu = mahasiswa.mhsNiu','left');
 		$this->dbSia->join('s_wisuda', 's_wisuda.wsdId = mahasiswa.mhsWsdId','left');
-		$this->dbSia->where('mhsNiu',$nim);
+		$this->dbSia->join('pegawai', 'pegawai.pegNip = mahasiswa.mhsDsnPegNipPembimbingAkademik','left');		
+		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
+
 		$query = $this->dbSia->get('mahasiswa');
 		$result = $query->row_array();
-		if (!empty($result['foto'])) $result['foto'] = URL_FOTO_MHS.$result['foto'];
 		//$this->debugSql();
-
 		return $result;
 	}
 
 	public function get_pembimbing($nim) {
 
-		$pembimbing = "pegNip AS nip,
-							pegNama AS nama,
-							dsnprntaNama AS peran";		
-
-		$this->dbSia->select($pembimbing);
+		$this->dbSia->select("pegNip AS nip, pegNama AS nama, dsnprntaNama AS peran");
 		$this->dbSia->order_by('dsnprntaId');
 		$this->dbSia->where('mhsNiu', $nim); // ID Tugas Akhir
 		$this->dbSia->where('mhsStakmhsrKode', 'L'); // Status mahasiswa Lulus
@@ -236,30 +106,25 @@ class Akademika_sia extends CI_Model {
 		$this->dbSia->join('mahasiswa', 'mahasiswa.mhsNiu = s_tugas_akhir.taMhsNiu');
 		$this->dbSia->join('pegawai', 'pegawai.pegNip = s_dosen_tugas_akhir.dsntaPegNip');
 		$this->dbSia->join('s_dosen_peran_ta_ref', 's_dosen_peran_ta_ref.dsnprntaId = s_dosen_tugas_akhir.dsntaDsnprntaId');
+		
 		$query = $this->dbSia->get('s_dosen_tugas_akhir');
 		$result = $query->result_array();
 		//$this->debugSql();
-
 		return $result;
 	}
 
 	public function list_judul($condition = FALSE) {
 
-		$judul = "mhsNiu AS nim, 
-							mhsNama AS nama,
-							taJudul AS judulTa,
-							mhsAngkatan AS angkatan";		
-
-		$this->dbSia->select($judul);
+		$this->dbSia->select("mhsNiu AS nim, mhsNama AS nama, taJudul AS judulTa, mhsAngkatan AS angkatan");
 		if ($condition) $this->dbSia->where($condition);
 		$this->dbSia->join('mahasiswa', 'mahasiswa.mhsNiu = s_tugas_akhir.taMhsNiu');
 		$this->dbSia->join('program_studi', 'program_studi.prodiKode = mahasiswa.mhsProdiKode');
 		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode');
 		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
+		
 		$query = $this->dbSia->get('s_tugas_akhir');
 		$result = $query->result_array();
 		//$this->debugSql();
-
 		return $result;
 	}		
 
@@ -336,49 +201,6 @@ class Akademika_sia extends CI_Model {
 		$query = $this->dbSia->get($table);
 		$result = $query->result_array();
 		//$this->debugSql();
-
-		return $result;
-	}
-
-	public function count_mhs($select, $condition, $groupby, $having=FALSE) {
-		$this->dbSia->select($select);
-		$this->dbSia->where($condition);
-		$this->dbSia->join('program_studi', 'program_studi.prodiKode = mahasiswa.mhsProdiKode');
-		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode');
-		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode');
-		$this->dbSia->join('agama_ref', 'agama_ref.agmrId = mahasiswa.mhsAgmrId','left');
-		$this->dbSia->join('status_nikah_ref', 'status_nikah_ref.stnkrId = mahasiswa.mhsStnkrId','left');
-		$this->dbSia->join('status_aktif_mahasiswa_ref', 'status_aktif_mahasiswa_ref.stakmhsrKode = mahasiswa.mhsStakmhsrKode','left');
-		$this->dbSia->join('s_sumber_dana_ref', 's_sumber_dana_ref.sbdnrId = mahasiswa.mhsSbdnrId','left');
-		$this->dbSia->join('s_jalur_ref', 's_jalur_ref.jllrKode = mahasiswa.mhsJlrrKode','left');
-		$this->dbSia->join('s_tugas_akhir', 's_tugas_akhir.taMhsNiu = mahasiswa.mhsNiu','left');
-		$this->dbSia->join('s_wisuda', 's_wisuda.wsdId = mahasiswa.mhsWsdId','left');
-		$this->dbSia->group_by($groupby);
-		if ($having) $this->dbSia->having($having);
-		$query = $this->dbSia->get('mahasiswa');
-		$result = $query->result_array();
-		//$this->debugSql();
-		
-		return $result;
-	}	
-
-	public function count_dosen($select, $condition, $groupby, $having=FALSE) {
-		$this->dbSia->select($select);
-		$this->dbSia->where($condition);
-		$this->dbSia->join('pegawai', 'pegawai.pegNip = dosen.dsnPegNip');
-    	$this->dbSia->join('program_studi', 'program_studi.prodiKode = dosen.dsnProdiKode','left');
-		$this->dbSia->join('jurusan', 'jurusan.jurKode = program_studi.prodiJurKode','left');
-		$this->dbSia->join('fakultas', 'fakultas.fakKode = program_studi.prodiFakKode','left');
-		$this->dbSia->join('pg_status_ikatan_kerja_dosen', 'pg_status_ikatan_kerja_dosen.sikjKode = dosen.dsnSikjKode','left');
-		$this->dbSia->join('pg_status_aktivitas_dosen_ref', 'pg_status_aktivitas_dosen_ref.sadrKode = dosen.dsnSadrKode','left');
-		$this->dbSia->join('pg_status_pegawai_ref', 'pg_status_pegawai_ref.stpegrId = pegawai.pegStpegrId','left');
-		$this->dbSia->join('pg_jenis_pegawai_ref', 'pg_jenis_pegawai_ref.jnpegrId = pegawai.pegJnpegrId','left');
-		$this->dbSia->group_by($groupby);
-		if ($having) $this->dbSia->having($having);
-		$query = $this->dbSia->get('dosen');
-		$result = $query->result_array();
-		//$this->debugSql();
-		
 		return $result;
 	}
 

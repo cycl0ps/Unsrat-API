@@ -27,6 +27,7 @@ class Dosen extends REST_Controller {
     
         $id         = $this->get('id');
         $groupby    = $this->get('by');
+        $where      = array('fakKode' => $id);
 
         if ($id === NULL)
         {
@@ -57,7 +58,7 @@ class Dosen extends REST_Controller {
                                     break;  
             }
 
-            $data = $this->Akademika_sia->count_dosen($select, 'fakultas.fakKode ='.$id, $groupby, $having); 
+            $data = $this->Akademika_sia->list_dosen($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -80,6 +81,7 @@ class Dosen extends REST_Controller {
 	
         $id 		= $this->get('id');
         $groupby	= $this->get('by');
+        $where      = array('jurKode' => $id);
 
         if ($id === NULL)
         {
@@ -107,7 +109,7 @@ class Dosen extends REST_Controller {
                                     break; 
         	}
 
-        	$data = $this->Akademika_sia->count_dosen($select, 'jurusan.jurKode ='.$id, $groupby, $having); 
+        	$data = $this->Akademika_sia->list_dosen($select, $where, $groupby, $having);
 
         	if (!empty($data))
 	        {
@@ -130,6 +132,7 @@ class Dosen extends REST_Controller {
     
         $id         = $this->get('id');
         $groupby    = $this->get('by');
+        $where      = array('prodiKode' => $id);
 
         if ($id === NULL)
         {
@@ -154,7 +157,7 @@ class Dosen extends REST_Controller {
                                     break; 
             }
 
-            $data = $this->Akademika_sia->count_dosen($select, 'program_studi.prodiKode ='.$id, $groupby, $having); 
+            $data = $this->Akademika_sia->list_dosen($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {

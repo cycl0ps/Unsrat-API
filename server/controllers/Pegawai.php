@@ -24,13 +24,14 @@ class Pegawai extends REST_Controller {
     }	
 
     public function index_get() {
-        $id = $this->get('nip');
+        $id 	= $this->get('nip');
+        $where  = array('dsnPegNip' => $id);
         
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sdm->detail_pegawai($id);
+        	$data = $this->Akademika_sdm->detail_pegawai(SELECT_DETAIL_PGW, $where);
        		if (!empty($data))
 	        {
 	        	$data['edu'] = $this->Akademika_sdm->get_pendidikan($id);
@@ -49,14 +50,15 @@ class Pegawai extends REST_Controller {
 		
     public function satker_get() {
 	
-        $id = $this->get('id');
+        $id 	= $this->get('id');
+        $where  = array('satkerpegId' => $id);
 
         if ($id === NULL)
         {
 			//To be List satker
 
         } else {
-        	$data = $this->Akademika_sdm->list_pegawai(array('satkerpegSatkerId' => $id));
+        	$data = $this->Akademika_sdm->list_pegawai(SELECT_LIST_PGW, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -75,12 +77,13 @@ class Pegawai extends REST_Controller {
 	public function academic_get() {
 	
         $id = $this->get('satker');
+        $where  = array('pegdtKategori' => 'Academic', 'satkerpegSatkerId' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sdm->list_pegawai(array('pegdtKategori' => 'Academic', 'satkerpegSatkerId' => $id));
+        	$data = $this->Akademika_sdm->list_pegawai(SELECT_LIST_PGW, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -99,12 +102,13 @@ class Pegawai extends REST_Controller {
 	public function non_academic_get() {
 	
         $id = $this->get('satker');
+        $where  = array('pegdtKategori' => 'Non-Academic', 'satkerpegSatkerId' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sdm->list_pegawai(array('pegdtKategori' => 'Non-Academic', 'satkerpegSatkerId' => $id));
+        	$data = $this->Akademika_sdm->list_pegawai(SELECT_LIST_PGW, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code

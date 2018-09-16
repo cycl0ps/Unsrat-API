@@ -24,13 +24,14 @@ class Dosen extends REST_Controller {
     }	
 
     public function index_get() {
-        $id = $this->get('nip');
+        $id 	= $this->get('nip');
+        $where  = array('dsnPegNip' => $id);
         
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->detail_dosen($id);
+        	$data = $this->Akademika_sia->detail_dosen(SELECT_DETAIL_DSN, $where);
 
         	
        		if (!empty($data))
@@ -51,13 +52,14 @@ class Dosen extends REST_Controller {
 		
     public function prodi_get() {
 	
-        $id = $this->get('id');
+        $id 	= $this->get('id');
+        $where  = array('prodiKode' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_dosen(array('prodiKode' => $id));
+        	$data = $this->Akademika_sia->list_dosen(SELECT_LIST_DSN, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -75,13 +77,14 @@ class Dosen extends REST_Controller {
 
 	public function jurusan_get() {
 	
-        $id = $this->get('id');
+        $id 	= $this->get('id');
+        $where	= array('jurKode' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_dosen(array('jurKode' => $id));
+        	$data = $this->Akademika_sia->list_dosen(SELECT_LIST_DSN, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -99,13 +102,14 @@ class Dosen extends REST_Controller {
 
 	public function fakultas_get() {
 	
-        $id = $this->get('id');
+        $id 	= $this->get('id');
+        $where	= array('fakKode' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_dosen(array('fakKode' => $id));
+        	$data = $this->Akademika_sia->list_dosen(SELECT_LIST_DSN, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code

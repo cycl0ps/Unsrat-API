@@ -85,4 +85,96 @@ define('EXIT_DATABASE', 8); // database error
 define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('URL_FOTO_MHS',		"https://kkt.unsrat.ac.id/images/user_foto/");
+
+/*
+|--------------------------------------------------------------------------
+| Unsrat API Configuration
+|--------------------------------------------------------------------------
+|
+| Created by Xaverius Najoan
+|
+*/
+define('URL_FOTO_MHS', "https://kkt.unsrat.ac.id/images/user_foto/");
+
+define('SELECT_LIST_MHS', 
+		   "mhsNiu AS nim,
+			mhsNama AS nama,
+			mhsFoto AS foto,
+			mhsAngkatan AS angkatan,
+			prodiNamaResmi AS prodi,
+			prodiKode AS kodeProdi,
+			jurNamaResmi AS jurusan,
+			jurKode AS kodeJurusan,
+			fakNamaResmi AS fakultas,
+			fakKode AS kodeFakultas,");
+
+define('SELECT_DETAIL_MHS', SELECT_LIST_MHS +
+		   "mhsTanggalLahir AS tanggalLahir,
+			mhsTempatLahirTranskrip AS tempatLahir,
+			mhsAlamatMhs AS alamat,
+			mhsJenisKelamin AS jenisKelamin,
+			agmrNama AS agama,
+			stnkrNama AS statusNikah,
+			mhsNoHp AS noHp,
+			mhsEmail AS email,
+			mhsHobi AS hobi,
+			stakmhsrNama AS statusMahasiswa,
+			jllrNama AS jalurMasuk,
+			sbdnNama AS sumberDana,
+			pegNama AS dosenPembimbingAkademik,
+			pegNip AS nipDosenPembimbingAkademik,");
+
+define('SELECT_LIST_ALU', SELECT_LIST_MHS);
+
+define('SELECT_DETAIL_ALU', SELECT_DETAIL_MHS + 
+		   "taJudul AS judulTa,
+			mhsTanggalLulus AS tanggalLulus,
+			wsdTanggal AS tanggalWisuda,
+			mhsTanggalIjasah AS tanggalIjazah,
+			mhsNoIjasah AS noIjazah,
+			mhsPrlsrNama AS predikatKelulusan,
+			mhsProdiGelarKelulusan AS gelar,");
+
+define('SELECT_LIST_DSN', 
+		   "dsnPegNip AS nip, 
+			dsnNidn AS nidn,
+			CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama,
+			prodiNamaResmi AS prodi,
+			prodiKode AS kodeProdi,
+			jurNamaResmi AS jurusan,
+			jurKode AS kodeJurusan,
+			fakNamaResmi AS fakultas,
+			fakKode AS kodeFakultas,");
+
+define('SELECT_DETAIL_DSN', SELECT_LIST_DSN + 
+		   "sikjNama AS statusIkatanKerja,
+			sadrNama AS statusAktifitas,
+			stpegrNama AS statusPegawai,
+			jnpegrNama AS jenisPegawai,
+			pegTanggalPengubahan AS lastUpdate");
+
+define('SELECT_LIST_PGW', 
+		   "pegKodeResmi AS nip,
+		   	pegKodeLain AS kodeLain,
+			pegId AS kodePegawai,
+			CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama,
+			pegFoto AS foto,");
+
+define('SELECT_DETAIL_PGW', SELECT_LIST_PGW + 
+		   "pegTglLahir AS tanggalLahir,
+			pegTmpLahir AS tempatLahir,
+			CONCAT(pegAlamat,' ',pegDesaRumah,' - ',pegKecRumah,' - ',pegKotaRumah,' - ',pegProvinsiRumah) AS alamat,
+			pegKelamin AS jenisKelamin,
+			agmNama AS agama,
+			statnkhNama AS statusNikah,
+			pegNoHp AS noHp,
+			pegEmail AS email,
+			jabfungrNama AS jabatanFungsional,
+			CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan,
+			pegThnSer AS tahunSerdos,
+			pegNoKarpeg AS noKarpeg,
+			statrPegawai AS statusPegawai,
+			pegdtKategori AS kategoriPegawai,
+			jnspegrNama AS jenisPegawai,
+			satkerNama AS satuanKerja,
+			pegLastUpdate AS lastUpdate,");

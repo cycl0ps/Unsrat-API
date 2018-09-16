@@ -22,7 +22,6 @@ class Mahasiswa extends REST_Controller {
 		$this->load->model(array('Akademika_sia'));
 
     }
-
 	
 	public function fakultas_get() {
 	
@@ -82,7 +81,7 @@ class Mahasiswa extends REST_Controller {
         							break;	
         	}
 
-        	$data = $this->Akademika_sia->count_mhs($select, $where, $groupby, $having); 
+        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -155,7 +154,7 @@ class Mahasiswa extends REST_Controller {
         							break;	
         	}
 
-        	$data = $this->Akademika_sia->count_mhs($select, $where, $groupby, $having); 
+        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -225,7 +224,7 @@ class Mahasiswa extends REST_Controller {
                                     break;  
             }
 
-            $data = $this->Akademika_sia->count_mhs($select, $where, $groupby, $having); 
+            $data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {

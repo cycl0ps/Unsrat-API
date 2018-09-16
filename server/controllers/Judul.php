@@ -25,13 +25,14 @@ class Judul extends REST_Controller {
 
     public function prodi_get() {
 	
-        $id = $this->get('id');
+        $id 	= $this->get('id');
+        $where  = array('prodiKode' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_judul(array('prodiKode' => $id));
+        	$data = $this->Akademika_sia->list_judul($where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -49,13 +50,14 @@ class Judul extends REST_Controller {
 
 	public function jurusan_get() {
 	
-        $id = $this->get('id');
+        $id 	= $this->get('id');
+        $where	= array('jurKode' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_judul(array('jurKode' => $id));
+        	$data = $this->Akademika_sia->list_judul($where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -73,13 +75,14 @@ class Judul extends REST_Controller {
 
 	public function fakultas_get() {
 	
-        $id = $this->get('id');
+        $id 	= $this->get('id');
+        $where	= array('fakKode' => $id);
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_judul(array('fakKode' => $id));
+        	$data = $this->Akademika_sia->list_judul($where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
