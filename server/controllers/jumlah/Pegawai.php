@@ -25,9 +25,13 @@ class Pegawai extends REST_Controller {
 
     public function satker_get() {
     
-        $id         = $this->get('id');
-        $groupby    = $this->get('by');
-        $where      = array('satkerpegId' => $id);
+        $id         = $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
+        $where      = array('satkerpegSatkerId' => $id);
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -35,13 +39,13 @@ class Pegawai extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'status'	  : $select  = "statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
+                case 'status'	  : $select  = "pegStatrId AS id, statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
                 					$groupby = "pegStatrId";
                 					break;
                 case 'kategori'   : $select  = "pegdtKategori AS kategoriPegawai, COUNT(*) AS jumlah";
                         			$groupby = "pegdtKategori";
                      				break;                                            
-                case 'jenis'      : $select  = "jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
+                case 'jenis'      : $select  = "pegJnspegrId AS id, jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
               						$groupby = "pegJnspegrId";
                             		break;
                 case 'gender'     : $select  = "pegKelamin AS gender, COUNT(*) AS jumlah";
@@ -50,10 +54,10 @@ class Pegawai extends REST_Controller {
                 case 'nikah'      : $select  = "statnkhNama AS statusNikah, COUNT(*) AS jumlah";
               						$groupby = "statnkhNama";
                             		break;
-                case 'pangkat'    : $select  = "CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
+                case 'pangkat'    : $select  = "pktgolrId as id, CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
               						$groupby = "pktgolrId";
                             		break;
-                case 'fungsional' : $select  = "jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
+                case 'fungsional' : $select  = "jabfungrId AS id, jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
               						$groupby = "jabfungrId";
                             		break;                         		
                 default      	  : $select  = "COUNT(*) AS jumlahPegawai";
@@ -61,7 +65,7 @@ class Pegawai extends REST_Controller {
                            			break;  
             }
 
-            $data = $this->Akademika_sdm->list_pegawai($select, $where, $groupby, $having); 
+            $data = $this->Akademika_sdm->get_pegawai($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -81,9 +85,13 @@ class Pegawai extends REST_Controller {
 
 	public function academic_get() {
 	
-        $id         = $this->get('satker');
-        $groupby    = $this->get('by');
+        $id         = $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('pegdtKategori' => 'Academic', 'satkerpegSatkerId' => $id);
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -91,25 +99,25 @@ class Pegawai extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'status'	  : $select  = "statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
-                					$groupby = "pub_pegawai.pegStatrId";
-                					break;
+                case 'status'     : $select  = "pegStatrId AS id, statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
+                                    $groupby = "pegStatrId";
+                                    break;
                 case 'kategori'   : $select  = "pegdtKategori AS kategoriPegawai, COUNT(*) AS jumlah";
-                        			$groupby = "pegdtKategori";
-                     				break;                                            
-                case 'jenis'      : $select  = "jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
-              						$groupby = "pub_pegawai.pegJnspegrId";
-                            		break;
+                                    $groupby = "pegdtKategori";
+                                    break;                                            
+                case 'jenis'      : $select  = "pegJnspegrId AS id, jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
+                                    $groupby = "pegJnspegrId";
+                                    break;
                 case 'gender'     : $select  = "pegKelamin AS gender, COUNT(*) AS jumlah";
               						$groupby = "pegKelamin";
                             		break;
                 case 'nikah'      : $select  = "statnkhNama AS statusNikah, COUNT(*) AS jumlah";
               						$groupby = "statnkhNama";
                             		break;
-                case 'pangkat'    : $select  = "CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
+                case 'pangkat'    : $select  = "pktgolrId as id, CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
               						$groupby = "pktgolrId";
                             		break;
-                case 'fungsional' : $select  = "jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
+                case 'fungsional' : $select  = "jabfungrId AS id, jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
               						$groupby = "jabfungrId";
                             		break;                         		
                 default      	  : $select  = "COUNT(*) AS jumlahPegawaiAcademic";
@@ -117,7 +125,7 @@ class Pegawai extends REST_Controller {
                            			break;  
             }
 
-            $data = $this->Akademika_sdm->list_pegawai($select, $where, $groupby, $having); 
+            $data = $this->Akademika_sdm->get_pegawai($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -137,9 +145,13 @@ class Pegawai extends REST_Controller {
 
 	public function non_academic_get() {
 	
-        $id         = $this->get('satker');
-        $groupby    = $this->get('by');
+        $id         = $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('pegdtKategori' => 'Non-Academic', 'satkerpegSatkerId' => $id);
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -147,25 +159,25 @@ class Pegawai extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'status'	  : $select  = "statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
-                					$groupby = "pub_pegawai.pegStatrId";
-                					break;
+                case 'status'     : $select  = "pegStatrId AS id, statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
+                                    $groupby = "pegStatrId";
+                                    break;
                 case 'kategori'   : $select  = "pegdtKategori AS kategoriPegawai, COUNT(*) AS jumlah";
-                        			$groupby = "pegdtKategori";
-                     				break;                                            
-                case 'jenis'      : $select  = "jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
-              						$groupby = "pub_pegawai.pegJnspegrId";
-                            		break;
+                                    $groupby = "pegdtKategori";
+                                    break;                                            
+                case 'jenis'      : $select  = "pegJnspegrId AS id, jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
+                                    $groupby = "pegJnspegrId";
+                                    break;
                 case 'gender'     : $select  = "pegKelamin AS gender, COUNT(*) AS jumlah";
               						$groupby = "pegKelamin";
                             		break;
                 case 'nikah'      : $select  = "statnkhNama AS statusNikah, COUNT(*) AS jumlah";
               						$groupby = "statnkhNama";
                             		break;
-                case 'pangkat'    : $select  = "CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
+                case 'pangkat'    : $select  = "pktgolrId as id, CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
               						$groupby = "pktgolrId";
                             		break;
-                case 'fungsional' : $select  = "jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
+                case 'fungsional' : $select  = "jabfungrId AS id, jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
               						$groupby = "jabfungrId";
                             		break;                         		
                 default      	  : $select  = "COUNT(*) AS jumlahPegawaiAcademic";
@@ -173,7 +185,7 @@ class Pegawai extends REST_Controller {
                            			break;  
             }
 
-            $data = $this->Akademika_sdm->list_pegawai($select, $where, $groupby, $having);
+            $data = $this->Akademika_sdm->get_pegawai($select, $where, $groupby, $having);
 
             if (!empty($data))
             {
@@ -191,5 +203,12 @@ class Pegawai extends REST_Controller {
 
 	}	
 
+    private function set_where($kategori,$kode) {
+        if ($kategori == "status") return array('pegStatrId' => $kode);
+        else if ($kategori == "fungsional") return array('jabfungrId' => $kode);
+        else if ($kategori == "pangkat") return array('pktgolrId' => $kode);
+        
+        else $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+    } 
 
 }

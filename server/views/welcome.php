@@ -29,24 +29,24 @@
 		</tr>
 		<tr>
 			<td><pre><code>prodi()</code></pre></td>
-			<td>List mahasiswa prodi tertentu</td>
-			<td><pre>id={kode prodi}</pre></td>
-			<td><pre>{server_url}/mahasiswa/prodi?id={kode prodi}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/prodi?id=77');?>"><?php echo site_url('mahasiswa/prodi?id=77');?></a></pre></td>		
+			<td>List mahasiswa prodi tertentu, difilter s</td>
+			<td><pre>kode={kode prodi}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/mahasiswa/prodi?kode={kode prodi}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/prodi?kode=77');?>"><?php echo site_url('mahasiswa/prodi?kode=77');?></a></pre></td>		
 		</tr>
 		<tr>
 			<td><pre><code>jurusan()</code></pre></td>
 			<td>List mahasiswa jurusan tertentu</td>
-			<td><pre>id={kode jurusan}</pre></td>
-			<td><pre>{server_url}/mahasiswa/jurusan?id={kode jurusan}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/jurusan?id=43');?>"><?php echo site_url('mahasiswa/jurusan?id=43');?></a></pre></td>	
+			<td><pre>kode={kode jurusan}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/mahasiswa/jurusan?kode={kode jurusan}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/jurusan?kode=43');?>"><?php echo site_url('mahasiswa/jurusan?kode=43');?></a></pre></td>	
 		</tr>
 		<tr>
 			<td><pre><code>fakultas()</code></pre></td>
 			<td>List mahasiswa fakultas tertentu</td>
-			<td><pre>id={kode fakultas}</pre></td>
-			<td><pre>{server_url}/mahasiswa/fakultas?id={kode fakultas}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/fakultas?id=2');?>"><?php echo site_url('mahasiswa/fakultas?id=2');?></a></pre></td>
+			<td><pre>kode={kode fakultas}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/mahasiswa/fakultas?kode={kode fakultas}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('mahasiswa/fakultas?kode=2');?>"><?php echo site_url('mahasiswa/fakultas?kode=2');?></a></pre></td>
 		</tr>
 
 		<tr>
@@ -62,23 +62,23 @@
 		<tr>
 			<td><pre><code>prodi()</code></pre></td>
 			<td>List dosen prodi tertentu</td>
-			<td><pre>id={kode prodi}</pre></td>
-			<td><pre>{server_url}/dosen/prodi?id={kode prodi}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('dosen/prodi?id=77');?>"><?php echo site_url('dosen/prodi?id=77');?></a></pre></td>
+			<td><pre>kode={kode prodi}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/dosen/prodi?kode={kode prodi}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('dosen/prodi?kode=77');?>"><?php echo site_url('dosen/prodi?kode=77');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>jurusan()</code></pre></td>
 			<td>List dosen jurusan tertentu</td>
-			<td><pre>id={kode jurusan}</pre></td>
-			<td><pre>{server_url}/dosen/jurusan?id={kode jurusan}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('dosen/jurusan?id=43');?>"><?php echo site_url('dosen/jurusan?id=43');?></a></pre></td>
+			<td><pre>kode={kode jurusan}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/dosen/jurusan?kode={kode jurusan}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('dosen/jurusan?kode=43');?>"><?php echo site_url('dosen/jurusan?kode=43');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>fakultas()</code></pre></td>
 			<td>List dosen fakultas tertentu</td>
-			<td><pre>id={kode fakultas}</pre></td>
-			<td><pre>{server_url}/dosen/fakultas?id={kode fakultas}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('dosen/fakultas?id=2');?>"><?php echo site_url('dosen/fakultas?id=2');?></a></pre></td>
+			<td><pre>kode={kode fakultas}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/dosen/fakultas?kode={kode fakultas}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('dosen/fakultas?kode=2');?>"><?php echo site_url('dosen/fakultas?kode=2');?></a></pre></td>
 		</tr>
 
 		<tr>
@@ -94,23 +94,23 @@
 		<tr>
 			<td><pre><code>prodi()</code></pre></td>
 			<td>List alumni prodi tertentu</td>
-			<td><pre>id={kode prodi}</pre></td>
-			<td><pre>{server_url}/alumni/prodi?id={kode prodi}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('alumni/prodi?id=77');?>"><?php echo site_url('alumni/prodi?id=77');?></a></pre></td>
+			<td><pre>kode={kode prodi}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/alumni/prodi?kode={kode prodi}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('alumni/prodi?kode=77');?>"><?php echo site_url('alumni/prodi?kode=77');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>jurusan()</code></pre></td>
 			<td>List alumni jurusan tertentu</td>
-			<td><pre>id={kode jurusan}</pre></td>
-			<td><pre>{server_url}/alumni/jurusan?id={kode jurusan}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('alumni/jurusan?id=43');?>"><?php echo site_url('alumni/jurusan?id=43');?></a></pre></td>
+			<td><pre>kode={kode jurusan}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/alumni/jurusan?kode={kode jurusan}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('alumni/jurusan?kode=43');?>"><?php echo site_url('alumni/jurusan?kode=43');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>fakultas()</code></pre></td>
 			<td>List alumni fakultas tertentu</td>
-			<td><pre>id={kode fakultas}</pre></td>
-			<td><pre>{server_url}/alumni/fakultas?id={kode fakultas}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('alumni/fakultas?id=2');?>"><?php echo site_url('alumni/fakultas?id=2');?></a></pre></td>
+			<td><pre>kode={kode fakultas}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/alumni/fakultas?kode={kode fakultas}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('alumni/fakultas?kode=2');?>"><?php echo site_url('alumni/fakultas?kode=2');?></a></pre></td>
 		</tr>
 
 		<tr>
@@ -126,23 +126,23 @@
 		<tr>
 			<td><pre><code>satker()</code></pre></td>
 			<td>List pegawai satker tertentu</td>
-			<td><pre>id={kode satker}</pre></td>
-			<td><pre>{server_url}/pegawai/satker?id={kode satker}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('pegawai/satker?id=13');?>"><?php echo site_url('pegawai/satker?id=13');?></a></pre></td>
+			<td><pre>kode={kode satker}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/pegawai/satker?kode={kode satker}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('pegawai/satker?kode=13');?>"><?php echo site_url('pegawai/satker?kode=13');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>academic()</code></pre></td>
 			<td>List pegawai akademik (Tenaga pendidik) pada satker tertentu</td>
-			<td><pre>satker={kode satker}</pre></td>
-			<td><pre>{server_url}/pegawai/academic?satker={kode satker}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('pegawai/academic?satker=13');?>"><?php echo site_url('pegawai/academic?satker=13');?></a></pre></td>
+			<td><pre>kode={kode satker}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/pegawai/academic?kode={kode satker}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('pegawai/academic?kode=13');?>"><?php echo site_url('pegawai/academic?kode=13');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>non_academic()</code></pre></td>
 			<td>List pegawai non-akademik (Tenaga kependidikan) pada satker tertentu</td>
-			<td><pre>satker={kode satker}</pre></td>
-			<td><pre>{server_url}/pegawai/non-academic?satker={kode satker}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('pegawai/non-academic?satker=13');?>"><?php echo site_url('pegawai/non-academic?satker=13');?></a></pre></td>
+			<td><pre>kode={kode satker}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/pegawai/non-academic?kode={kode satker}[&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('pegawai/non-academic?kode=13');?>"><?php echo site_url('pegawai/non-academic?kode=13');?></a></pre></td>
 		</tr>
 
 		<tr>
@@ -150,24 +150,24 @@
 			<td rowspan="3">Jumlah mahasiswa</td>
 			<td rowspan="3"><pre>jumlah/mahasiswa</pre></td>
 			<td><pre>fakultas()</pre></td>
-			<td>Jumlah mahasiswa fakultas tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode fakultas}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/mahasiswa/fakultas?id={kode fakultas}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/mahasiswa/fakultas?id=2&by=jurusan');?>"><?php echo site_url('jumlah/mahasiswa/fakultas?id=2&by=jurusan');?></a></pre></td>
+			<td>Jumlah mahasiswa fakultas tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode fakultas}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/mahasiswa/fakultas?kode={kode fakultas}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/mahasiswa/fakultas?kode=2&groupby=jurusan');?>"><?php echo site_url('jumlah/mahasiswa/fakultas?kode=2&groupby=jurusan');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre>jurusan()</pre></td>
-			<td>Jumlah mahasiswa jurusan tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode jurusan}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/mahasiswa/jurusan?id={kode jurusan}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/mahasiswa/jurusan?id=43&by=status');?>"><?php echo site_url('jumlah/mahasiswa/jurusan?id=43&by=status');?></a></pre></td>		
+			<td>Jumlah mahasiswa jurusan tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode jurusan}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/mahasiswa/jurusan?kode={kode jurusan}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/mahasiswa/jurusan?kode=43&groupby=status');?>"><?php echo site_url('jumlah/mahasiswa/jurusan?kode=43&groupby=status');?></a></pre></td>		
 		</tr>
 		<tr>
 			<td><pre>prodi()</pre></td>
-			<td>Jumlah mahasiswa prodi tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode prodi}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/mahasiswa/prodi?id={kode prodi}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/mahasiswa/prodi?id=77&by=status');?>"><?php echo site_url('jumlah/mahasiswa/prodi?id=77&by=status');?></a></pre></td>		
+			<td>Jumlah mahasiswa prodi tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode prodi}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/mahasiswa/prodi?kode={kode prodi}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/mahasiswa/prodi?kode=77&groupby=status');?>"><?php echo site_url('jumlah/mahasiswa/prodi?kode=77&groupby=status');?></a></pre></td>		
 		</tr>
 
 		<tr>
@@ -175,24 +175,24 @@
 			<td rowspan="3">Jumlah alumni</td>
 			<td rowspan="3"><pre>jumlah/alumni</pre></td>
 			<td><pre>fakultas()</pre></td>
-			<td>Jumlah alumni fakultas tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode fakultas}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/alumni/fakultas?id={kode fakultas}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/alumni/fakultas?id=2&by=jurusan');?>"><?php echo site_url('jumlah/alumni/fakultas?id=2&by=jurusan');?></a></pre></td>
+			<td>Jumlah alumni fakultas tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode fakultas}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/alumni/fakultas?kode={kode fakultas}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/alumni/fakultas?kode=2&groupby=jurusan');?>"><?php echo site_url('jumlah/alumni/fakultas?kode=2&groupby=jurusan');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre>jurusan()</pre></td>
-			<td>Jumlah alumni jurusan tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode jurusan}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/alumni/jurusan?id={kode jurusan}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/alumni/jurusan?id=43&by=tahun');?>"><?php echo site_url('jumlah/alumni/jurusan?id=43&by=tahun');?></a></pre></td>		
+			<td>Jumlah alumni jurusan tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode jurusan}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/alumni/jurusan?kode={kode jurusan}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/alumni/jurusan?kode=43&groupby=tahun');?>"><?php echo site_url('jumlah/alumni/jurusan?kode=43&groupby=tahun');?></a></pre></td>		
 		</tr>
 		<tr>
 			<td><pre>prodi()</pre></td>
-			<td>Jumlah alumni prodi tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode prodi}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/alumni/prodi?id={kode prodi}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/alumni/prodi?id=77&by=angkatan');?>"><?php echo site_url('jumlah/alumni/prodi?id=77&by=angkatan');?></a></pre></td>		
+			<td>Jumlah alumni prodi tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode prodi}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/alumni/prodi?kode={kode prodi}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/alumni/prodi?kode=77&groupby=angkatan');?>"><?php echo site_url('jumlah/alumni/prodi?kode=77&groupby=angkatan');?></a></pre></td>		
 		</tr>		
 
 		<tr>
@@ -200,49 +200,49 @@
 			<td rowspan="3">Jumlah dosen</td>
 			<td rowspan="3"><pre>jumlah/dosen</pre></td>
 			<td><pre>fakultas()</pre></td>
-			<td>Jumlah dosen fakultas tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode fakultas}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/dosen/fakultas?id={kode fakultas}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/dosen/fakultas?id=2&by=jurusan');?>"><?php echo site_url('jumlah/dosen/fakultas?id=2&by=jurusan');?></a></pre></td>
+			<td>Jumlah dosen fakultas tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode fakultas}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/dosen/fakultas?kode={kode fakultas}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/dosen/fakultas?kode=2&groupby=jurusan');?>"><?php echo site_url('jumlah/dosen/fakultas?kode=2&groupby=jurusan');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre>jurusan()</pre></td>
-			<td>Jumlah dosen jurusan tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode jurusan}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/dosen/jurusan?id={kode jurusan}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/dosen/jurusan?id=43&by=prodi');?>"><?php echo site_url('jumlah/dosen/jurusan?id=43&by=prodi');?></a></pre></td>		
+			<td>Jumlah dosen jurusan tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode jurusan}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/dosen/jurusan?kode={kode jurusan}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/dosen/jurusan?kode=43&groupby=prodi');?>"><?php echo site_url('jumlah/dosen/jurusan?kode=43&groupby=prodi');?></a></pre></td>		
 		</tr>
 		<tr>
 			<td><pre>prodi()</pre></td>
-			<td>Jumlah dosen prodi tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>id={kode prodi}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/dosen/prodi?id={kode prodi}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/dosen/prodi?id=77&by=angkatan');?>"><?php echo site_url('jumlah/dosen/prodi?id=77&by=aktifitas');?></a></pre></td>		
+			<td>Jumlah dosen prodi tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode prodi}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/dosen/prodi?kode={kode prodi}[&groupby={group}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/dosen/prodi?kode=77&groupby=angkatan');?>"><?php echo site_url('jumlah/dosen/prodi?kode=77&groupby=aktifitas');?></a></pre></td>		
 		</tr>
 
 		<tr>
 			<td rowspan="3">VIII.</td>
 			<td rowspan="3">Jumlah pegawai</td>
 			<td rowspan="3"><pre>jumlah/pegawai</pre></td>
-			<td><pre><code>index()</code></pre></td>
-			<td>Jumlah pegawai untuk satker tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>satker={kode satker}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/pegawai?satker={kode satker}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/pegawai?satker=13');?>"><?php echo site_url('jumlah/pegawai?satker=13');?></a></pre></td>
+			<td><pre><code>satker()</code></pre></td>
+			<td>Jumlah pegawai untuk satker tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode satker}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/pegawai/satker?kode={kode satker}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/pegawai/satker?kode=13');?>"><?php echo site_url('jumlah/pegawai/satker?kode=13');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>academic()</code></pre></td>
-			<td>Jumlah pegawai akademik (Tenaga pendidik) pada satker tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>satker={kode satker}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/pegawai/academic?satker={kode satker}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/pegawai/academic?satker=13&by=fungsional');?>"><?php echo site_url('jumlah/pegawai/academic?satker=13&by=fungsional');?></a></pre></td>
+			<td>Jumlah pegawai akademik (Tenaga pendidik) pada satker tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode satker}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/pegawai/academic?kode={kode satker}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/pegawai/academic?kode=13&groupby=fungsional');?>"><?php echo site_url('jumlah/pegawai/academic?kode=13&groupby=fungsional');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>non_academic()</code></pre></td>
-			<td>Jumlah pegawai non-akademik (Tenaga kependidikan) pada satker tertentu atau berdasarkan kategori tertentu</td>
-			<td><pre>satker={kode satker}<br>[by={kategori}]</pre></td>
-			<td><pre>{server_url}/jumlah/pegawai/non-academic?satker={kode satker}[&by={kategori}]</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('jumlah/pegawai/non-academic?satker=13&by=pangkat');?>"><?php echo site_url('jumlah/pegawai/non-academic?satker=13&by=pangkat');?></a></pre></td>
+			<td>Jumlah pegawai non-akademik (Tenaga kependidikan) pada satker tertentu, dikelompokkan berdasarkan group tertentu</td>
+			<td><pre>kode={kode satker}<br>groupby={group}<br>filter={kategori}, by={id}</pre></td>
+			<td><pre>{server_url}/jumlah/pegawai/non-academic?kode={kode satker}[&groupby={group}][&filter={kategori}&by{id}]</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('jumlah/pegawai/non-academic?kode=13&groupby=pangkat');?>"><?php echo site_url('jumlah/pegawai/non-academic?kode=13&groupby=pangkat');?></a></pre></td>
 		</tr>		
 
 		<tr>
@@ -258,7 +258,7 @@
 		<tr>
 			<td><pre><code>total_sks()</code></pre></td>
 			<td>Data total sks mahasiswa</td>
-			<td><pre>im={nim mahasiswa}</pre></td>
+			<td><pre>nim={nim mahasiswa}</pre></td>
 			<td><pre>{server_url}/akademik/total-sks?nim={nim mahasiswa}</pre></td>
 			<td><pre><a target="blank" href="<?php echo site_url('akademik/total-sks?nim=12345');?>"><?php echo site_url('akademik/total-sks?nim=12345');?></a></pre></td>
 		</tr>
@@ -269,23 +269,23 @@
 			<td rowspan="3"><pre>judul</pre></td>
 			<td><pre><code>prodi()</code></pre></td>
 			<td>List judul skripsi mahasiswa pada prodi tertentu</td>
-			<td><pre>id={kode prodi}</pre></td>
-			<td><pre>{server_url}/judul/prodi?id={kode prodi}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('judul/prodi?id=77');?>"><?php echo site_url('judul/prodi?id=77');?></a></pre></td>
+			<td><pre>kode={kode prodi}</pre></td>
+			<td><pre>{server_url}/judul/prodi?kode={kode prodi}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('judul/prodi?kode=77');?>"><?php echo site_url('judul/prodi?kode=77');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>jurusan()</code></pre></td>
 			<td>List judul skripsi mahasiswa pada jurusan tertentu</td>
-			<td><pre>id={kode jurusan}</pre></td>
-			<td><pre>{server_url}/judul/jurusan?id={kode jurusan}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('judul/jurusan?id=43');?>"><?php echo site_url('judul/jurusan?id=43');?></a></pre></td>
+			<td><pre>kode={kode jurusan}</pre></td>
+			<td><pre>{server_url}/judul/jurusan?kode={kode jurusan}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('judul/jurusan?kode=43');?>"><?php echo site_url('judul/jurusan?kode=43');?></a></pre></td>
 		</tr>
 		<tr>
 			<td><pre><code>fakultas()</code></pre></td>
 			<td>List judul skripsi mahasiswa pada fakultas tertentu</td>
-			<td><pre>id={kode fakultas}</pre></td>
-			<td><pre>{server_url}/judul/fakultas?id={kode fakultas}</pre></td>
-			<td><pre><a target="blank" href="<?php echo site_url('judul/fakultas?id=2');?>"><?php echo site_url('judul/fakultas?id=2');?></a></pre></td>
+			<td><pre>kode={kode fakultas}</pre></td>
+			<td><pre>{server_url}/judul/fakultas?kode={kode fakultas}</pre></td>
+			<td><pre><a target="blank" href="<?php echo site_url('judul/fakultas?kode=2');?>"><?php echo site_url('judul/fakultas?kode=2');?></a></pre></td>
 		</tr>
 
 		<tr>
@@ -321,7 +321,8 @@
 <ol>
 <li><a target="_blank" href="<?php echo site_url('welcome/kode-fakultas');?>">Info parameter kode fakultas/jurusan/prodi</a></li>
 <li><a target="_blank" href="<?php echo site_url('welcome/kode-satker');?>">Info parameter kode satker</a></li>
-<li><a target="_blank" href="<?php echo site_url('welcome/kategori');?>">Info parameter kategori</a></li>
+<li><a target="_blank" href="<?php echo site_url('welcome/group');?>">Info parameter group</a></li>
+<li><a target="_blank" href="<?php echo site_url('welcome/filter');?>">Info parameter kategori filter</a></li>
 </ol>
 
 
@@ -331,7 +332,7 @@
 <pre>Output format: json - jsonp - array - csv - html - php - xml - serialized 
 URL Parameter: format={output format}
 Format URL : {server_url}/{method}?{parameter}&format={output format}
-Example: <a target="blank" href="<?php echo site_url('mahasiswa/prodi?id=77&format=xml');?>"><?php echo site_url('mahasiswa/prodi?id=77&format=xml');?></a></pre>
+Example: <a target="blank" href="<?php echo site_url('mahasiswa/prodi?kode=77&format=xml');?>"><?php echo site_url('mahasiswa/prodi?kode=77&format=xml');?></a></pre>
 
 <h2>URI Request</h2>
 

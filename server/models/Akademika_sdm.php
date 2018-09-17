@@ -10,10 +10,10 @@ class Akademika_sdm extends CI_Model {
 
 	public function get_pegawai($select = FALSE, $condition = FALSE, $groupby = FALSE, $having = FALSE) {
 
-		if ($select)	$this->dbSia->select($select);
-		if ($condition)	$this->dbSia->where($condition);
-		if ($groupby) 	$this->dbSia->group_by($groupby);
-		if ($having) 	$this->dbSia->having($having);
+		if ($select)	$this->dbSdm->select($select);
+		if ($condition)	$this->dbSdm->where($condition);
+		if ($groupby) 	$this->dbSdm->group_by($groupby);
+		if ($having) 	$this->dbSdm->having($having);
     	
     	$this->dbSdm->join('sdm_pegawai_detail', 'sdm_pegawai_detail.pegdtPegId = pub_pegawai.pegId','left');
 		$this->dbSdm->join('sdm_ref_status_pegawai', 'sdm_ref_status_pegawai.statrId = pub_pegawai.pegStatrId','left');
@@ -41,8 +41,8 @@ class Akademika_sdm extends CI_Model {
 
 	public function detail_pegawai($select = FALSE, $condition = FALSE) {
 
-		if ($select)	$this->dbSia->select($select);
-		if ($condition)	$this->dbSia->where($condition);		
+		if ($select)	$this->dbSdm->select($select);
+		if ($condition)	$this->dbSdm->where($condition);		
 
     	$this->dbSdm->join('sdm_pegawai_detail', 'sdm_pegawai_detail.pegdtPegId = pub_pegawai.pegId','left');
 		$this->dbSdm->join('sdm_ref_status_pegawai', 'sdm_ref_status_pegawai.statrId = pub_pegawai.pegStatrId','left');
@@ -95,7 +95,6 @@ class Akademika_sdm extends CI_Model {
     private function debugSql() {
 		
 		echo $this->dbSdm->last_query(); die;
-		//$this->dbSdm->select("dsnPegNip as NIP, CONCAT(COALESCE(pegGelarDepan,''),pegNama,', ',COALESCE(pegGelarBelakang,'')) as Nama",FALSE);
     }	
 
 

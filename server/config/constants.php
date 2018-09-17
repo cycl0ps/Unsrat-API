@@ -108,7 +108,7 @@ define('SELECT_LIST_MHS',
 			fakNamaResmi AS fakultas,
 			fakKode AS kodeFakultas,");
 
-define('SELECT_DETAIL_MHS', SELECT_LIST_MHS +
+define('SELECT_DETAIL_MHS', SELECT_LIST_MHS .
 		   "mhsTanggalLahir AS tanggalLahir,
 			mhsTempatLahirTranskrip AS tempatLahir,
 			mhsAlamatMhs AS alamat,
@@ -126,7 +126,7 @@ define('SELECT_DETAIL_MHS', SELECT_LIST_MHS +
 
 define('SELECT_LIST_ALU', SELECT_LIST_MHS);
 
-define('SELECT_DETAIL_ALU', SELECT_DETAIL_MHS + 
+define('SELECT_DETAIL_ALU', SELECT_DETAIL_MHS . 
 		   "taJudul AS judulTa,
 			mhsTanggalLulus AS tanggalLulus,
 			wsdTanggal AS tanggalWisuda,
@@ -146,7 +146,7 @@ define('SELECT_LIST_DSN',
 			fakNamaResmi AS fakultas,
 			fakKode AS kodeFakultas,");
 
-define('SELECT_DETAIL_DSN', SELECT_LIST_DSN + 
+define('SELECT_DETAIL_DSN', SELECT_LIST_DSN . 
 		   "sikjNama AS statusIkatanKerja,
 			sadrNama AS statusAktifitas,
 			stpegrNama AS statusPegawai,
@@ -160,7 +160,7 @@ define('SELECT_LIST_PGW',
 			CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama,
 			pegFoto AS foto,");
 
-define('SELECT_DETAIL_PGW', SELECT_LIST_PGW + 
+define('SELECT_DETAIL_PGW', SELECT_LIST_PGW .
 		   "pegTglLahir AS tanggalLahir,
 			pegTmpLahir AS tempatLahir,
 			CONCAT(pegAlamat,' ',pegDesaRumah,' - ',pegKecRumah,' - ',pegKotaRumah,' - ',pegProvinsiRumah) AS alamat,

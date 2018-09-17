@@ -113,7 +113,7 @@ class Akademika_sia extends CI_Model {
 		return $result;
 	}
 
-	public function list_judul($condition = FALSE) {
+	public function get_judul($condition = FALSE) {
 
 		$this->dbSia->select("mhsNiu AS nim, mhsNama AS nama, taJudul AS judulTa, mhsAngkatan AS angkatan");
 		if ($condition) $this->dbSia->where($condition);
@@ -131,18 +131,13 @@ class Akademika_sia extends CI_Model {
 	//Model function untuk mengambil data total sks dan IPK dari mahasiswa $nim
 	public function total_sks($nim){
 
-		$sql = "SELECT
-				    `mhsNiu` AS 'nim',
-				    `mhsSksTranskrip` AS `sksTotal`,
-				    ROUND(mhsIpkTranskrip, 2) AS ipk
-				FROM
-				    `mahasiswa`
-				WHERE
-				    `mhsNiu` = '$nim'";
+		$this->dbSia->select("mhsNiu AS nim, mhsSksTranskrip AS sksTotal, ROUND(mhsIpkTranskrip, 2) AS ipk");
+		$this->dbSia->where('mhsNiu', $nim);
 		
-		$result = $this->dbSia->query($sql);
+		$query = $this->dbSia->get('mahasiswa');
+		$result = $query->row_array();
 		//$this->debugSql();
-		return $result->row_array();
+		return $result;
 	}
 
 	public function total_sks_lulus($nim){
@@ -165,7 +160,7 @@ class Akademika_sia extends CI_Model {
 		$result = $this->dbSia->query($sql);
 		//$this->debugSql();
 		return $result->row_array();
-	}	
+	}
 
 	//Model function untuk mengecek apakah sudah mengontrak mata kuliah Tugas Akhir
 	public function cek_mk_ta($nim) {
@@ -192,7 +187,7 @@ class Akademika_sia extends CI_Model {
 		$result = $this->dbSia->query($sql);
 		//$this->debugSql();
 		return $result->row_array();
-	}
+	}	
 
 	public function get_table($table, $select = FALSE, $condition = FALSE) {
 

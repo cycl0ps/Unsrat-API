@@ -25,25 +25,13 @@ class Mahasiswa extends REST_Controller {
 	
 	public function fakultas_get() {
 	
-        $id 		= $this->get('id');
-        $groupby	= $this->get('by');
-        $status     = $this->get('status');
+        $id 		= $this->get('kode');
+        $groupby	= $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('fakKode' => $id);
 
-        if ($status != NULL) {
-            switch ($status) {
-                case 'A'    : $status = array('mhsStakmhsrKode' => 'A');break;
-                case 'C'    : $status = array('mhsStakmhsrKode' => 'C');break;
-                case 'D'    : $status = array('mhsStakmhsrKode' => 'D');break;
-                case 'K'    : $status = array('mhsStakmhsrKode' => 'K');break;
-                case 'L'    : $status = array('mhsStakmhsrKode' => 'L');break;
-                case 'N'    : $status = array('mhsStakmhsrKode' => 'N');break;
-                case 'P'    : $status = array('mhsStakmhsrKode' => 'P');break;
-                default     : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-            }
-            
-            $where += $status;
-        }
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -51,37 +39,37 @@ class Mahasiswa extends REST_Controller {
         } else {
             $having = FALSE;
         	switch ($groupby) {
-        		case 'jalurmasuk' :	$select  = "s_jalur_ref.jllrNama AS mhsJalurMasuk, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsJlrrKode";
+        		case 'jalurmasuk' :	$select  = "mhsJlrrKode AS id, jllrNama AS mhsJalurMasuk, COUNT(*) AS jumlah";
+        							$groupby = "mhsJlrrKode";
                                     $having  = "mhsJalurMasuk != 'Lain-Lain'";
         							break;
-        		case 'status' 	  :	$select  = "status_aktif_mahasiswa_ref.stakmhsrNama AS mhsStatus, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsStakmhsrKode";
+        		case 'status' 	  :	$select  = "mhsStakmhsrKode AS id, stakmhsrNama AS mhsStatus, COUNT(*) AS jumlah";
+        							$groupby = "mhsStakmhsrKode";
         							break;
         		case 'angkatan'   :	$select  = "mhsAngkatan, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsAngkatan";
+        							$groupby = "mhsAngkatan";
                                     $having  = "mhsAngkatan >= 2000";
         							break;
-        		case 'sumberdana' :	$select  = "sbdnNama AS mhsSumberDana, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsSbdnrId";
+        		case 'sumberdana' :	$select  = "mhsSbdnrId AS id, sbdnNama AS mhsSumberDana, COUNT(*) AS jumlah";
+        							$groupby = "mhsSbdnrId";
                                     $having  = "mhsSumberDana != ". NULL;
         							break;
                 case 'gender'     : $select  = "mhsJenisKelamin AS mhsGender, COUNT(*) AS jumlah";
                                     $groupby = "mhsJenisKelamin";
                                     $having  = "mhsGender != ". NULL;
                                     break;                    
-        		case 'jurusan'    :	$select  = "jurNamaResmi AS mhsJurusan, COUNT(*) AS jumlah";
-        							$groupby = "jurusan.jurKode";
+        		case 'jurusan'    :	$select  = "jurKode AS kode, jurNamaResmi AS mhsJurusan, COUNT(*) AS jumlah";
+        							$groupby = "jurKode";
         							break;
-        		case 'prodi'      :	$select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS mhsProdi, COUNT(*) AS jumlah";
-        							$groupby = "program_studi.prodiKode";
+        		case 'prodi'      :	$select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS mhsProdi, COUNT(*) AS jumlah";
+        							$groupby = "prodiKode";
         							break;																	
-        		default 		  : $select  = "COUNT(*) AS jumlahMahasiswa";
-        							$groupby = "fakultas.fakKode";
+        		default 		  : $select  = "fakKode AS kode, COUNT(*) AS jumlahMahasiswa";
+        							$groupby = "fakKode";
         							break;	
         	}
 
-        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
+        	$data = $this->Akademika_sia->get_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -102,25 +90,13 @@ class Mahasiswa extends REST_Controller {
 
 	public function jurusan_get() {
 	
-        $id 		= $this->get('id');
-        $groupby	= $this->get('by');
-        $status     = $this->get('status');
+        $id 		= $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('jurKode' => $id);
 
-        if ($status != NULL) {
-            switch ($status) {
-                case 'A'    : $status = array('mhsStakmhsrKode' => 'A');break;
-                case 'C'    : $status = array('mhsStakmhsrKode' => 'C');break;
-                case 'D'    : $status = array('mhsStakmhsrKode' => 'D');break;
-                case 'K'    : $status = array('mhsStakmhsrKode' => 'K');break;
-                case 'L'    : $status = array('mhsStakmhsrKode' => 'L');break;
-                case 'N'    : $status = array('mhsStakmhsrKode' => 'N');break;
-                case 'P'    : $status = array('mhsStakmhsrKode' => 'P');break;
-                default     : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-            }
-            
-            $where += $status;
-        }        
+        if ($condition && $code) $where += $this->set_where($condition, $code);    
 
         if ($id === NULL)
         {
@@ -128,33 +104,34 @@ class Mahasiswa extends REST_Controller {
         } else {
             $having  = FALSE;
         	switch ($groupby) {
-        		case 'jalurmasuk' :	$select  = "s_jalur_ref.jllrNama AS mhsJalurMasuk, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsJlrrKode";
-        							break;
-        		case 'status' 	  :	$select  = "status_aktif_mahasiswa_ref.stakmhsrNama AS mhsStatus, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsStakmhsrKode";
-        							break;
-        		case 'angkatan'   :	$select  = "mhsAngkatan, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsAngkatan";
+                case 'jalurmasuk' : $select  = "mhsJlrrKode AS id, jllrNama AS mhsJalurMasuk, COUNT(*) AS jumlah";
+                                    $groupby = "mhsJlrrKode";
+                                    $having  = "mhsJalurMasuk != 'Lain-Lain'";
+                                    break;
+                case 'status'     : $select  = "mhsStakmhsrKode AS id, stakmhsrNama AS mhsStatus, COUNT(*) AS jumlah";
+                                    $groupby = "mhsStakmhsrKode";
+                                    break;
+                case 'angkatan'   : $select  = "mhsAngkatan, COUNT(*) AS jumlah";
+                                    $groupby = "mhsAngkatan";
                                     $having  = "mhsAngkatan >= 2000";
-        							break;
-        		case 'sumberdana' :	$select  = "sbdnNama AS mhsSumberDana, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsSbdnrId";
+                                    break;
+                case 'sumberdana' : $select  = "mhsSbdnrId AS id, sbdnNama AS mhsSumberDana, COUNT(*) AS jumlah";
+                                    $groupby = "mhsSbdnrId";
                                     $having  = "mhsSumberDana != ". NULL;
-        							break;
+                                    break;
                 case 'gender'     : $select  = "mhsJenisKelamin AS mhsGender, COUNT(*) AS jumlah";
                                     $groupby = "mhsJenisKelamin";
                                     $having  = "mhsGender != ". NULL;
-                                    break;                                     
-        		case 'prodi'      :	$select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS mhsProdi, COUNT(*) AS jumlah";
-        							$groupby = "program_studi.prodiKode";
+                                    break;                                   
+        		case 'prodi'      :	$select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS mhsProdi, COUNT(*) AS jumlah";
+        							$groupby = "prodiKode";
         							break;																	
-        		default 		  : $select  = "COUNT(*) AS jumlahMahasiswa";
-        							$groupby = "jurusan.jurKode";
+        		default 		  : $select  = "jurKode AS kode, COUNT(*) AS jumlahMahasiswa";
+        							$groupby = "jurKode";
         							break;	
         	}
 
-        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
+        	$data = $this->Akademika_sia->get_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -168,32 +145,19 @@ class Mahasiswa extends REST_Controller {
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 
-
 		}
 
 	}
 
     public function prodi_get() {
     
-        $id         = $this->get('id');
-        $groupby    = $this->get('by');
-        $status     = $this->get('status');
+        $id         = $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('prodiKode' => $id);
 
-        if ($status != NULL) {
-            switch ($status) {
-                case 'A'    : $status = array('mhsStakmhsrKode' => 'A');break;
-                case 'C'    : $status = array('mhsStakmhsrKode' => 'C');break;
-                case 'D'    : $status = array('mhsStakmhsrKode' => 'D');break;
-                case 'K'    : $status = array('mhsStakmhsrKode' => 'K');break;
-                case 'L'    : $status = array('mhsStakmhsrKode' => 'L');break;
-                case 'N'    : $status = array('mhsStakmhsrKode' => 'N');break;
-                case 'P'    : $status = array('mhsStakmhsrKode' => 'P');break;
-                default     : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-            }
-            
-            $where += $status;
-        }
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -201,30 +165,31 @@ class Mahasiswa extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'jalurmasuk' : $select  = "s_jalur_ref.jllrNama AS mhsJalurMasuk, COUNT(*) AS jumlah";
-                                    $groupby = "mahasiswa.mhsJlrrKode";
+                case 'jalurmasuk' : $select  = "mhsJlrrKode AS id, jllrNama AS mhsJalurMasuk, COUNT(*) AS jumlah";
+                                    $groupby = "mhsJlrrKode";
+                                    $having  = "mhsJalurMasuk != 'Lain-Lain'";
                                     break;
-                case 'status'     : $select  = "status_aktif_mahasiswa_ref.stakmhsrNama AS mhsStatus, COUNT(*) AS jumlah";
-                                    $groupby = "mahasiswa.mhsStakmhsrKode";
+                case 'status'     : $select  = "mhsStakmhsrKode AS id, stakmhsrNama AS mhsStatus, COUNT(*) AS jumlah";
+                                    $groupby = "mhsStakmhsrKode";
                                     break;
                 case 'angkatan'   : $select  = "mhsAngkatan, COUNT(*) AS jumlah";
-                                    $groupby = "mahasiswa.mhsAngkatan";
+                                    $groupby = "mhsAngkatan";
                                     $having  = "mhsAngkatan >= 2000";
                                     break;
-                case 'sumberdana' : $select  = "sbdnNama AS mhsSumberDana, COUNT(*) AS jumlah";
-                                    $groupby = "mahasiswa.mhsSbdnrId";
+                case 'sumberdana' : $select  = "mhsSbdnrId AS id, sbdnNama AS mhsSumberDana, COUNT(*) AS jumlah";
+                                    $groupby = "mhsSbdnrId";
                                     $having  = "mhsSumberDana != ". NULL;
                                     break;
                 case 'gender'     : $select  = "mhsJenisKelamin AS mhsGender, COUNT(*) AS jumlah";
                                     $groupby = "mhsJenisKelamin";
                                     $having  = "mhsGender != ". NULL;
-                                    break;                                                                                                 
-                default           : $select  = "COUNT(*) AS jumlahMahasiswa";
-                                    $groupby = "program_studi.prodiKode";
+                                    break;                                                                                                
+                default           : $select  = "prodiKode AS kode, COUNT(*) AS jumlahMahasiswa";
+                                    $groupby = "prodiKode";
                                     break;  
             }
 
-            $data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
+            $data = $this->Akademika_sia->get_mahasiswa($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -243,5 +208,13 @@ class Mahasiswa extends REST_Controller {
 
     }
 
-
+    private function set_where($kategori,$kode) {
+        if ($kategori == "status") return array('mhsStakmhsrKode' => $kode);
+        else if ($kategori == "jalurmasuk") return array('mhsJlrrKode' => $kode);
+        else if ($kategori == "angkatan") return array('mhsAngkatan' => $kode);
+        else if ($kategori == "sumberdana") return array('mhsSbdnrId' => $kode);
+        else if ($kategori == "gender") return array('mhsJenisKelamin' => $kode);
+        
+        else $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+    }    
 }

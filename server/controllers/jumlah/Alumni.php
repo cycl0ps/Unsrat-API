@@ -25,9 +25,13 @@ class Alumni extends REST_Controller {
 
 	public function fakultas_get() {
 	
-        $id 		= $this->get('id');
-        $groupby	= $this->get('by');
+        $id 		= $this->get('kode');
+        $groupby	= $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('fakKode' => $id,'mhsStakmhsrKode' => 'L');
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -35,30 +39,30 @@ class Alumni extends REST_Controller {
         } else {
             $having  = FALSE;
         	switch ($groupby) {
-        		case 'tahun'     :	$select  = "year(mahasiswa.mhsTanggalLulus) AS alumniTahun, COUNT(*) AS jumlah";
-        							$groupby = "year(mahasiswa.mhsTanggalLulus)";
+        		case 'tahun'     :	$select  = "year(mhsTanggalLulus) AS alumniTahun, COUNT(*) AS jumlah";
+        							$groupby = "year(mhsTanggalLulus)";
                                     $having  = "alumniTahun >= 2000";
         							break;
         		case 'wisudaprd'  :	$select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS alumniTahunPeriod, COUNT(*) AS jumlah";
-                                    $groupby = "s_wisuda.wsdTahun,s_wisuda.wsdPwsdrId";
+                                    $groupby = "wsdTahun, wsdPwsdrId";
                                     $having  = "alumniTahunPeriod != ". NULL;
                                     break;;
         		case 'angkatan'   :	$select  = "mhsAngkatan AS alumniAngkatan, COUNT(*) AS jumlah";
-        							$groupby = "mahasiswa.mhsAngkatan";
+        							$groupby = "mhsAngkatan";
                                     $having  = "alumniAngkatan >= 2000";
         							break;
-        		case 'jurusan'    :	$select  = "jurNamaResmi AS alumniJurusan, COUNT(*) AS jumlah";
-        							$groupby = "jurusan.jurKode";
+        		case 'jurusan'    :	$select  = "jurKode AS kode, jurNamaResmi AS alumniJurusan, COUNT(*) AS jumlah";
+        							$groupby = "jurKode";
         							break;
-        		case 'prodi'      :	$select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS alumniProdi, COUNT(*) AS jumlah";
-        							$groupby = "program_studi.prodiKode";
+        		case 'prodi'      :	$select  = "prodiKode as Kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS alumniProdi, COUNT(*) AS jumlah";
+        							$groupby = "prodiKode";
         							break;																	
-        		default 		  : $select  = "COUNT(*) AS jumlahAlumni";
-        							$groupby = "fakultas.fakKode";
+        		default 		  : $select  = "fakKode AS kode, COUNT(*) AS jumlahAlumni";
+        							$groupby = "fakKode";
         							break;	
         	}
 
-        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
+        	$data = $this->Akademika_sia->get_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -79,9 +83,13 @@ class Alumni extends REST_Controller {
 
 	public function jurusan_get() {
 	
-        $id 		= $this->get('id');
-        $groupby	= $this->get('by');
+        $id 		= $this->get('kode');
+        $groupby	= $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('jurKode' => $id,'mhsStakmhsrKode' => 'L');
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -94,22 +102,22 @@ class Alumni extends REST_Controller {
                                     $having  = "alumniTahun >= 2000";
                                     break;
                 case 'wisudaprd'  : $select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS alumniTahunPeriod, COUNT(*) AS jumlah";
-                                    $groupby = "s_wisuda.wsdTahun,s_wisuda.wsdPwsdrId";
+                                    $groupby = "wsdTahun, wsdPwsdrId";
                                     $having  = "alumniTahunPeriod != ". NULL;
                                     break;;
                 case 'angkatan'   : $select  = "mhsAngkatan AS alumniAngkatan, COUNT(*) AS jumlah";
-                                    $groupby = "mahasiswa.mhsAngkatan";
+                                    $groupby = "mhsAngkatan";
                                     $having  = "alumniAngkatan >= 2000";
                                     break;
-                case 'prodi'      : $select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS alumniProdi, COUNT(*) AS jumlah";
-                                    $groupby = "program_studi.prodiKode";
+                case 'prodi'      : $select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS alumniProdi, COUNT(*) AS jumlah";
+                                    $groupby = "prodiKode";
                                     break;                                                                  
-                default           : $select  = "COUNT(*) AS jumlahAlumni";
-                                    $groupby = "fakultas.fakKode";
+                default           : $select  = "jurKode AS kode, COUNT(*) AS jumlahAlumni";
+                                    $groupby = "jurKode";
                                     break;  
             }
 
-        	$data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having); 
+        	$data = $this->Akademika_sia->get_mahasiswa($select, $where, $groupby, $having); 
 
         	if (!empty($data))
 	        {
@@ -130,9 +138,13 @@ class Alumni extends REST_Controller {
 
     public function prodi_get() {
     
-        $id         = $this->get('id');
-        $groupby    = $this->get('by');
+        $id         = $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('prodiKode' => $id,'mhsStakmhsrKode' => 'L');
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -147,17 +159,17 @@ class Alumni extends REST_Controller {
                 case 'wisudaprd'  : $select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS alumniTahunPeriod, COUNT(*) AS jumlah";
                                     $groupby = "s_wisuda.wsdTahun,s_wisuda.wsdPwsdrId";
                                     $having  = "alumniTahunPeriod != ". NULL;
-                                    break;;
+                                    break;
                 case 'angkatan'   : $select  = "mhsAngkatan AS alumniAngkatan, COUNT(*) AS jumlah";
-                                    $groupby = "mahasiswa.mhsAngkatan";
+                                    $groupby = "mhsAngkatan";
                                     $having  = "alumniAngkatan >= 2000";
                                     break;                                                          
-                default           : $select  = "COUNT(*) AS jumlahAlumni";
-                                    $groupby = "fakultas.fakKode";
+                default           : $select  = "prodiKode AS kode, COUNT(*) AS jumlahAlumni";
+                                    $groupby = "prodiKode";
                                     break;  
             }
 
-            $data = $this->Akademika_sia->list_mahasiswa($select, $where, $groupby, $having);
+            $data = $this->Akademika_sia->get_mahasiswa($select, $where, $groupby, $having);
 
             if (!empty($data))
             {
@@ -176,5 +188,8 @@ class Alumni extends REST_Controller {
 
     }    
 
+    private function set_where($kategori,$kode) {
+
+    } 
 
 }

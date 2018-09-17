@@ -49,29 +49,18 @@ class Mahasiswa extends REST_Controller {
 		
     public function prodi_get() {
 	
-        $id     = $this->get('id');
-        $status = $this->get('status');
-        $where  = array('prodiKode' => $id);
+        $id         = $this->get('kode');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
+        $where      = array('prodiKode' => $id);
 
-        if ($status != NULL) {
-            switch ($status) {
-                case 'A'    : $status = array('mhsStakmhsrKode' => 'A');break;
-                case 'C'    : $status = array('mhsStakmhsrKode' => 'C');break;
-                case 'D'    : $status = array('mhsStakmhsrKode' => 'D');break;
-                case 'K'    : $status = array('mhsStakmhsrKode' => 'K');break;
-                case 'L'    : $status = array('mhsStakmhsrKode' => 'L');break;
-                case 'N'    : $status = array('mhsStakmhsrKode' => 'N');break;
-                case 'P'    : $status = array('mhsStakmhsrKode' => 'P');break;
-                default     : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-            }
-            
-            $where += $status;
-        }  
+        if ($condition && $code) $where += $this->set_where($condition, $code);
+
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(SELECT_LIST_MHS, $where);
+        	$data = $this->Akademika_sia->get_mahasiswa(SELECT_LIST_MHS, $where);
        		if (!empty($data))
 	        {
                 foreach ($data as $key => $value) {
@@ -83,7 +72,7 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan prodi id tersebut'
+	                'message' => 'Tidak ditemukan list mahasiswa dengan kode prodi tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
@@ -92,30 +81,18 @@ class Mahasiswa extends REST_Controller {
 
 	public function jurusan_get() {
 	
-        $id     = $this->get('id');
-        $status = $this->get('status');
-        $where  = array('jurKode' => $id);
+        $id         = $this->get('kode');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
+        $where      = array('jurKode' => $id);
 
-        if ($status != NULL) {
-            switch ($status) {
-                case 'A'    : $status = array('mhsStakmhsrKode' => 'A');break;
-                case 'C'    : $status = array('mhsStakmhsrKode' => 'C');break;
-                case 'D'    : $status = array('mhsStakmhsrKode' => 'D');break;
-                case 'K'    : $status = array('mhsStakmhsrKode' => 'K');break;
-                case 'L'    : $status = array('mhsStakmhsrKode' => 'L');break;
-                case 'N'    : $status = array('mhsStakmhsrKode' => 'N');break;
-                case 'P'    : $status = array('mhsStakmhsrKode' => 'P');break;
-                default     : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-            }
-            
-            $where += $status;
-        }          
+        if ($condition && $code) $where += $this->set_where($condition, $code);         
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(SELECT_LIST_MHS, $where);
+        	$data = $this->Akademika_sia->get_mahasiswa(SELECT_LIST_MHS, $where);
        		if (!empty($data))
 	        {
                 foreach ($data as $key => $value) {
@@ -127,7 +104,7 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan jurusan id tersebut'
+	                'message' => 'Tidak ditemukan list mahasiswa dengan kode jurusan tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
@@ -136,30 +113,18 @@ class Mahasiswa extends REST_Controller {
 
 	public function fakultas_get() {
 	
-        $id     = $this->get('id');
-        $status = $this->get('status');
-        $where  = array('fakKode' => $id);
+        $id         = $this->get('kode');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
+        $where      = array('fakKode' => $id);
 
-        if ($status != NULL) {
-            switch ($status) {
-                case 'A'    : $status = array('mhsStakmhsrKode' => 'A');break;
-                case 'C'    : $status = array('mhsStakmhsrKode' => 'C');break;
-                case 'D'    : $status = array('mhsStakmhsrKode' => 'D');break;
-                case 'K'    : $status = array('mhsStakmhsrKode' => 'K');break;
-                case 'L'    : $status = array('mhsStakmhsrKode' => 'L');break;
-                case 'N'    : $status = array('mhsStakmhsrKode' => 'N');break;
-                case 'P'    : $status = array('mhsStakmhsrKode' => 'P');break;
-                default     : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-            }
-            
-            $where += $status;
-        }        
+        if ($condition && $code) $where += $this->set_where($condition, $code);       
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->list_mahasiswa(SELECT_LIST_MHS, $where);
+        	$data = $this->Akademika_sia->get_mahasiswa(SELECT_LIST_MHS, $where);
        		if (!empty($data))
 	        {
                 foreach ($data as $key => $value) {
@@ -171,10 +136,19 @@ class Mahasiswa extends REST_Controller {
 	        {
 	            $this->set_response([
 	                'status' => FALSE,
-	                'message' => 'Tidak ditemukan list mahasiswa dengan fakultas id tersebut'
+	                'message' => 'Tidak ditemukan list mahasiswa dengan kode fakultas tersebut'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
 		}
-
 	}
+
+    private function set_where($kategori,$kode) {
+        if ($kategori == "status") return array('mhsStakmhsrKode' => $kode);
+        else if ($kategori == "jalurmasuk") return array('mhsJlrrKode' => $kode);
+        else if ($kategori == "angkatan") return array('mhsAngkatan' => $kode);
+        else if ($kategori == "sumberdana") return array('mhsSbdnrId' => $kode);
+        else if ($kategori == "gender") return array('mhsJenisKelamin' => $kode);
+        
+        else $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+    }     
 }

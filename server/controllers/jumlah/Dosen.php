@@ -25,9 +25,13 @@ class Dosen extends REST_Controller {
 
     public function fakultas_get() {
     
-        $id         = $this->get('id');
-        $groupby    = $this->get('by');
+        $id         = $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('fakKode' => $id);
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -35,30 +39,30 @@ class Dosen extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'ikatankerja': $select  = "sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
-                                    $groupby = "dosen.dsnSikjKode";
+                case 'ikatankerja': $select  = "dsnSikjKode AS id, sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
+                                    $groupby = "dsnSikjKode";
                                     break;
-                case 'aktifitas'  : $select  = "sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
-                                    $groupby = "dosen.dsnSadrKode";
+                case 'aktifitas'  : $select  = "dsnSadrKode AS id, sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
+                                    $groupby = "dsnSadrKode";
                                     break;
-                case 'status'     : $select  = "stpegrNama AS statusDosen, COUNT(*) AS jumlah";
-                                    $groupby = "pegawai.pegStpegrId";
+                case 'status'     : $select  = "pegStpegrId AS id, stpegrNama AS statusDosen, COUNT(*) AS jumlah";
+                                    $groupby = "pegStpegrId";
                                     break;
-                case 'jenis'      : $select  = "jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
-                                    $groupby = "pegawai.pegJnpegrId";
+                case 'jenis'      : $select  = "pegJnpegrId AS id, jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
+                                    $groupby = "pegJnpegrId";
                                     break;                                      
-                case 'jurusan'    : $select  = "jurNamaResmi AS dosenJurusan, COUNT(*) AS jumlah";
-                                    $groupby = "jurusan.jurKode";
+                case 'jurusan'    : $select  = "jurKode AS kode, jurNamaResmi AS dosenJurusan, COUNT(*) AS jumlah";
+                                    $groupby = "jurKode";
                                     break;
-                case 'prodi'      : $select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS dosenProdi, COUNT(*) AS jumlah";
-                                    $groupby = "program_studi.prodiKode";
+                case 'prodi'      : $select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS dosenProdi, COUNT(*) AS jumlah";
+                                    $groupby = "prodiKode";
                                     break;                                                                  
-                default           : $select  = "COUNT(*) AS jumlahDosen";
-                                    $groupby = "fakultas.fakKode";
+                default           : $select  = "fakKode AS kode, COUNT(*) AS jumlahDosen";
+                                    $groupby = "fakKode";
                                     break;  
             }
 
-            $data = $this->Akademika_sia->list_dosen($select, $where, $groupby, $having); 
+            $data = $this->Akademika_sia->get_dosen($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -71,17 +75,19 @@ class Dosen extends REST_Controller {
                     'message' => 'Not found!'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             }
-
-
         }
 
     }    
 
 	public function jurusan_get() {
 	
-        $id 		= $this->get('id');
-        $groupby	= $this->get('by');
+        $id 		= $this->get('kode');
+        $groupby	= $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('jurKode' => $id);
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -89,27 +95,27 @@ class Dosen extends REST_Controller {
         } else {
             $having  = FALSE;
         	switch ($groupby) {
-                case 'ikatankerja': $select  = "sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
-                                    $groupby = "dosen.dsnSikjKode";
+                case 'ikatankerja': $select  = "dsnSikjKode AS id, sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
+                                    $groupby = "dsnSikjKode";
                                     break;
-                case 'aktifitas'  : $select  = "sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
-                                    $groupby = "dosen.dsnSadrKode";
+                case 'aktifitas'  : $select  = "dsnSadrKode AS id, sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
+                                    $groupby = "dsnSadrKode";
                                     break;
-                case 'status'     : $select  = "stpegrNama AS statusDosen, COUNT(*) AS jumlah";
-                                    $groupby = "pegawai.pegStpegrId";
+                case 'status'     : $select  = "pegStpegrId AS id, stpegrNama AS statusDosen, COUNT(*) AS jumlah";
+                                    $groupby = "pegStpegrId";
                                     break;
-                case 'jenis'      : $select  = "jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
-                                    $groupby = "pegawai.pegJnpegrId";
-                                    break;
-                case 'prodi'      : $select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS dosenProdi, COUNT(*) AS jumlah";
-                                    $groupby = "program_studi.prodiKode";
+                case 'jenis'      : $select  = "pegJnpegrId AS id, jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
+                                    $groupby = "pegJnpegrId";
+                                    break;     
+                case 'prodi'      : $select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS dosenProdi, COUNT(*) AS jumlah";
+                                    $groupby = "prodiKode";
                                     break;                                                                  
-                default           : $select  = "COUNT(*) AS jumlahDosen";
-                                    $groupby = "fakultas.fakKode";
+                default           : $select  = "jurKode AS kode, COUNT(*) AS jumlahDosen";
+                                    $groupby = "jurKode";
                                     break; 
         	}
 
-        	$data = $this->Akademika_sia->list_dosen($select, $where, $groupby, $having);
+        	$data = $this->Akademika_sia->get_dosen($select, $where, $groupby, $having);
 
         	if (!empty($data))
 	        {
@@ -122,17 +128,19 @@ class Dosen extends REST_Controller {
 	                'message' => 'Not found!'
 	            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
 	        }
-
-
 		}
 
 	}
 
     public function prodi_get() {
     
-        $id         = $this->get('id');
-        $groupby    = $this->get('by');
+        $id         = $this->get('kode');
+        $groupby    = $this->get('groupby');
+        $condition  = $this->get('filter');
+        $code       = $this->get('by');
         $where      = array('prodiKode' => $id);
+
+        if ($condition && $code) $where += $this->set_where($condition, $code);
 
         if ($id === NULL)
         {
@@ -140,24 +148,24 @@ class Dosen extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'ikatankerja': $select  = "sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
-                                    $groupby = "dosen.dsnSikjKode";
+                case 'ikatankerja': $select  = "dsnSikjKode AS id, sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
+                                    $groupby = "dsnSikjKode";
                                     break;
-                case 'aktifitas'  : $select  = "sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
-                                    $groupby = "dosen.dsnSadrKode";
+                case 'aktifitas'  : $select  = "dsnSadrKode AS id, sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
+                                    $groupby = "dsnSadrKode";
                                     break;
-                case 'status'     : $select  = "stpegrNama AS statusDosen, COUNT(*) AS jumlah";
-                                    $groupby = "pegawai.pegStpegrId";
+                case 'status'     : $select  = "pegStpegrId AS id, stpegrNama AS statusDosen, COUNT(*) AS jumlah";
+                                    $groupby = "pegStpegrId";
                                     break;
-                case 'jenis'      : $select  = "jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
-                                    $groupby = "pegawai.pegJnpegrId";
-                                    break;                                                            
-                default           : $select  = "COUNT(*) AS jumlahDosen";
-                                    $groupby = "fakultas.fakKode";
+                case 'jenis'      : $select  = "pegJnpegrId AS id, jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
+                                    $groupby = "pegJnpegrId";
+                                    break;                                                              
+                default           : $select  = "prodiKode AS kode, COUNT(*) AS jumlahDosen";
+                                    $groupby = "prodiKode";
                                     break; 
             }
 
-            $data = $this->Akademika_sia->list_dosen($select, $where, $groupby, $having); 
+            $data = $this->Akademika_sia->get_dosen($select, $where, $groupby, $having); 
 
             if (!empty($data))
             {
@@ -171,10 +179,11 @@ class Dosen extends REST_Controller {
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             }
 
-
         }
 
     }    
 
+    private function set_where($kategori,$kode) {
 
+    } 
 }

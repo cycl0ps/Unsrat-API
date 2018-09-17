@@ -34,7 +34,6 @@ class Akademika_portal extends CI_Model {
     private function debugSql() {
 		
 		echo $this->dbPortal->last_query(); die;
-		//$this->dbSdm->select("dsnPegNip as NIP, CONCAT(COALESCE(pegGelarDepan,''),pegNama,', ',COALESCE(pegGelarBelakang,'')) as Nama",FALSE);
     }		
 
 
