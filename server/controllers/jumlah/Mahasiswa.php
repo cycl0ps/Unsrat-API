@@ -46,7 +46,7 @@ class Mahasiswa extends REST_Controller {
                 case 'status'     : $select  = "stakmhsrNama AS status, COUNT(*) AS jumlah";
                                     $groupby = "mhsStakmhsrKode";
                                     break;
-                case 'angkatan'   : $select  = "angkatan, COUNT(*) AS jumlah";
+                case 'angkatan'   : $select  = "mhsAngkatan AS angkatan, COUNT(*) AS jumlah";
                                     $groupby = "mhsAngkatan";
                                     $having  = "angkatan >= 2000";
                                     break;
@@ -111,7 +111,7 @@ class Mahasiswa extends REST_Controller {
                 case 'status'     : $select  = "stakmhsrNama AS status, COUNT(*) AS jumlah";
                                     $groupby = "mhsStakmhsrKode";
                                     break;
-                case 'angkatan'   : $select  = "angkatan, COUNT(*) AS jumlah";
+                case 'angkatan'   : $select  = "mhsAngkatan AS angkatan, COUNT(*) AS jumlah";
                                     $groupby = "mhsAngkatan";
                                     $having  = "angkatan >= 2000";
                                     break;
@@ -172,7 +172,7 @@ class Mahasiswa extends REST_Controller {
                 case 'status'     : $select  = "stakmhsrNama AS status, COUNT(*) AS jumlah";
                                     $groupby = "mhsStakmhsrKode";
                                     break;
-                case 'angkatan'   : $select  = "angkatan, COUNT(*) AS jumlah";
+                case 'angkatan'   : $select  = "mhsAngkatan AS angkatan, COUNT(*) AS jumlah";
                                     $groupby = "mhsAngkatan";
                                     $having  = "angkatan >= 2000";
                                     break;
