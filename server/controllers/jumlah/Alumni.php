@@ -39,25 +39,25 @@ class Alumni extends REST_Controller {
         } else {
             $having  = FALSE;
         	switch ($groupby) {
-        		case 'tahun'     :	$select  = "year(mhsTanggalLulus) AS alumniTahun, COUNT(*) AS jumlah";
+        		case 'tahun'     :	$select  = "year(mhsTanggalLulus) AS tahun, COUNT(*) AS jumlah";
         							$groupby = "year(mhsTanggalLulus)";
-                                    $having  = "alumniTahun >= 2000";
+                                    $having  = "tahun >= 2000";
         							break;
-        		case 'wisudaprd'  :	$select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS alumniTahunPeriod, COUNT(*) AS jumlah";
+        		case 'wisudaprd'  :	$select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS wisudaPeriod, COUNT(*) AS jumlah";
                                     $groupby = "wsdTahun, wsdPwsdrId";
-                                    $having  = "alumniTahunPeriod != ". NULL;
+                                    $having  = "wisudaPeriod != ". NULL;
                                     break;;
-        		case 'angkatan'   :	$select  = "mhsAngkatan AS alumniAngkatan, COUNT(*) AS jumlah";
+        		case 'angkatan'   :	$select  = "mhsAngkatan AS angkatan, COUNT(*) AS jumlah";
         							$groupby = "mhsAngkatan";
-                                    $having  = "alumniAngkatan >= 2000";
+                                    $having  = "angkatan >= 2000";
         							break;
-        		case 'jurusan'    :	$select  = "jurKode AS kode, jurNamaResmi AS alumniJurusan, COUNT(*) AS jumlah";
+        		case 'jurusan'    :	$select  = "jurNamaResmi AS jurusan, COUNT(*) AS jumlah";
         							$groupby = "jurKode";
         							break;
-        		case 'prodi'      :	$select  = "prodiKode as Kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS alumniProdi, COUNT(*) AS jumlah";
+        		case 'prodi'      :	$select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS prodi, COUNT(*) AS jumlah";
         							$groupby = "prodiKode";
         							break;																	
-        		default 		  : $select  = "fakKode AS kode, COUNT(*) AS jumlahAlumni";
+        		default 		  : $select  = "COUNT(*) AS jumlah";
         							$groupby = "fakKode";
         							break;	
         	}
@@ -97,22 +97,22 @@ class Alumni extends REST_Controller {
         } else {
             $having  = FALSE;
         	switch ($groupby) {
-                case 'tahun'     :  $select  = "year(mahasiswa.mhsTanggalLulus) AS alumniTahun, COUNT(*) AS jumlah";
-                                    $groupby = "year(mahasiswa.mhsTanggalLulus)";
-                                    $having  = "alumniTahun >= 2000";
+                case 'tahun'     :  $select  = "year(mhsTanggalLulus) AS tahun, COUNT(*) AS jumlah";
+                                    $groupby = "year(mhsTanggalLulus)";
+                                    $having  = "tahun >= 2000";
                                     break;
-                case 'wisudaprd'  : $select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS alumniTahunPeriod, COUNT(*) AS jumlah";
+                case 'wisudaprd'  : $select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS wisudaPeriod, COUNT(*) AS jumlah";
                                     $groupby = "wsdTahun, wsdPwsdrId";
-                                    $having  = "alumniTahunPeriod != ". NULL;
+                                    $having  = "wisudaPeriod != ". NULL;
                                     break;;
-                case 'angkatan'   : $select  = "mhsAngkatan AS alumniAngkatan, COUNT(*) AS jumlah";
+                case 'angkatan'   : $select  = "mhsAngkatan AS angkatan, COUNT(*) AS jumlah";
                                     $groupby = "mhsAngkatan";
-                                    $having  = "alumniAngkatan >= 2000";
+                                    $having  = "angkatan >= 2000";
                                     break;
-                case 'prodi'      : $select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS alumniProdi, COUNT(*) AS jumlah";
+                case 'prodi'      : $select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS prodi, COUNT(*) AS jumlah";
                                     $groupby = "prodiKode";
                                     break;                                                                  
-                default           : $select  = "jurKode AS kode, COUNT(*) AS jumlahAlumni";
+                default           : $select  = "COUNT(*) AS jumlah";
                                     $groupby = "jurKode";
                                     break;  
             }
@@ -152,19 +152,19 @@ class Alumni extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'tahun'     :  $select  = "year(mahasiswa.mhsTanggalLulus) AS alumniTahun, COUNT(*) AS jumlah";
-                                    $groupby = "year(mahasiswa.mhsTanggalLulus)";
-                                    $having  = "alumniTahun >= 2000";
+                case 'tahun'     :  $select  = "year(mhsTanggalLulus) AS tahun, COUNT(*) AS jumlah";
+                                    $groupby = "year(mhsTanggalLulus)";
+                                    $having  = "tahun >= 2000";
                                     break;
-                case 'wisudaprd'  : $select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS alumniTahunPeriod, COUNT(*) AS jumlah";
-                                    $groupby = "s_wisuda.wsdTahun,s_wisuda.wsdPwsdrId";
-                                    $having  = "alumniTahunPeriod != ". NULL;
-                                    break;
-                case 'angkatan'   : $select  = "mhsAngkatan AS alumniAngkatan, COUNT(*) AS jumlah";
+                case 'wisudaprd'  : $select  = "CONCAT(wsdTahun, '-', wsdPwsdrId) AS wisudaPeriod, COUNT(*) AS jumlah";
+                                    $groupby = "wsdTahun, wsdPwsdrId";
+                                    $having  = "wisudaPeriod != ". NULL;
+                                    break;;
+                case 'angkatan'   : $select  = "mhsAngkatan AS angkatan, COUNT(*) AS jumlah";
                                     $groupby = "mhsAngkatan";
-                                    $having  = "alumniAngkatan >= 2000";
-                                    break;                                                          
-                default           : $select  = "prodiKode AS kode, COUNT(*) AS jumlahAlumni";
+                                    $having  = "angkatan >= 2000";
+                                    break;                                                   
+                default           : $select  = "COUNT(*) AS jumlah";
                                     $groupby = "prodiKode";
                                     break;  
             }

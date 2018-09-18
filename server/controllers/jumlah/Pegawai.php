@@ -1,4 +1,4 @@
-<?php
+    <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
@@ -39,13 +39,13 @@ class Pegawai extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'status'	  : $select  = "pegStatrId AS id, statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
+                case 'status'	  : $select  = "statrPegawai AS status, COUNT(*) AS jumlah";
                 					$groupby = "pegStatrId";
                 					break;
-                case 'kategori'   : $select  = "pegdtKategori AS kategoriPegawai, COUNT(*) AS jumlah";
+                case 'kategori'   : $select  = "pegdtKategori AS kategori, COUNT(*) AS jumlah";
                         			$groupby = "pegdtKategori";
                      				break;                                            
-                case 'jenis'      : $select  = "pegJnspegrId AS id, jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
+                case 'jenis'      : $select  = "jnspegrNama AS jenis, COUNT(*) AS jumlah";
               						$groupby = "pegJnspegrId";
                             		break;
                 case 'gender'     : $select  = "pegKelamin AS gender, COUNT(*) AS jumlah";
@@ -54,13 +54,13 @@ class Pegawai extends REST_Controller {
                 case 'nikah'      : $select  = "statnkhNama AS statusNikah, COUNT(*) AS jumlah";
               						$groupby = "statnkhNama";
                             		break;
-                case 'pangkat'    : $select  = "pktgolrId as id, CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
+                case 'pangkat'    : $select  = "CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
               						$groupby = "pktgolrId";
                             		break;
-                case 'fungsional' : $select  = "jabfungrId AS id, jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
+                case 'fungsional' : $select  = "jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
               						$groupby = "jabfungrId";
                             		break;                         		
-                default      	  : $select  = "COUNT(*) AS jumlahPegawai";
+                default      	  : $select  = "COUNT(*) AS jumlah";
                     				$groupby = "satkerpegSatkerId";
                            			break;  
             }
@@ -99,30 +99,30 @@ class Pegawai extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'status'     : $select  = "pegStatrId AS id, statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
+                case 'status'     : $select  = "statrPegawai AS status, COUNT(*) AS jumlah";
                                     $groupby = "pegStatrId";
                                     break;
-                case 'kategori'   : $select  = "pegdtKategori AS kategoriPegawai, COUNT(*) AS jumlah";
+                case 'kategori'   : $select  = "pegdtKategori AS kategori, COUNT(*) AS jumlah";
                                     $groupby = "pegdtKategori";
                                     break;                                            
-                case 'jenis'      : $select  = "pegJnspegrId AS id, jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
+                case 'jenis'      : $select  = "jnspegrNama AS jenis, COUNT(*) AS jumlah";
                                     $groupby = "pegJnspegrId";
                                     break;
                 case 'gender'     : $select  = "pegKelamin AS gender, COUNT(*) AS jumlah";
-              						$groupby = "pegKelamin";
-                            		break;
+                                    $groupby = "pegKelamin";
+                                    break;
                 case 'nikah'      : $select  = "statnkhNama AS statusNikah, COUNT(*) AS jumlah";
-              						$groupby = "statnkhNama";
-                            		break;
-                case 'pangkat'    : $select  = "pktgolrId as id, CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
-              						$groupby = "pktgolrId";
-                            		break;
-                case 'fungsional' : $select  = "jabfungrId AS id, jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
-              						$groupby = "jabfungrId";
-                            		break;                         		
-                default      	  : $select  = "COUNT(*) AS jumlahPegawaiAcademic";
-                    				$groupby = "satkerpegSatkerId";
-                           			break;  
+                                    $groupby = "statnkhNama";
+                                    break;
+                case 'pangkat'    : $select  = "CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
+                                    $groupby = "pktgolrId";
+                                    break;
+                case 'fungsional' : $select  = "jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
+                                    $groupby = "jabfungrId";
+                                    break;                              
+                default           : $select  = "COUNT(*) AS jumlah";
+                                    $groupby = "satkerpegSatkerId";
+                                    break;  
             }
 
             $data = $this->Akademika_sdm->get_pegawai($select, $where, $groupby, $having); 
@@ -159,30 +159,30 @@ class Pegawai extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'status'     : $select  = "pegStatrId AS id, statrPegawai AS statusPegawai, COUNT(*) AS jumlah";
+                case 'status'     : $select  = "statrPegawai AS status, COUNT(*) AS jumlah";
                                     $groupby = "pegStatrId";
                                     break;
-                case 'kategori'   : $select  = "pegdtKategori AS kategoriPegawai, COUNT(*) AS jumlah";
+                case 'kategori'   : $select  = "pegdtKategori AS kategori, COUNT(*) AS jumlah";
                                     $groupby = "pegdtKategori";
                                     break;                                            
-                case 'jenis'      : $select  = "pegJnspegrId AS id, jnspegrNama AS jenisPegawai, COUNT(*) AS jumlah";
+                case 'jenis'      : $select  = "jnspegrNama AS jenis, COUNT(*) AS jumlah";
                                     $groupby = "pegJnspegrId";
                                     break;
                 case 'gender'     : $select  = "pegKelamin AS gender, COUNT(*) AS jumlah";
-              						$groupby = "pegKelamin";
-                            		break;
+                                    $groupby = "pegKelamin";
+                                    break;
                 case 'nikah'      : $select  = "statnkhNama AS statusNikah, COUNT(*) AS jumlah";
-              						$groupby = "statnkhNama";
-                            		break;
-                case 'pangkat'    : $select  = "pktgolrId as id, CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
-              						$groupby = "pktgolrId";
-                            		break;
-                case 'fungsional' : $select  = "jabfungrId AS id, jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
-              						$groupby = "jabfungrId";
-                            		break;                         		
-                default      	  : $select  = "COUNT(*) AS jumlahPegawaiAcademic";
-                    				$groupby = "satkerpegSatkerId";
-                           			break;  
+                                    $groupby = "statnkhNama";
+                                    break;
+                case 'pangkat'    : $select  = "CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan, COUNT(*) AS jumlah";
+                                    $groupby = "pktgolrId";
+                                    break;
+                case 'fungsional' : $select  = "jabfungrNama AS jabatanFungsional, COUNT(*) AS jumlah";
+                                    $groupby = "jabfungrId";
+                                    break;                              
+                default           : $select  = "COUNT(*) AS jumlah";
+                                    $groupby = "satkerpegSatkerId";
+                                    break;  
             }
 
             $data = $this->Akademika_sdm->get_pegawai($select, $where, $groupby, $having);

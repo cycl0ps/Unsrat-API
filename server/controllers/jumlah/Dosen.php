@@ -39,25 +39,25 @@ class Dosen extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'ikatankerja': $select  = "dsnSikjKode AS id, sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
+                case 'ikatankerja': $select  = "sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
                                     $groupby = "dsnSikjKode";
                                     break;
-                case 'aktifitas'  : $select  = "dsnSadrKode AS id, sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
+                case 'aktifitas'  : $select  = "sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
                                     $groupby = "dsnSadrKode";
                                     break;
-                case 'status'     : $select  = "pegStpegrId AS id, stpegrNama AS statusDosen, COUNT(*) AS jumlah";
+                case 'status'     : $select  = "stpegrNama AS statusDosen, COUNT(*) AS jumlah";
                                     $groupby = "pegStpegrId";
                                     break;
-                case 'jenis'      : $select  = "pegJnpegrId AS id, jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
+                case 'jenis'      : $select  = "jnpegrNama AS jenisPegawai, COUNT(*) AS jumlah";
                                     $groupby = "pegJnpegrId";
                                     break;                                      
-                case 'jurusan'    : $select  = "jurKode AS kode, jurNamaResmi AS dosenJurusan, COUNT(*) AS jumlah";
+                case 'jurusan'    : $select  = "jurNamaResmi AS jurusan, COUNT(*) AS jumlah";
                                     $groupby = "jurKode";
                                     break;
-                case 'prodi'      : $select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS dosenProdi, COUNT(*) AS jumlah";
+                case 'prodi'      : $select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS prodi, COUNT(*) AS jumlah";
                                     $groupby = "prodiKode";
                                     break;                                                                  
-                default           : $select  = "fakKode AS kode, COUNT(*) AS jumlahDosen";
+                default           : $select  = "COUNT(*) AS jumlah";
                                     $groupby = "fakKode";
                                     break;  
             }
@@ -95,22 +95,22 @@ class Dosen extends REST_Controller {
         } else {
             $having  = FALSE;
         	switch ($groupby) {
-                case 'ikatankerja': $select  = "dsnSikjKode AS id, sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
+                case 'ikatankerja': $select  = "sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
                                     $groupby = "dsnSikjKode";
                                     break;
-                case 'aktifitas'  : $select  = "dsnSadrKode AS id, sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
+                case 'aktifitas'  : $select  = "sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
                                     $groupby = "dsnSadrKode";
                                     break;
-                case 'status'     : $select  = "pegStpegrId AS id, stpegrNama AS statusDosen, COUNT(*) AS jumlah";
+                case 'status'     : $select  = "stpegrNama AS statusDosen, COUNT(*) AS jumlah";
                                     $groupby = "pegStpegrId";
                                     break;
-                case 'jenis'      : $select  = "pegJnpegrId AS id, jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
+                case 'jenis'      : $select  = "jnpegrNama AS jenisPegawai, COUNT(*) AS jumlah";
                                     $groupby = "pegJnpegrId";
-                                    break;     
-                case 'prodi'      : $select  = "prodiKode AS kode, CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS dosenProdi, COUNT(*) AS jumlah";
+                                    break;    
+                case 'prodi'      : $select  = "CONCAT(prodiNamaResmi, ' ', prodiNamaJenjang) AS prodi, COUNT(*) AS jumlah";
                                     $groupby = "prodiKode";
                                     break;                                                                  
-                default           : $select  = "jurKode AS kode, COUNT(*) AS jumlahDosen";
+                default           : $select  = "COUNT(*) AS jumlah";
                                     $groupby = "jurKode";
                                     break; 
         	}
@@ -148,19 +148,19 @@ class Dosen extends REST_Controller {
         } else {
             $having  = FALSE;
             switch ($groupby) {
-                case 'ikatankerja': $select  = "dsnSikjKode AS id, sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
+                case 'ikatankerja': $select  = "sikjNama AS statusIkatanKerja, COUNT(*) AS jumlah";
                                     $groupby = "dsnSikjKode";
                                     break;
-                case 'aktifitas'  : $select  = "dsnSadrKode AS id, sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
+                case 'aktifitas'  : $select  = "sadrNama AS statusAktifitas, COUNT(*) AS jumlah";
                                     $groupby = "dsnSadrKode";
                                     break;
-                case 'status'     : $select  = "pegStpegrId AS id, stpegrNama AS statusDosen, COUNT(*) AS jumlah";
+                case 'status'     : $select  = "stpegrNama AS statusDosen, COUNT(*) AS jumlah";
                                     $groupby = "pegStpegrId";
                                     break;
-                case 'jenis'      : $select  = "pegJnpegrId AS id, jnpegrNama AS jenis_pegawai, COUNT(*) AS jumlah";
+                case 'jenis'      : $select  = "jnpegrNama AS jenisPegawai, COUNT(*) AS jumlah";
                                     $groupby = "pegJnpegrId";
                                     break;                                                              
-                default           : $select  = "prodiKode AS kode, COUNT(*) AS jumlahDosen";
+                default           : $select  = "COUNT(*) AS jumlah";
                                     $groupby = "prodiKode";
                                     break; 
             }
