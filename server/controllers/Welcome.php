@@ -63,7 +63,7 @@ class Welcome extends CI_Controller {
 		$mhsJalur 	= $this->Akademika_sia->get_table('s_jalur_ref', 'jllrKode AS id, jllrNama AS keterangan');
 		$mhsSumber	= $this->Akademika_sia->get_table('s_sumber_dana_ref', 'sbdnrId AS id, sbdnNama AS keterangan');
 		$mhsGender 	= array(array('id' => 'L', 'keterangan' => 'Laki-laki'), array('id' => 'P', 'keterangan' => 'Perempuan'));
-		$filterMhs	= array('status' => $mhsStatus, 'jalurmasuk' => $mhsJalur, 'angkatan' => 'id = angkatan mahasiswa', 'sumber' => $mhsSumber, 'gender' => $mhsGender);
+		$filterMhs	= array('status' => $mhsStatus, 'jalurmasuk' => $mhsJalur, 'angkatan' => 'id = angkatan mahasiswa', 'sumberdana' => $mhsSumber, 'gender' => $mhsGender);
 
 		$dsnStatus 	= $this->Akademika_sdm->get_table('sdm_ref_status_pegawai', 'statrId AS id, statrPegawai AS keterangan');
 		$dsnFung 	= $this->Akademika_sdm->get_table('pub_ref_jabatan_fungsional', 'jabfungrId AS id, jabfungrNama AS keterangan');
@@ -74,6 +74,21 @@ class Welcome extends CI_Controller {
 		$data['parameter kategori filter alumni'] = "Not available yet";
 		$data['parameter kategori filter dosen'] = "Not available yet";
 		$data['parameter kategori filter pegawai'] = $filterPgw;
+
+        header('Content-type: application/json');
+        echo json_encode($data);
+   		
+	}
+
+	public function select() {
+
+		$filterMhs	= array('status', 'jalurmasuk', 'angkatan', 'sumberdana', 'gender');
+		$filterPgw	= array('status', 'kategori', 'jenis', 'gender', 'fungsional', 'pangkat');		
+	
+		$data['parameter select mahasiswa'] = $filterMhs;
+		$data['parameter select alumni'] = "Not available yet";
+		$data['parameter select dosen'] = "Not available yet";
+		$data['parameter select pegawai'] = $filterPgw;
 
         header('Content-type: application/json');
         echo json_encode($data);

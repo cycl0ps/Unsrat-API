@@ -136,8 +136,8 @@ class Dosen extends REST_Controller {
 		}
 	}
 
-    private function set_where($kategori,$kode) {
+    private function set_where($kategori,$kode) {}
 
-    } 	
+	private function set_select($select) {}     
 
 }

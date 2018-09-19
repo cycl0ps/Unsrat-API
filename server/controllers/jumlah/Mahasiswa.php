@@ -209,12 +209,13 @@ class Mahasiswa extends REST_Controller {
     }
 
     private function set_where($kategori,$kode) {
-        if ($kategori == "status") return array('mhsStakmhsrKode' => $kode);
-        else if ($kategori == "jalurmasuk") return array('mhsJlrrKode' => $kode);
-        else if ($kategori == "angkatan") return array('mhsAngkatan' => $kode);
-        else if ($kategori == "sumberdana") return array('mhsSbdnrId' => $kode);
-        else if ($kategori == "gender") return array('mhsJenisKelamin' => $kode);
-        
-        else $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-    }    
+        switch ($kategori) {
+            case 'jalurmasuk' : return array('mhsJlrrKode' => $kode);
+            case 'status'     : return array('mhsStakmhsrKode' => $kode);
+            case 'angkatan'   : return array('mhsAngkatan' => $kode);
+            case 'sumberdana' : return array('mhsSbdnrId' => $kode);
+            case 'gender'     : return array('mhsJenisKelamin' => $kode);                  
+            default           : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }        
+    }   
 }

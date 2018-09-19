@@ -52,15 +52,17 @@ class Mahasiswa extends REST_Controller {
         $id         = $this->get('kode');
         $condition  = $this->get('filter');
         $code       = $this->get('by');
+        $select     = $this->get('select');
         $where      = array('prodiKode' => $id);
 
         if ($condition && $code) $where += $this->set_where($condition, $code);
+        $select     = ($select != NULL) ? SELECT_LIST_MHS . $this->set_select($select) : SELECT_LIST_MHS;
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->get_mahasiswa(SELECT_LIST_MHS, $where);
+        	$data = $this->Akademika_sia->get_mahasiswa($select, $where);
        		if (!empty($data))
 	        {
                 foreach ($data as $key => $value) {
@@ -84,15 +86,17 @@ class Mahasiswa extends REST_Controller {
         $id         = $this->get('kode');
         $condition  = $this->get('filter');
         $code       = $this->get('by');
+        $select     = $this->get('select');
         $where      = array('jurKode' => $id);
 
-        if ($condition && $code) $where += $this->set_where($condition, $code);         
+        if ($condition && $code) $where += $this->set_where($condition, $code);
+        $select     = ($select != NULL) ? SELECT_LIST_MHS . $this->set_select($select) : SELECT_LIST_MHS;       
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->get_mahasiswa(SELECT_LIST_MHS, $where);
+        	$data = $this->Akademika_sia->get_mahasiswa($select, $where);
        		if (!empty($data))
 	        {
                 foreach ($data as $key => $value) {
@@ -116,15 +120,17 @@ class Mahasiswa extends REST_Controller {
         $id         = $this->get('kode');
         $condition  = $this->get('filter');
         $code       = $this->get('by');
+        $select     = $this->get('select');
         $where      = array('fakKode' => $id);
 
-        if ($condition && $code) $where += $this->set_where($condition, $code);       
+        if ($condition && $code) $where += $this->set_where($condition, $code);
+        $select     = ($select != NULL) ? SELECT_LIST_MHS . $this->set_select($select) : SELECT_LIST_MHS;      
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sia->get_mahasiswa(SELECT_LIST_MHS, $where);
+        	$data = $this->Akademika_sia->get_mahasiswa($select, $where);
        		if (!empty($data))
 	        {
                 foreach ($data as $key => $value) {
@@ -143,12 +149,25 @@ class Mahasiswa extends REST_Controller {
 	}
 
     private function set_where($kategori,$kode) {
-        if ($kategori == "status") return array('mhsStakmhsrKode' => $kode);
-        else if ($kategori == "jalurmasuk") return array('mhsJlrrKode' => $kode);
-        else if ($kategori == "angkatan") return array('mhsAngkatan' => $kode);
-        else if ($kategori == "sumberdana") return array('mhsSbdnrId' => $kode);
-        else if ($kategori == "gender") return array('mhsJenisKelamin' => $kode);
-        
-        else $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-    }     
+        switch ($kategori) {
+            case 'jalurmasuk' : return array('mhsJlrrKode' => $kode);
+            case 'status'     : return array('mhsStakmhsrKode' => $kode);
+            case 'angkatan'   : return array('mhsAngkatan' => $kode);
+            case 'sumberdana' : return array('mhsSbdnrId' => $kode);
+            case 'gender'     : return array('mhsJenisKelamin' => $kode);                  
+            default           : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }        
+    }
+
+    private function set_select($select) {
+        switch ($select) {
+            case 'jalurmasuk' : return "jllrNama AS jalurMasuk";
+            case 'status'     : return "stakmhsrNama AS status";
+            case 'angkatan'   : return "mhsAngkatan AS angkatan";
+            case 'sumberdana' : return "sbdnNama AS sumberDana";
+            case 'gender'     : return "mhsJenisKelamin AS gender";                                                                             
+            default           : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }
+    } 
+
 }

@@ -20,12 +20,12 @@ class Pegawai extends REST_Controller {
     function __construct() {
         parent::__construct();
 		$this->load->model(array('Akademika_sdm'));
-
     }	
 
     public function index_get() {
         $id 		= $this->get('nip');
         $where  	= array('pegKodeResmi' => $id);
+
         
         if ($id === NULL)
         {
@@ -53,16 +53,18 @@ class Pegawai extends REST_Controller {
         $id 		= $this->get('kode');
         $condition  = $this->get('filter');
         $code       = $this->get('by');
+        $select     = $this->get('select');
         $where  	= array('satkerpegSatkerId' => $id);
 
         if ($condition && $code) $where += $this->set_where($condition, $code);
+        $select 	= ($select != NULL) ? SELECT_LIST_PGW . $this->set_select($select) : SELECT_LIST_PGW;
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
 
         } else {
-        	$data = $this->Akademika_sdm->get_pegawai(SELECT_LIST_PGW, $where);
+        	$data = $this->Akademika_sdm->get_pegawai($select, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -83,15 +85,17 @@ class Pegawai extends REST_Controller {
         $id 		= $this->get('kode');
         $condition  = $this->get('filter');
         $code       = $this->get('by');
+        $select     = $this->get('select');
         $where  	= array('pegdtKategori' => 'Academic', 'satkerpegSatkerId' => $id);
 
         if ($condition && $code) $where += $this->set_where($condition, $code);
+        $select 	= ($select != NULL) ? SELECT_LIST_PGW . $this->set_select($select) : SELECT_LIST_PGW;
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sdm->get_pegawai(SELECT_LIST_PGW, $where);
+        	$data = $this->Akademika_sdm->get_pegawai($select, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -112,15 +116,17 @@ class Pegawai extends REST_Controller {
         $id 		= $this->get('kode');
         $condition  = $this->get('filter');
         $code       = $this->get('by');
+        $select     = $this->get('select');
         $where  	= array('pegdtKategori' => 'Non-Academic', 'satkerpegSatkerId' => $id);
 
         if ($condition && $code) $where += $this->set_where($condition, $code);
+        $select 	= ($select != NULL) ? SELECT_LIST_PGW . $this->set_select($select) : SELECT_LIST_PGW;
 
         if ($id === NULL)
         {
 			$this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-        	$data = $this->Akademika_sdm->get_pegawai(SELECT_LIST_PGW, $where);
+        	$data = $this->Akademika_sdm->get_pegawai($select, $where);
        		if (!empty($data))
 	        {
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -137,11 +143,24 @@ class Pegawai extends REST_Controller {
 	}
 
     private function set_where($kategori,$kode) {
-        if ($kategori == "status") return array('pegStatrId' => $kode);
-        else if ($kategori == "fungsional") return array('jabfungrId' => $kode);
-        else if ($kategori == "pangkat") return array('pktgolrId' => $kode);
-        
-        else $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+		switch ($kategori) {
+            case 'status'     : return array('pegStatrId' => $kode);
+            case 'pangkat'    : return array('pktgolrId' => $kode);
+            case 'fungsional' : return array('jabfungrId' => $kode);
+    		default 		  : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+    	}        
+    }
+
+	private function set_select($select) {
+		switch ($select) {
+            case 'status'     : return "statrPegawai AS status";
+            case 'kategori'   : return "pegdtKategori AS kategori";                                        
+            case 'jenis'      : return "jnspegrNama AS jenis";
+            case 'gender'     : return "pegKelamin AS gender";
+            case 'pangkat'    : return "CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan";
+            case 'fungsional' : return "jabfungrNama AS jabatanFungsional";														
+    		default 		  : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+    	}
     } 
 
 }

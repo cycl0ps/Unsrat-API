@@ -323,6 +323,7 @@
 <li><a target="_blank" href="<?php echo site_url('welcome/kode-satker');?>">Info parameter kode satker</a></li>
 <li><a target="_blank" href="<?php echo site_url('welcome/group');?>">Info parameter group</a></li>
 <li><a target="_blank" href="<?php echo site_url('welcome/filter');?>">Info parameter kategori filter</a></li>
+<li><a target="_blank" href="<?php echo site_url('welcome/select');?>">Info parameter select</a></li>
 </ol>
 
 

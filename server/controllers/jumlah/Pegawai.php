@@ -204,11 +204,12 @@ class Pegawai extends REST_Controller {
 	}	
 
     private function set_where($kategori,$kode) {
-        if ($kategori == "status") return array('pegStatrId' => $kode);
-        else if ($kategori == "fungsional") return array('jabfungrId' => $kode);
-        else if ($kategori == "pangkat") return array('pktgolrId' => $kode);
-        
-        else $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-    } 
+        switch ($kategori) {
+            case 'status'     : return array('pegStatrId' => $kode);
+            case 'pangkat'    : return array('pktgolrId' => $kode);
+            case 'fungsional' : return array('jabfungrId' => $kode);
+            default           : $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }        
+    }
 
 }
