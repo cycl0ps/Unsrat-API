@@ -98,7 +98,7 @@ class Akademika_sia extends CI_Model {
 
 	public function get_pembimbing($nim) {
 
-		$this->dbSia->select("pegNip AS nip, pegNama AS nama, dsnprntaNama AS peran");
+		$this->dbSia->select("pegNip AS nip, CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama,, dsnprntaNama AS peran");
 		$this->dbSia->order_by('dsnprntaId');
 		$this->dbSia->where('mhsNiu', $nim); // ID Tugas Akhir
 		$this->dbSia->where('mhsStakmhsrKode', 'L'); // Status mahasiswa Lulus
