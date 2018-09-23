@@ -100,7 +100,11 @@ define('SELECT_LIST_MHS',
 		   "mhsNiu AS nim,
 			mhsNama AS nama,
 			mhsFoto AS foto,
+			mhsEmail AS email,			
 			mhsAngkatan AS angkatan,
+			stakmhsrNama AS statusMahasiswa,
+			jllrNama AS jalurMasuk,
+			sbdnNama AS sumberDana,
 			prodiNamaResmi AS prodi,
 			prodiKode AS kodeProdi,
 			jurNamaResmi AS jurusan,
@@ -116,15 +120,12 @@ define('SELECT_DETAIL_MHS', SELECT_LIST_MHS .
 			agmrNama AS agama,
 			stnkrNama AS statusNikah,
 			mhsNoHp AS noHp,
-			mhsEmail AS email,
 			mhsHobi AS hobi,
-			stakmhsrNama AS statusMahasiswa,
-			jllrNama AS jalurMasuk,
-			sbdnNama AS sumberDana,
-			pegNama AS dosenPembimbingAkademik,
+			CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS dosenPembimbingAkademik,
 			pegNip AS nipDosenPembimbingAkademik,");
 
-define('SELECT_LIST_ALU', SELECT_LIST_MHS);
+define('SELECT_LIST_ALU', SELECT_LIST_MHS .
+		   "year(mhsTanggalLulus) AS tahunLulus,");
 
 define('SELECT_DETAIL_ALU', SELECT_DETAIL_MHS . 
 		   "taJudul AS judulTa,
@@ -158,7 +159,12 @@ define('SELECT_LIST_PGW',
 		   	pegKodeLain AS kodeLain,
 			pegId AS kodePegawai,
 			CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama,
-			pegFoto AS foto,");
+			pegFoto AS foto,
+			jabfungrNama AS jabatanFungsional,
+			CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan,
+			statrPegawai AS statusPegawai,
+			pegdtKategori AS kategoriPegawai,
+			jnspegrNama AS jenisPegawai,");
 
 define('SELECT_DETAIL_PGW', SELECT_LIST_PGW .
 		   "pegTglLahir AS tanggalLahir,
@@ -169,12 +175,7 @@ define('SELECT_DETAIL_PGW', SELECT_LIST_PGW .
 			statnkhNama AS statusNikah,
 			pegNoHp AS noHp,
 			pegEmail AS email,
-			jabfungrNama AS jabatanFungsional,
-			CONCAT(pktgolrId,' - ',pktgolrNama) AS pangkatGolongan,
 			pegThnSer AS tahunSerdos,
 			pegNoKarpeg AS noKarpeg,
-			statrPegawai AS statusPegawai,
-			pegdtKategori AS kategoriPegawai,
-			jnspegrNama AS jenisPegawai,
 			satkerNama AS satuanKerja,
 			pegLastUpdate AS lastUpdate,");

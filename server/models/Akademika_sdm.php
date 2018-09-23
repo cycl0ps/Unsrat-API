@@ -25,7 +25,7 @@ class Akademika_sdm extends CI_Model {
 		$this->dbSdm->join("(SELECT satkerpegId, satkerpegPegId, satkerpegSatkerId FROM sdm_satuan_kerja_pegawai WHERE satkerpegAktif = 'Aktif' GROUP BY satkerpegPegId) c", "c.satkerpegPegId = pub_pegawai.pegId");
 		$this->dbSdm->join('pub_satuan_kerja', 'pub_satuan_kerja.satkerId = c.satkerpegSatkerId','left');
 
-		//join tabel jabatan fungsional.  
+		//join tabel jabatan fungsional 
 		$this->dbSdm->join("(SELECT jbtnPegKode, jbtnJabfungrId, jbtnTglMulai FROM sdm_jabatan_fungsional WHERE jbtnStatus = 'Aktif') a", "a.jbtnPegKode = pub_pegawai.pegId AND a.jbtnTglMulai = (SELECT MAX(a2.jbtnTglMulai) FROM sdm_jabatan_fungsional a2 WHERE a2.jbtnPegKode = pub_pegawai.pegId)", 'left');
 		$this->dbSdm->join('pub_ref_jabatan_fungsional', 'pub_ref_jabatan_fungsional.jabfungrId = a.jbtnJabfungrId','left');
 		

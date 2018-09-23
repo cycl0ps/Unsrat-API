@@ -79,19 +79,4 @@ class Welcome extends CI_Controller {
         echo json_encode($data);
    		
 	}
-
-	public function select() {
-
-		$filterMhs	= array('status', 'jalurmasuk', 'angkatan', 'sumberdana', 'gender');
-		$filterPgw	= array('status', 'kategori', 'jenis', 'gender', 'fungsional', 'pangkat');		
-	
-		$data['parameter select mahasiswa'] = $filterMhs;
-		$data['parameter select alumni'] = "Not available yet";
-		$data['parameter select dosen'] = "Not available yet";
-		$data['parameter select pegawai'] = $filterPgw;
-
-        header('Content-type: application/json');
-        echo json_encode($data);
-   		
-	}
 }
