@@ -79,4 +79,22 @@ class Welcome extends CI_Controller {
         echo json_encode($data);
    		
 	}
+
+    public function get_user() {
+		$id = $_GET['id'];
+		$data = $this->Akademika_sdm->get_table('pub_pegawai', "CONCAT_WS(' ', NULLIF(pegGelarDepan,''), pegNama, NULLIF(pegGelarBelakang,'')) AS nama, pegKodeResmi AS nip", array('pegKodeResmi' => $id));
+
+		if (!$data) $data = $this->Akademika_sia->get_table('mahasiswa', 'mhsNiu AS nim,
+			mhsNama AS nama', array('mhsNiu' => $id));
+
+        
+		if (!empty($data)) {
+        	header('Content-type: application/json');
+        	echo json_encode($data);
+		} else {
+			header("HTTP/1.1 404 Not Found");
+		}
+        
+   		
+	}	
 }
