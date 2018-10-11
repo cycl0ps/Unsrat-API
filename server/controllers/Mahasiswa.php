@@ -35,6 +35,7 @@ class Mahasiswa extends REST_Controller {
        		if (!empty($data))
 	        {
                 if (!empty($data['foto'])) $data['foto'] = URL_FOTO_MHS.$data['foto'];
+                 $data['akademik'] = $this->Akademika_sia->total_sks($data['nim']);
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
 	        else
@@ -66,6 +67,7 @@ class Mahasiswa extends REST_Controller {
 	        {
                 foreach ($data as $key => $value) {
                     if (!empty($data[$key]['foto'])) $data[$key]['foto'] = URL_FOTO_MHS.$data[$key]['foto'];
+                    if ($condition == 'angkatan') $data[$key]['akademik'] = $this->Akademika_sia->total_sks($data[$key]['nim']);
                 }             
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
@@ -99,6 +101,7 @@ class Mahasiswa extends REST_Controller {
 	        {
                 foreach ($data as $key => $value) {
                     if (!empty($data[$key]['foto'])) $data[$key]['foto'] = URL_FOTO_MHS.$data[$key]['foto'];
+                    if ($condition == 'angkatan') $data[$key]['akademik'] = $this->Akademika_sia->total_sks($data[$key]['nim']);
                 } 
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
@@ -132,6 +135,7 @@ class Mahasiswa extends REST_Controller {
 	        {
                 foreach ($data as $key => $value) {
                     if (!empty($data[$key]['foto'])) $data[$key]['foto'] = URL_FOTO_MHS.$data[$key]['foto'];
+                    if ($condition == 'angkatan') $data[$key]['akademik'] = $this->Akademika_sia->total_sks($data[$key]['nim']);
                 } 
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }

@@ -59,7 +59,6 @@ class Akademik extends REST_Controller {
         	$data = $this->Akademika_sia->total_sks($id);
        		if (!empty($data))
 	        {
-	        	$data += $this->Akademika_sia->total_sks_lulus($id);
 	            $this->set_response($data, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 	        }
 	        else

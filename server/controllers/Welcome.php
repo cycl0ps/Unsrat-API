@@ -6,7 +6,7 @@ class Welcome extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model(array('Akademika_sia','Akademika_sdm','Akademika_portal'));
-	
+			
 	}
 	
 	public function index() {
@@ -89,7 +89,8 @@ class Welcome extends CI_Controller {
 
         
 		if (!empty($data)) {
-        	header('Content-type: application/json');
+        	header('Access-Control-Allow-Origin: *');
+			header('Content-type: application/json');
         	echo json_encode($data);
 		} else {
 			header("HTTP/1.1 404 Not Found");

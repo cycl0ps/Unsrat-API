@@ -136,6 +136,17 @@ class Akademika_sia extends CI_Model {
 		
 		$query = $this->dbSia->get('mahasiswa');
 		$result = $query->row_array();
+		$result += $this->total_sks_lulus($nim);
+
+		if ($this->cek_mk_ta($nim)) {
+			
+			$tugasAkhir = $this->cek_mk_ta($nim);
+			$tugasAkhir['statusTa'] = "Sedang dikontrak";
+		} else {
+			$tugasAkhir['statusTa'] = "";
+		}
+
+		$result += $tugasAkhir;
 		//$this->debugSql();
 		return $result;
 	}
