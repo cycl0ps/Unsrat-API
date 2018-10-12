@@ -95,7 +95,9 @@ class Welcome extends CI_Controller {
 		} else {
 			header("HTTP/1.1 404 Not Found");
 		}
-        
-   		
-	}	
+	}
+
+    public function clear_cache() {
+		$this->Akademika_sia->clear_cache();
+	}		
 }

@@ -210,6 +210,12 @@ class Akademika_sia extends CI_Model {
 		return $result;
 	}
 
+    public function clear_cache() {
+		
+		$this->dbSia->cache_delete_all(); 
+		echo "cache berhasil dihapus!";
+    }	
+
     private function debugSql() {
 		
 		echo $this->dbSia->last_query(); die;
